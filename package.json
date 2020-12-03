@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "@types/qs": "^6.9.5",
+    "prettier": "^2.2.1",
     "serverless": "^2.13.0",
     "serverless-cloudflare-workers": "^1.2.0",
     "serverless-dotenv-plugin": "^3.1.0",
