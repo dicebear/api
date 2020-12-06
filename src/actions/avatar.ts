@@ -45,11 +45,9 @@ addEventListener<any>('fetch', (event: WorkerEvent) => {
 
 async function handler(request: Request) {
   let url = new URL(request.url);
-  let route = decodeURIComponent(url.pathname).match(
-    /^\/(?:\d+\.\d+\/)?(?:api(?:\/\d+\.\d+)?|v2)\/([a-z]+)\/([^\/]*)\.svg$/
-  );
+  let route = url.pathname.match(/^\/(?:\d+\.\d+\/)?(?:api(?:\/\d+\.\d+)?|v2)\/([a-z]+)\/([^\/]*)\.svg$/);
   let parsedQueryString = qs.parse(url.search.slice(1));
-  let requestOptions = parsedQueryString['options'] || parsedQueryString || {};
+  let requestOptions = JSON.parse(JSON.stringify(parsedQueryString['options'] || parsedQueryString || {}));
   let headers = new Headers();
 
   if (null === route) {
@@ -67,14 +65,16 @@ async function handler(request: Request) {
   }
 
   try {
-    await options.validate(requestOptions);
+    await options.validate(requestOptions, {
+      stripUnknown: true,
+    });
   } catch (e) {
     return new Response(e['errors'].join(''), {
       status: 400,
     });
   }
 
-  let seed = route[2];
+  let seed = decodeURIComponent(route[2]);
   let avatars = new Avatars(style);
   let svg = avatars.create(seed, options.cast(requestOptions));
 
