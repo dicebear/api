@@ -1,13 +1,4 @@
-type WorkerEvent = {
-  request: Request;
-  respondWith: (response: Response | Promise<Response>) => void;
-};
-
-addEventListener<any>('fetch', (event: WorkerEvent) => {
-  event.respondWith(handler());
-});
-
-async function handler() {
+export default async function handler() {
   let headers = new Headers();
   headers.append('Content-Type', 'application/json');
   headers.append('Cache-Control', `max-age=${60 * 60}`);

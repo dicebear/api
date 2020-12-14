@@ -1,5 +1,3 @@
-import * as qs from 'qs';
-
 import Avatars from '@dicebear/avatars';
 
 import avataaars from '@dicebear/avatars-avataaars-sprites';
@@ -34,29 +32,19 @@ const styles: Record<string, any> = {
   male: [male, maleOptions],
 };
 
-type WorkerEvent = {
-  request: Request;
-  respondWith: (response: Response | Promise<Response>) => void;
+type Params = {
+  version?: string;
+  style: string;
+  seed?: string;
 };
 
-addEventListener<any>('fetch', (event: WorkerEvent) => {
-  event.respondWith(handler(event.request));
-});
+type QueryString = Record<string, string>;
 
-async function handler(request: Request) {
-  let url = new URL(request.url);
-  let route = url.pathname.match(/^\/(?:\d+\.\d+\/)?(?:api(?:\/\d+\.\d+)?|v2)\/([a-z]+)\/([^\/]*)\.svg$/);
-  let parsedQueryString = qs.parse(url.search.slice(1));
-  let requestOptions = JSON.parse(JSON.stringify(parsedQueryString['options'] || parsedQueryString || {}));
+export default async function handler(params: Params, queryString: QueryString) {
+  let requestOptions = queryString['options'] || queryString;
   let headers = new Headers();
 
-  if (null === route) {
-    return new Response('404 Not Found', {
-      status: 404,
-    });
-  }
-
-  let [style, options] = styles[route[1]] || [];
+  let [style, options] = styles[params.style] || [];
 
   if (undefined === style) {
     return new Response('404 Not Found', {
@@ -74,7 +62,7 @@ async function handler(request: Request) {
     });
   }
 
-  let seed = decodeURIComponent(route[2]);
+  let seed = decodeURIComponent(params.seed || '');
   let avatars = new Avatars(style);
   let svg = avatars.create(seed, options.cast(requestOptions));
 
