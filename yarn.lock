@@ -17,29 +17,29 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@dicebear/avatars-avataaars-sprites@^4.5.0":
+"@dicebear/avatars-avataaars-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-avataaars-sprites/-/avatars-avataaars-sprites-4.5.2.tgz#bfae41d0592192385d84d6ea75dbc06e588a64a2"
   integrity sha512-dZrKuHZdjsfqx0tHpgAE696ZbKRZoIM9znwCKDgXBPl/y2lCUiJFRvMyix8AXihhYR62APgaP7ShRm9dQVdxKg==
 
-"@dicebear/avatars-bottts-sprites@^4.5.0":
+"@dicebear/avatars-bottts-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-bottts-sprites/-/avatars-bottts-sprites-4.5.2.tgz#7dd5ec653ee1da88da8342f620fcbc91876417bd"
   integrity sha512-sQ2ek3asdYwau/Y666xjF7K82JSVe0bpcBYvi1EUdnq7NIvtA9ouMFq00R9e51iIM26xLlqzMRmRj/Pj9hzhLA==
 
-"@dicebear/avatars-female-sprites@^4.5.0", "@dicebear/avatars-female-sprites@^4.5.2":
+"@dicebear/avatars-female-sprites@^4.5.2", "@dicebear/avatars-female-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-female-sprites/-/avatars-female-sprites-4.5.2.tgz#43d03b3099991cff3dfbcc3b10bc75250ec67d9d"
   integrity sha512-zbnQtwX8skRtJZhz58PDBexBB95v6YR2JMy5w/wAcxQVQBKrAklzuAAVVXbWRAjhXBczCqUvHCvtnYSW2wuWBQ==
 
-"@dicebear/avatars-gridy-sprites@^4.5.0":
+"@dicebear/avatars-gridy-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-gridy-sprites/-/avatars-gridy-sprites-4.5.2.tgz#15e1a053cb32fd9e34c48ae9ee7887fc1a690a64"
   integrity sha512-XdHo7N+lapfSa5K5imp7LPhcSTfKFxD8gw8+elrO7JeAIzr2C46dv2nxF41ay/c0Rs2/4PxrEA1Z+O51j1U0NA==
   dependencies:
     gridy-avatars "^1.1.3"
 
-"@dicebear/avatars-human-sprites@^4.5.0":
+"@dicebear/avatars-human-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-human-sprites/-/avatars-human-sprites-4.5.2.tgz#c5a954ed151b51343214cf590f536bfc0347184f"
   integrity sha512-H6jRDm4Hx0onKkE6bkTP0yhu2BymO1jpo89lWIc1XCPz4sVWt1+ToKa8HJX33xRhtevxA0PRO5LpJ8cd7YFghQ==
@@ -47,31 +47,31 @@
     "@dicebear/avatars-female-sprites" "^4.5.2"
     "@dicebear/avatars-male-sprites" "^4.5.2"
 
-"@dicebear/avatars-identicon-sprites@^4.5.0":
+"@dicebear/avatars-identicon-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-identicon-sprites/-/avatars-identicon-sprites-4.5.2.tgz#314d113f9eee5b218648d55c70753f6bd4a63c51"
   integrity sha512-/nnpmyMV5tV96SIzdV+RpEUafKnu6f+MZbLJY+6tUBt4vpSi+BL7lvccwPjqza+o8R5jAceXDUbvKAMqJdovGQ==
 
-"@dicebear/avatars-initials-sprites@^4.5.0":
+"@dicebear/avatars-initials-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-initials-sprites/-/avatars-initials-sprites-4.5.2.tgz#175bcbbeb63d378aa6d70ae55e9d9eb4c6d428d3"
   integrity sha512-HVy7on72X6gwjDb5ZP5tUY3JY85ESXlvUa5+7yK09kTQvqGOv5vrwLnjW3QppCNem6Ax+0SXpmxeB1KGKVu03Q==
   dependencies:
     initials "^3.0.1"
 
-"@dicebear/avatars-jdenticon-sprites@^4.5.0":
+"@dicebear/avatars-jdenticon-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-jdenticon-sprites/-/avatars-jdenticon-sprites-4.5.2.tgz#674275fa197279a4c00bf157b8da465c2cb1ecf7"
   integrity sha512-uoPTv4x8oLPBaoonerSfpezEtcwFt8yb4hrFKUx/qP2hZCZGTK1Q7IWgrtNi8zI2LgGBaAG5nzpvl+a3C+SeJg==
   dependencies:
     jdenticon "^2.1.1"
 
-"@dicebear/avatars-male-sprites@^4.5.0", "@dicebear/avatars-male-sprites@^4.5.2":
+"@dicebear/avatars-male-sprites@^4.5.2", "@dicebear/avatars-male-sprites@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-male-sprites/-/avatars-male-sprites-4.5.2.tgz#011a2fda423e975fd218e706009e6bfce6a4f526"
   integrity sha512-lgNie0R4qylCac/XHoDAJ7hoR/yQsvp2wM8CQIWCVwmAkYdaD5pBIqedvHg6zCykpg0nFSHPaCRkgthNCuROyg==
 
-"@dicebear/avatars@^4.5.0":
+"@dicebear/avatars@~4.5.0":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars/-/avatars-4.5.2.tgz#8db50cfca633e4280ea08b5749e977a1effe2674"
   integrity sha512-0OSeeLmcqOMo3Wp7uGtdnJQtoZPBjkymDSNlZMtLEE44iGdYH+niheV0wFegSqphAjkIsyu8JDyBnK0Bgk9c/A==
