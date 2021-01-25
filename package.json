@@ -21,6 +21,7 @@
     "@dicebear/avatars-male-sprites": "~4.5.0",
     "@types/yup": "^0.29.9",
     "qs": "^6.9.4",
+    "tiny-request-router": "^1.2.2",
     "yup": "^0.31.0"
   },
   "devDependencies": {
