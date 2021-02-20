@@ -9,6 +9,7 @@ import identicon from '@dicebear/avatars-identicon-sprites';
 import initials from '@dicebear/avatars-initials-sprites';
 import jdenticon from '@dicebear/avatars-jdenticon-sprites';
 import male from '@dicebear/avatars-male-sprites';
+import { RequestHandler } from 'express';
 
 import avataaarsOptions from '../options/avataaars';
 import botttsOptions from '../options/bottts';
@@ -32,24 +33,14 @@ const styles: Record<string, any> = {
   male: [male, maleOptions],
 };
 
-type Params = {
-  version?: string;
-  style: string;
-  seed?: string;
-};
+const handler: RequestHandler = async (req, res) => {
+  let requestOptions = req.query.options || req.query;
 
-type QueryString = Record<string, string>;
-
-export default async function handler(params: Params, queryString: QueryString) {
-  let requestOptions = queryString['options'] || queryString;
-  let headers = new Headers();
-
-  let [style, options] = styles[params.style] || [];
+  let [style, options] = styles[req.params.style] || [];
 
   if (undefined === style) {
-    return new Response('404 Not Found', {
-      status: 404,
-    });
+    res.sendStatus(404);
+    return;
   }
 
   try {
@@ -57,19 +48,18 @@ export default async function handler(params: Params, queryString: QueryString) 
       stripUnknown: true,
     });
   } catch (e) {
-    return new Response(e['errors'].join(''), {
-      status: 400,
-    });
+    res.status(400).send(e['errors'].join(''));
+    return;
   }
 
-  let seed = decodeURIComponent(params.seed || '');
+  let seed = decodeURIComponent(req.params.seed || '');
   let avatars = new Avatars(style);
   let svg = avatars.create(seed, options.cast(requestOptions));
 
-  headers.append('Content-Type', 'image/svg+xml');
-  headers.append('Cache-Control', `max-age=${60 * 60 * 24 * 365}`);
+  res.append('Content-Type', 'image/svg+xml');
+  res.append('Cache-Control', `max-age=${60 * 60 * 24 * 365}`);
 
-  return new Response(svg, {
-    headers: headers,
-  });
-}
+  res.send(svg);
+};
+
+export default handler;

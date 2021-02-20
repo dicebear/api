@@ -4,6 +4,7 @@
   "description": "DiceBear Avatars API build on Cloudflare Workers",
   "private": true,
   "scripts": {
+    "start": "ts-node src/index.ts",
     "deploy": "serverless deploy"
   },
   "author": "Florian Körner <contact@florian-koerner.com>",
@@ -20,11 +21,14 @@
     "@dicebear/avatars-jdenticon-sprites": "~4.5.0",
     "@dicebear/avatars-male-sprites": "~4.5.0",
     "@types/yup": "^0.29.9",
+    "express": "^4.17.1",
     "qs": "^6.9.4",
     "tiny-request-router": "^1.2.2",
+    "ts-node": "^9.1.1",
     "yup": "^0.31.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.11",
     "@types/qs": "^6.9.5",
     "prettier": "^2.2.1",
     "serverless": "^2.13.0",

@@ -1,13 +1,13 @@
-export default async function handler() {
-  let headers = new Headers();
-  headers.append('Content-Type', 'application/json');
-  headers.append('Cache-Control', `max-age=${60 * 60}`);
+import { RequestHandler } from 'express';
 
-  return new Response(JSON.stringify({ data: await github() }), {
-    status: 200,
-    headers: headers,
-  });
-}
+const handler: RequestHandler = async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', `max-age=${60 * 60}`);
+
+  res.json({ data: await github() });
+};
+
+export default handler;
 
 async function github() {
   let headers = new Headers({
