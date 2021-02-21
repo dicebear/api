@@ -21,6 +21,8 @@ import initialsOptions from '../options/initials';
 import jdenticonOptions from '../options/jdenticon';
 import maleOptions from '../options/male';
 
+import sharp from 'sharp';
+
 const styles: Record<string, any> = {
   avataaars: [avataaars, avataaarsOptions],
   bottts: [bottts, botttsOptions],
@@ -34,13 +36,36 @@ const styles: Record<string, any> = {
 };
 
 const handler: RequestHandler = async (req, res) => {
+  const format = req.params.format;
   let requestOptions = req.query.options || req.query;
+
+  if (Array.isArray(requestOptions) || typeof requestOptions === 'string') {
+    requestOptions = {};
+  }
 
   let [style, options] = styles[req.params.style] || [];
 
   if (undefined === style) {
     res.sendStatus(404);
     return;
+  }
+
+  if (false === ['svg', 'png'].includes(format)) {
+    res.sendStatus(404);
+    return;
+  }
+
+  if (format === 'png') {
+    let size = requestOptions['w'] || requestOptions['width'] || requestOptions['h'] || requestOptions['height'];
+    let secureSize = typeof size === 'string' ? parseInt(size) : 0;
+
+    delete requestOptions['w'];
+    delete requestOptions['width'];
+    delete requestOptions['h'];
+    delete requestOptions['height'];
+
+    requestOptions['w'] = (secureSize <= 0 || secureSize > 256 ? 256 : secureSize).toString();
+    requestOptions['h'] = requestOptions['w'];
   }
 
   try {
@@ -56,9 +81,17 @@ const handler: RequestHandler = async (req, res) => {
   let avatars = new Avatars(style);
   let svg = avatars.create(seed, options.cast(requestOptions));
 
-  res.append('Content-Type', 'image/svg+xml');
   res.append('Cache-Control', `max-age=${60 * 60 * 24 * 365}`);
 
+  if (format === 'png') {
+    const output = await sharp(Buffer.from(svg)).png().toBuffer();
+
+    res.contentType('image/png');
+    res.send(output);
+    return;
+  }
+
+  res.contentType('image/svg+xml');
   res.send(svg);
 };
 
