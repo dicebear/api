@@ -1,4 +1,5 @@
 spec:
+  name: avatars-api
   services:
     - environment_slug: node-js
       git:
