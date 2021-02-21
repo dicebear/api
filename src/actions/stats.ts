@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+import axios from 'axios';
 
 const handler: RequestHandler = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -10,19 +11,14 @@ const handler: RequestHandler = async (req, res) => {
 export default handler;
 
 async function github() {
-  let headers = new Headers({
-    Accept: 'application/vnd.github.v3+json',
-    'User-Agent': 'Dicebear-Avatars',
+  let response = await axios.get('https://api.github.com/repos/dicebear/avatars', {
+    headers: {
+      Accept: 'application/vnd.github.v3+json',
+      'User-Agent': 'Dicebear-Avatars',
+    },
   });
-
-  let response = await fetch('https://api.github.com/repos/dicebear/avatars', {
-    method: 'get',
-    headers: headers,
-  });
-
-  let json = await response.json();
 
   return {
-    stars: json.stargazers_count,
+    stars: response.data.stargazers_count,
   };
 }

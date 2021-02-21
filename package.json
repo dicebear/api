@@ -21,6 +21,7 @@
     "@dicebear/avatars-jdenticon-sprites": "~4.5.0",
     "@dicebear/avatars-male-sprites": "~4.5.0",
     "@types/yup": "^0.29.9",
+    "axios": "^0.21.1",
     "express": "^4.17.1",
     "qs": "^6.9.4",
     "tiny-request-router": "^1.2.2",
