@@ -1,0 +1,11 @@
+spec:
+  services:
+    - environment_slug: node-js
+      github:
+        branch: main
+        repo_clone_url: https://github.com/DiceBear/avatars-api.git
+      http_port: 3000
+      name: avatars-api
+      routes:
+        - path: /
+      run_command: yarn start
