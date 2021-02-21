@@ -1,7 +1,7 @@
 spec:
   services:
     - environment_slug: node-js
-      github:
+      git:
         branch: main
         repo_clone_url: https://github.com/DiceBear/avatars-api.git
       http_port: 3000
