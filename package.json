@@ -1,25 +1,29 @@
 {
   "name": "@dicebear/avatars-api",
   "private": true,
+  "license": "MIT",
+  "author": "Florian Körner <contact@florian-koerner.com>",
+  "workspaces": {
+    "packages": [
+      "versions/*"
+    ],
+    "nohoist": [
+      "**/@dicebear/avatars*"
+    ]
+  },
   "scripts": {
     "start": "ts-node src/index.ts"
   },
-  "author": "Florian Körner <contact@florian-koerner.com>",
-  "license": "MIT",
   "dependencies": {
     "@dicebear/avatars-api-4.4": "*",
     "@dicebear/avatars-api-4.5": "*",
+    "@types/express": "^4.17.11",
     "axios": "^0.21.1",
     "express": "^4.17.1",
-    "ts-node": "^9.1.1"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.11",
-    "prettier": "^2.2.1",
+    "ts-node": "^9.1.1",
     "typescript": "^4.1.2"
   },
-  "workspaces": {
-    "packages": ["versions/*"],
-    "nohoist": ["**/@dicebear/avatars*"]
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
 }

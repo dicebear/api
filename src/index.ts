@@ -4,7 +4,7 @@ import statsAction from './actions/stats';
 import express from 'express';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use('/4.4', v44);
 app.use('/4.5', v45);
