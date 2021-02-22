@@ -1,11 +1,7 @@
 <h1 align="center"><img src="https://avatars.dicebear.com/api/male/seed.svg" width="124" /> <br />DiceBear Avatars API</h1>
 <p align="center"><strong>DiceBear Avatars API build on express</strong></p>
 
-## Requirements
-
-- You need a DigitalOcean account. If you don't already have one, you can sign up at https://cloud.digitalocean.com/registrations/new
-
-## Deploying the App
+## Deploy to DigitalOcean App Platform
 
 Click this button to deploy the app to the DigitalOcean App Platform. If you are not logged in, you will be prompted to log in with your DigitalOcean account.
 
@@ -19,3 +15,9 @@ After clicking the "Deploy to DigitalOcean" button, follow these steps:
 4. You should see a "Building..." progress indicator. And you can click "Deployments"→"Details" to see more details of the build.
 5. It can take a few minutes for the build to finish, but you can follow the progress by clicking the "Details" link in the top banner.
 6. Once the build completes successfully, click the "Live App" link in the header and you should see your running application in a new tab.
+
+## Deploy to Heroku
+
+Click this button to deploy the app to Heroku. If you are not logged in, you will be prompted to log in with your Heroku account.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/DiceBear/avatars-api)

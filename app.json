@@ -1,0 +1,7 @@
+{
+  "name": "DiceBear Avatars API",
+  "description": "Avatars is an avatar placeholder library for designers and developers.",
+  "repository": "https://github.com/heroku/node-js-getting-started",
+  "logo": "https://avatars.dicebear.com/4.5/api/male/dicebear.svg",
+  "keywords": ["node", "avatar", "dicebear"]
+}
