@@ -1,15 +1,32 @@
 import v44 from '@dicebear/avatars-api-4.4';
 import v45 from '@dicebear/avatars-api-4.5';
+import 'make-promises-safe';
 import statsAction from './actions/stats';
-import express from 'express';
+import fastify from 'fastify';
+import qs from 'qs';
 
-const app = express();
 const port = process.env.PORT || 3000;
+const app = fastify({
+  logger: true,
+  querystringParser: (str) => qs.parse(str),
+  ajv: {
+    customOptions: {
+      coerceTypes: 'array',
+      removeAdditional: true,
+      useDefaults: true,
+    },
+  },
+});
 
-app.use('/4.4', v44);
-app.use('/4.5', v45);
 app.get('/:version/stats.json', statsAction);
+app.register(v44, { prefix: '/4.4' });
+app.register(v45, { prefix: '/4.5' });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+app.listen(port, (err, address) => {
+  if (err) {
+    app.log.error(err.message);
+    process.exit(1);
+  }
+
+  app.log.info(`server listening on ${address}`);
 });

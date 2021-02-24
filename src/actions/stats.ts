@@ -1,11 +1,12 @@
-import { RequestHandler } from 'express';
 import axios from 'axios';
+import { FastifyReply, FastifyRequest } from 'fastify';
 
-const handler: RequestHandler = async (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Cache-Control', `max-age=${60 * 60}`);
-
-  res.json({ data: await github() });
+const handler = async (request: FastifyRequest, reply: FastifyReply) => {
+  reply
+    .headers({
+      'Cache-Control': `max-age=${60 * 60}`,
+    })
+    .send({ data: await github() });
 };
 
 export default handler;

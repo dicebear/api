@@ -1,5 +1,5 @@
 <h1 align="center"><img src="https://avatars.dicebear.com/api/male/seed.svg" width="124" /> <br />DiceBear Avatars API</h1>
-<p align="center"><strong>DiceBear Avatars API build on express</strong></p>
+<p align="center"><strong>DiceBear Avatars API build on [fastify](https://fastify.io/)</strong></p>
 
 ## Deploy to DigitalOcean App Platform
 
