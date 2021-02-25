@@ -22,7 +22,7 @@ app.get('/:version/stats.json', statsAction);
 app.register(v44, { prefix: '/4.4' });
 app.register(v45, { prefix: '/4.5' });
 
-app.listen(port, (err, address) => {
+app.listen(port, '0.0.0.0', (err, address) => {
   if (err) {
     app.log.error(err.message);
     process.exit(1);
