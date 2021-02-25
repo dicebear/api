@@ -16,28 +16,15 @@ export default function createRoutes<O, Q extends O & Options & { options?: O & 
     app.get<{ Querystring: Q; Params: Params }>(
       `/:prefix/${name}/.:format`,
       { schema: { querystring: schema, params: paramsSchema } },
-      async (request, reply) =>
-        createAvatar(
-          reply,
-          style,
-          '',
-          request.query,
-          request.params.format
-        )
+      async (request, reply) => createAvatar(reply, style, '', request.query, request.params.format)
     );
 
     // Route with seed
     app.get<{ Querystring: Q; Params: Params }>(
-      `/:prefix/${name}/:seed(^[^\.]+).:format`,
+      `/:prefix/${name}/:seed(^.*(?=\.(svg|png))).:format`,
       { schema: { querystring: schema, params: paramsSchema } },
       async (request, reply) =>
-        createAvatar(
-          reply,
-          style,
-          request.params.seed ?? '',
-          request.query,
-          request.params.format
-        )
+        createAvatar(reply, style, request.params.seed ?? '', request.query, request.params.format)
     );
   };
 }
