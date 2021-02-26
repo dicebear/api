@@ -18,7 +18,7 @@ const app = fastify({
   },
 });
 
-app.get('/:version/stats.json', statsAction);
+app.get('/stats.json', statsAction);
 app.register(v44, { prefix: '/4.4' });
 app.register(v45, { prefix: '/4.5' });
 
