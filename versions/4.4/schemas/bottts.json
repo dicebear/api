@@ -46,7 +46,7 @@
           }
         },
         "colorful": {
-          "type": "boolean"
+          "type": ["boolean", "number"]
         },
         "primaryColorLevel": {
           "$ref": "#/definitions/colorLevel"

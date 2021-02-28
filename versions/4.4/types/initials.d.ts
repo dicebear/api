@@ -42,6 +42,6 @@ export type Initials = {
   colorLevel?: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
   fontSize?: number;
   chars?: number;
-  bold?: boolean;
+  bold?: boolean | number;
   [k: string]: unknown;
 };

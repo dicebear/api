@@ -49,7 +49,7 @@
           "maximum": 2
         },
         "bold": {
-          "type": "boolean"
+          "type": ["boolean", "number"]
         }
       }
     }

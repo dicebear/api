@@ -39,7 +39,7 @@ export type Bottts = {
     | "teal"
     | "yellow"
   )[];
-  colorful?: boolean;
+  colorful?: boolean | number;
   primaryColorLevel?: ColorLevel;
   secondaryColorLevel?: ColorLevel;
   textureChance?: Chance;

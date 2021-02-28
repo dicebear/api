@@ -18,7 +18,7 @@ export type Gridy = {
   b?: string | "transparent";
   [k: string]: unknown;
 } & {
-  colorful?: boolean;
-  deterministic?: boolean;
+  colorful?: boolean | number;
+  deterministic?: boolean | number;
   [k: string]: unknown;
 };

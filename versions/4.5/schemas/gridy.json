@@ -8,10 +8,10 @@
       "type": "object",
       "properties": {
         "colorful": {
-          "type": "boolean"
+          "type": ["boolean", "number"]
         },
         "deterministic": {
-          "type": "boolean"
+          "type": ["boolean", "number"]
         }
       }
     }
