@@ -1,9 +1,11 @@
+import 'make-promises-safe';
 import v44 from '@dicebear/avatars-api-4.4';
 import v45 from '@dicebear/avatars-api-4.5';
-import 'make-promises-safe';
 import statsAction from './actions/stats';
 import fastify from 'fastify';
 import qs from 'qs';
+import serve from 'fastify-static';
+import path from 'path';
 
 const port = process.env.PORT || 3000;
 const app = fastify({
@@ -19,8 +21,12 @@ const app = fastify({
 });
 
 app.get('/stats.json', statsAction);
+app.register(serve, {
+  root: path.join(__dirname, 'public'),
+});
 app.register(v44, { prefix: '/4.4' });
 app.register(v45, { prefix: '/4.5' });
+app.register(v45);
 
 app.listen(port, '0.0.0.0', (err, address) => {
   if (err) {
