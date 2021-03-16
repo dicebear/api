@@ -79,7 +79,7 @@
           "$ref": "#/definitions/hairColor"
         },
         "clothes": {
-          "type": "string",
+          "type": "array",
           "items": {
             "type": "string",
             "enum": ["blazer", "sweater", "shirt", "hoodie", "overall"]
