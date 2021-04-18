@@ -18,10 +18,8 @@
     "@dicebear/avatars-initials-sprites": "~4.5.0",
     "@dicebear/avatars-jdenticon-sprites": "~4.5.0",
     "@dicebear/avatars-male-sprites": "~4.5.0",
-    "@types/sharp": "^0.27.1",
     "deepmerge": "^4.2.2",
-    "json-schema-to-typescript": "^10.1.3",
-    "sharp": "^0.27.1"
+    "json-schema-to-typescript": "^10.1.3"
   },
   "peerDependencies": {
     "fastify": "^3.12.0"

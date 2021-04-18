@@ -11,7 +11,7 @@
     },
     "format": {
       "type": "string",
-      "enum": ["svg", "png"]
+      "enum": ["svg"]
     }
   },
   "required": ["prefix", "format"]

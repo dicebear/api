@@ -6,8 +6,8 @@
  */
 
 export interface Params {
-  prefix: "api" | "v2";
+  prefix: 'api' | 'v2';
   seed?: string;
-  format: "svg" | "png";
+  format: 'svg';
   [k: string]: unknown;
 }

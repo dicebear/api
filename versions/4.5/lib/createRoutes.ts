@@ -21,7 +21,7 @@ export default function createRoutes<O, Q extends O & Options & { options?: O & 
 
     // Route with seed
     app.get<{ Querystring: Q; Params: Params }>(
-      `/:prefix/${name}/:seed(^.*(?=\.(svg|png))).:format`,
+      `/:prefix/${name}/:seed(^.*(?=\.(svg))).:format`,
       { schema: { querystring: schema, params: paramsSchema } },
       async (request, reply) =>
         createAvatar(reply, style, request.params.seed ?? '', request.query, request.params.format)
