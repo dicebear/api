@@ -22,16 +22,16 @@ import identiconSchema from './schemas/identicon.json';
 import initialsSchema from './schemas/initials.json';
 import jdenticonSchema from './schemas/jdenticon.json';
 
-import coreSchema from './schemas/core.json';
-import createRoutes from './lib/createRoutes';
+import createRoutes from './utils/createRoutes';
 
 const api: FastifyPluginCallback = async (app) => {
-  app.addSchema(coreSchema);
-
   app.addHook<{ Querystring: any }>('preValidation', async (request) => {
     if (request.query && request.query.options) {
       request.query = deepmerge(request.query.options, request.query);
     }
+
+    delete request.query.base64;
+    delete request.query.dataUri;
   });
 
   app.register(createRoutes('male', maleStyles, maleSchema as JSONSchema7));

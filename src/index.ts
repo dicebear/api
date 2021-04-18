@@ -1,6 +1,7 @@
 import 'make-promises-safe';
 import v44 from '@dicebear/avatars-api-4.4';
 import v45 from '@dicebear/avatars-api-4.5';
+import v46 from '@dicebear/avatars-api-4.6';
 import statsAction from './actions/stats';
 import fastify from 'fastify';
 import qs from 'qs';
@@ -15,7 +16,7 @@ const app = fastify({
     customOptions: {
       coerceTypes: 'array',
       removeAdditional: true,
-      useDefaults: true,
+      useDefaults: false,
     },
   },
 });
@@ -26,7 +27,8 @@ app.register(serve, {
 });
 app.register(v44, { prefix: '/4.4' });
 app.register(v45, { prefix: '/4.5' });
-app.register(v45);
+app.register(v46, { prefix: '/4.6' });
+app.register(v46);
 
 app.listen(port, '0.0.0.0', (err, address) => {
   if (err) {

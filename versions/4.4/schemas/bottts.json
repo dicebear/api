@@ -11,62 +11,54 @@
       "maximum": 100
     }
   },
-  "allOf": [
-    {
-      "$ref": "core.json#"
-    },
-    {
-      "type": "object",
-      "properties": {
-        "colors": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "amber",
-              "blue",
-              "blueGrey",
-              "brown",
-              "cyan",
-              "deepOrange",
-              "deepPurple",
-              "green",
-              "grey",
-              "indigo",
-              "lightBlue",
-              "lightGreen",
-              "lime",
-              "orange",
-              "pink",
-              "purple",
-              "red",
-              "teal",
-              "yellow"
-            ]
-          }
-        },
-        "colorful": {
-          "type": ["boolean", "number"]
-        },
-        "primaryColorLevel": {
-          "$ref": "#/definitions/colorLevel"
-        },
-        "secondaryColorLevel": {
-          "$ref": "#/definitions/colorLevel"
-        },
-        "textureChance": {
-          "$ref": "#/definitions/chance"
-        },
-        "mouthChance": {
-          "$ref": "#/definitions/chance"
-        },
-        "sidesChance": {
-          "$ref": "#/definitions/chance"
-        },
-        "topChange": {
-          "$ref": "#/definitions/chance"
-        }
+  "properties": {
+    "colors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "amber",
+          "blue",
+          "blueGrey",
+          "brown",
+          "cyan",
+          "deepOrange",
+          "deepPurple",
+          "green",
+          "grey",
+          "indigo",
+          "lightBlue",
+          "lightGreen",
+          "lime",
+          "orange",
+          "pink",
+          "purple",
+          "red",
+          "teal",
+          "yellow"
+        ]
       }
+    },
+    "colorful": {
+      "type": ["boolean", "number"]
+    },
+    "primaryColorLevel": {
+      "$ref": "#/definitions/colorLevel"
+    },
+    "secondaryColorLevel": {
+      "$ref": "#/definitions/colorLevel"
+    },
+    "textureChance": {
+      "$ref": "#/definitions/chance"
+    },
+    "mouthChance": {
+      "$ref": "#/definitions/chance"
+    },
+    "sidesChance": {
+      "$ref": "#/definitions/chance"
+    },
+    "topChange": {
+      "$ref": "#/definitions/chance"
     }
-  ]
+  }
 }
