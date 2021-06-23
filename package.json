@@ -17,6 +17,7 @@
   "dependencies": {
     "@dicebear/avatars-api-4.4": "*",
     "@dicebear/avatars-api-4.5": "*",
+    "@dicebear/avatars-api-4.6": "*",
     "@types/qs": "^6.9.5",
     "axios": "^0.21.1",
     "fastify": "^3.12.0",
