@@ -11,6 +11,11 @@
     call-me-maybe "^1.0.1"
     js-yaml "^3.13.1"
 
+"@dicebear/avatars-avataaars-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-avataaars-sprites/-/avatars-avataaars-sprites-4.7.0.tgz#b0059ce264bd24a60d14dc7ca07397ec0ab446af"
+  integrity sha512-eh1E3CE+B+noMowFGxUL42snA3MK4ApFr/B4Aphf8tpUC9uB/bSN1Hm1748rbBaB6OCVbncHCcIatkfwbEJY5A==
+
 "@dicebear/avatars-avataaars-sprites@~4.4.0":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-avataaars-sprites/-/avatars-avataaars-sprites-4.4.1.tgz#8f92b469140d59e71e1df63a243881c51cbef860"
@@ -27,6 +32,11 @@
   integrity sha512-mmbkNL8qXTBS3nPQwTDsllBntP+a3p3R5rkckFwn6jFG3Sj5/h1sRtsKY9mSHxnrXwgu4/7A9PovCjJIcM+y6g==
   dependencies:
     "@types/json-schema" "^7.0.7"
+
+"@dicebear/avatars-bottts-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-bottts-sprites/-/avatars-bottts-sprites-4.7.0.tgz#487b803feb4db6471357a6e8d9fe73b095459c6b"
+  integrity sha512-jaqaFo+hDK2aP2CF6+fJGC57eIWxv9RayuDLd5TFLBrY7UyMSJK7rTrk2XgmxAHdLuMasF8AuUNhwyFW1IEmxQ==
 
 "@dicebear/avatars-bottts-sprites@~4.4.0":
   version "4.4.1"
@@ -57,10 +67,22 @@
   dependencies:
     "@types/json-schema" "^7.0.7"
 
+"@dicebear/avatars-female-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-female-sprites/-/avatars-female-sprites-4.7.0.tgz#0fc6bafaeac87b5cb177e29c284236602e534860"
+  integrity sha512-HCHlQFgi+KmeQx3g1U6Fr31SSlX2sny6IrWsiN82v634s6qw+kMThTVBjKw/YouDBnpKSnq/zUFPw1iD0JNn7Q==
+
 "@dicebear/avatars-female-sprites@~4.4.0":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-female-sprites/-/avatars-female-sprites-4.4.1.tgz#ca1d28e0bae5d1fad319f23d93396a5c8fe427f1"
   integrity sha512-iTukUEiOuJFBzeUt6TIo+rMJD0VVjQN+ANubYxhkzO/d/d157Qk5w+xYGhDkiOO0BrhHiEExknDM2OCq7Axf7A==
+
+"@dicebear/avatars-gridy-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-gridy-sprites/-/avatars-gridy-sprites-4.7.0.tgz#e63c595c868b5b716ef366cb928780accdddd97c"
+  integrity sha512-W5mwsh4o1nZ4LiY6sbTwZk+Z2e0jMVOh27+8CnPP5NOwghLsx1t7WJThQcBVcb8DgIgi0E6ztpJ67YkJfHBCCQ==
+  dependencies:
+    gridy-avatars "^1.1.3"
 
 "@dicebear/avatars-gridy-sprites@~4.4.0":
   version "4.4.1"
@@ -83,6 +105,14 @@
   dependencies:
     "@types/json-schema" "^7.0.7"
     gridy-avatars "^1.1.3"
+
+"@dicebear/avatars-human-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-human-sprites/-/avatars-human-sprites-4.7.0.tgz#820579dec399778799f3b9156ecaf80b9ccfe409"
+  integrity sha512-JR8xIKeQs4/eAoBdOZjniXCovmqQNYiNV01EhP7AGBOcmR2qo3mYQRkoGxlX/VzuflVyHaokq6rZsqaYf1VnWw==
+  dependencies:
+    "@dicebear/avatars-female-sprites" "^4.7.0"
+    "@dicebear/avatars-male-sprites" "^4.7.0"
 
 "@dicebear/avatars-human-sprites@~4.4.0":
   version "4.4.1"
@@ -109,6 +139,11 @@
     "@dicebear/avatars-male-sprites" "^4.6.10"
     "@types/json-schema" "^7.0.7"
 
+"@dicebear/avatars-identicon-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-identicon-sprites/-/avatars-identicon-sprites-4.7.0.tgz#e3729cf4749b9f44dd8490611bb58b82f3ca01c2"
+  integrity sha512-BOPK8ZkpNmzk6X/FDx+PBxEGyUTnSapFAo37lr2qjYMG3QlaUaz9n8gpQ66GijPfg9lHjWujhZ3ovtPS5Jqa+Q==
+
 "@dicebear/avatars-identicon-sprites@~4.4.0":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-identicon-sprites/-/avatars-identicon-sprites-4.4.1.tgz#cb0429cbf5852898ebff4498fc6f084ebc0b74d1"
@@ -125,6 +160,13 @@
   integrity sha512-xRL2LjOXJgBEMZx0V4jA+tqJw+RvIz9p/f6vqYFi04r2Xf1oL3WaH9YouXvzxOP1wIv9smwoBCtEKX932KYyGQ==
   dependencies:
     "@types/json-schema" "^7.0.7"
+
+"@dicebear/avatars-initials-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-initials-sprites/-/avatars-initials-sprites-4.7.0.tgz#4959efd982665691b70d7b7662d3a798a47fa381"
+  integrity sha512-yamzf9sB11hH3jC4VbisOpf9TaGN715nSDvfHwYcpPSHM8cZ207ewHwYcdLj2slAh+noMnzj5OCd/rgFxWtKpw==
+  dependencies:
+    initials "^3.0.1"
 
 "@dicebear/avatars-initials-sprites@~4.4.0":
   version "4.4.1"
@@ -147,6 +189,13 @@
   dependencies:
     "@types/json-schema" "^7.0.7"
     initials "^3.0.1"
+
+"@dicebear/avatars-jdenticon-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-jdenticon-sprites/-/avatars-jdenticon-sprites-4.7.0.tgz#7b56de2f6b5b35874228eb56db32ae31a1d7d2ba"
+  integrity sha512-36pb0TavBOP6NbKxFBtkPwN8F5IKm3iiTz6ScfTISZrQOqrOVl7Aq9o/B6kOSBfHmtXeCZP1JiVQwrIjoXCUNg==
+  dependencies:
+    jdenticon "^2.1.1"
 
 "@dicebear/avatars-jdenticon-sprites@~4.4.0":
   version "4.4.1"
@@ -182,6 +231,13 @@
   dependencies:
     "@types/json-schema" "^7.0.7"
 
+"@dicebear/avatars-male-sprites@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars-male-sprites/-/avatars-male-sprites-4.7.0.tgz#969378533543937c9f78bc282323cee8b0f0375c"
+  integrity sha512-zT9H8V3ay+ZKmr/+ejRJTYjuLXsm84Fn8HS796M6mJwr4OCF+44DDjnHBoU9UHRS08Rtl0mWH7pI8w5nm9aYxw==
+  dependencies:
+    "@types/json-schema" "^7.0.7"
+
 "@dicebear/avatars-male-sprites@~4.4.0":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-male-sprites/-/avatars-male-sprites-4.4.1.tgz#78c775bd8c5f572139498e2dc402d7232c151231"
@@ -212,6 +268,36 @@
     "@types/json-schema" "^7.0.7"
     pure-color "^1.3.0"
     svgson "^5.2.1"
+
+"@dicebear/avatars@~4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars/-/avatars-4.7.0.tgz#bbebf6f2d9a596ee676d6b6e7ece4104b552e987"
+  integrity sha512-yE8KwRNZ3In1oVQwMUpN9FfWF1NNbhLgeFxYljIud0cAKiAR7yCGxGxV28lsIdF4egZa6BKLEcknQ7iMjtovjg==
+  dependencies:
+    "@types/json-schema" "^7.0.7"
+    pure-color "^1.3.0"
+    svgson "^5.2.1"
+
+"@dicebear/collection@~4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/collection/-/collection-4.7.0.tgz#d7f291d7d22f814971d599fb7a29256cd6ea8d1b"
+  integrity sha512-1tVHKyQZ5dXc9ZLryRYGVbi8eGnK7xLuXdMS5H7LloNDlOWgqQS5Doudp6kUlVtCqfulFWygzwmF/6wAanIqTA==
+  dependencies:
+    "@dicebear/avatars-avataaars-sprites" "^4.7.0"
+    "@dicebear/avatars-bottts-sprites" "^4.7.0"
+    "@dicebear/avatars-female-sprites" "^4.7.0"
+    "@dicebear/avatars-gridy-sprites" "^4.7.0"
+    "@dicebear/avatars-human-sprites" "^4.7.0"
+    "@dicebear/avatars-identicon-sprites" "^4.7.0"
+    "@dicebear/avatars-initials-sprites" "^4.7.0"
+    "@dicebear/avatars-jdenticon-sprites" "^4.7.0"
+    "@dicebear/avatars-male-sprites" "^4.7.0"
+    "@dicebear/micah" "^4.7.0"
+
+"@dicebear/micah@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@dicebear/micah/-/micah-4.7.0.tgz#d7d433fdf629567636ac80820eff0ca4689483b8"
+  integrity sha512-dcWuRxnXsJeORGHBIB6EA3V5taBridQiB4z1Dx0QcvJjSeV7Wxl5C3gApnS3mUovMxvxwLiP7RU9RNhC40E1HQ==
 
 "@dicebear/micah@~4.6.10":
   version "4.6.10"
