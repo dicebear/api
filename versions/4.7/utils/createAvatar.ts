@@ -8,7 +8,6 @@ export default async function createAvatar<O extends {}>(
   options: StyleOptions<O>,
   format: 'svg'
 ) {
-  console.log({ options });
   let svg = coreCreateAvatar(style, { ...options, seed });
 
   reply.header('Cache-Control', `max-age=${60 * 60 * 24 * 365}`);

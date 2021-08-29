@@ -1,7 +1,7 @@
 import { Style, createAvatar as coreCreateAvatar, StyleOptions } from '@dicebear/avatars';
 import { FastifyReply } from 'fastify';
 
-export default async function createAvatar<O extends {}>(
+export async function createAvatar<O extends {}>(
   reply: FastifyReply,
   style: Style<O>,
   seed: string,

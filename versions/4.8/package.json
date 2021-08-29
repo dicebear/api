@@ -1,0 +1,21 @@
+{
+  "name": "@dicebear/avatars-api-4.8",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "author": "Florian Körner <contact@florian-koerner.com>",
+  "scripts": {
+    "compile-schemas": "cd schemas && json2ts -i . -o ../types"
+  },
+  "dependencies": {
+    "@dicebear/avatars": "~4.8.1",
+    "@dicebear/collection": "~4.8.1",
+    "@types/json-schema-merge-allof": "^0.6.0",
+    "deepmerge": "^4.2.2",
+    "json-schema-merge-allof": "^0.8.1",
+    "json-schema-to-typescript": "^10.1.3"
+  },
+  "peerDependencies": {
+    "fastify": "^3.12.0"
+  }
+}
