@@ -8,8 +8,8 @@
     "compile-schemas": "cd schemas && json2ts -i . -o ../types"
   },
   "dependencies": {
-    "@dicebear/avatars": "~4.8.4",
-    "@dicebear/collection": "~4.8.4",
+    "@dicebear/avatars": "~4.8.5",
+    "@dicebear/collection": "~4.8.5",
     "@types/json-schema-merge-allof": "^0.6.0",
     "deepmerge": "^4.2.2",
     "json-schema-merge-allof": "^0.8.1",
