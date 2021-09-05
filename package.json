@@ -20,6 +20,7 @@
     "@dicebear/avatars-api-4.6": "*",
     "@dicebear/avatars-api-4.7": "*",
     "@dicebear/avatars-api-4.8": "*",
+    "@dicebear/avatars-api-4.9": "*",
     "@types/qs": "^6.9.5",
     "axios": "^0.21.1",
     "fastify": "^3.12.0",
