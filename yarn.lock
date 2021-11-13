@@ -421,10 +421,10 @@
   resolved "https://registry.yarnpkg.com/@dicebear/avatars-male-sprites/-/avatars-male-sprites-4.4.1.tgz#78c775bd8c5f572139498e2dc402d7232c151231"
   integrity sha512-Esx3auRQroD4uOXYmKjqBUO1Tqv2XN/KUMPvGvyg0Vyg5+GDBQnYzB6lCWoUD7HMj2cdtE812U+1QtksMtDLYg==
 
-"@dicebear/avatars@~4.10.0":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@dicebear/avatars/-/avatars-4.10.0.tgz#73f36f79a9f5da8bdf99e29f001b90ac586adf23"
-  integrity sha512-hODs31R1STbeLyX+aj/icFhrdYHM7xeUJp0zaW75V9l9/H31f3S+pDSI33H/s7Q3daFTd+qR+LbQZRKTI/MOsQ==
+"@dicebear/avatars@~4.10.1":
+  version "4.10.1"
+  resolved "https://registry.yarnpkg.com/@dicebear/avatars/-/avatars-4.10.1.tgz#0d62040ab6c01348418d785eac70e0ab3c5a88ae"
+  integrity sha512-c9Etj+wkxERmt8puCBR/Q1Yor9FQxUgEXFchJx8eYwX0Pt/qvNj/D5mK7EddRj5tfslWiGELbYHd/0r8ZfJu+A==
   dependencies:
     "@types/json-schema" "^7.0.7"
     pure-color "^1.3.0"
