@@ -6,7 +6,7 @@ on:
     - cron: '0 0 * * *'
   push:
     branches:
-      - 'main'
+      - '4.x'
 
 
 env:

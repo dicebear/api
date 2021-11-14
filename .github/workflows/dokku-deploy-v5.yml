@@ -1,14 +1,14 @@
 ---
-name: 'Deploy to Prod'
+name: 'Deploy to Prod (v5)'
 
 # yamllint disable-line rule:truthy
 on:
   push:
     branches:
-      - main
+      - '5.x'
 
 env:
-  DOKKU_REMOTE_URL: 'ssh://dokku@de01.net.dicebear.com:22/api'
+  DOKKU_REMOTE_URL: 'ssh://dokku@de02.api.dicebear.com:22/app'
 
 jobs:
   deploy:
