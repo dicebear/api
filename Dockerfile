@@ -5,6 +5,6 @@ EXPOSE 3000
 WORKDIR /dicebear-api
 
 COPY . .
-RUN yarn install
+RUN npm install
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

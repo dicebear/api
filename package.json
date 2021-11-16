@@ -1,38 +1,37 @@
 {
-  "name": "@dicebear/avatars-api",
+  "name": "@dicebear/api",
   "private": true,
   "license": "MIT",
   "author": "Florian Körner <contact@florian-koerner.com>",
-  "workspaces": {
-    "packages": [
-      "versions/*"
-    ],
-    "nohoist": [
-      "**/@dicebear/avatars*"
-    ]
-  },
   "scripts": {
     "start": "ts-node src/index.ts"
   },
   "dependencies": {
-    "@dicebear/avatars-api-4.4": "*",
-    "@dicebear/avatars-api-4.5": "*",
-    "@dicebear/avatars-api-4.6": "*",
-    "@dicebear/avatars-api-4.7": "*",
-    "@dicebear/avatars-api-4.8": "*",
-    "@dicebear/avatars-api-4.9": "*",
-    "@dicebear/avatars-api-4.10": "*",
-    "@types/qs": "^6.9.5",
-    "axios": "^0.21.2",
-    "fastify": "^3.12.0",
-    "fastify-static": "^4.4.1",
-    "make-promises-safe": "^5.1.0",
-    "qs": "^6.9.6",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.1.2"
+    "@dicebear/collection-4.10": "npm:@dicebear/collection@4.10",
+    "@dicebear/collection-4.7": "npm:@dicebear/collection@4.7",
+    "@dicebear/collection-4.8": "npm:@dicebear/collection@4.8",
+    "@dicebear/collection-4.9": "npm:@dicebear/collection@4.9",
+    "@dicebear/collection-5.0": "npm:@dicebear/collection@5.0.0-alpha.5",
+    "@dicebear/core-4.10": "npm:@dicebear/avatars@4.10",
+    "@dicebear/core-4.7": "npm:@dicebear/avatars@4.7",
+    "@dicebear/core-4.8": "npm:@dicebear/avatars@4.8",
+    "@dicebear/core-4.9": "npm:@dicebear/avatars@4.9",
+    "@dicebear/core-5.0": "npm:@dicebear/core@5.0.0-alpha.5",
+    "@resvg/resvg-js": "^1.1.0",
+    "@tsconfig/node16": "^1.0.2",
+    "@types/json-schema": "^7.0.9",
+    "@types/json-schema-merge-allof": "^0.6.1",
+    "@types/node": "^16.11.7",
+    "axios": "^0.24.0",
+    "change-case": "^4.1.2",
+    "fastify": "^3.24.0",
+    "fastify-swagger": "^4.12.6",
+    "json-schema-merge-allof": "^0.8.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
   },
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "prettier": "^2.4.1"
   },
   "engines": {
     "node": "16.x"

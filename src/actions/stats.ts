@@ -1,25 +1,25 @@
 import axios from 'axios';
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
 
-const handler = async (request: FastifyRequest, reply: FastifyReply) => {
-  reply
-    .headers({
-      'Cache-Control': `max-age=${60 * 60}`,
-    })
-    .send({ data: await github() });
+const plugin: FastifyPluginCallback = async (app) => {
+  app.get('/stats.json', async (request: FastifyRequest, reply: FastifyReply) => {
+    const response = await axios.get('https://api.github.com/repos/dicebear/dicebear', {
+      headers: {
+        Accept: 'application/vnd.github.v3+json',
+        'User-Agent': 'DiceBear',
+      },
+    });
+
+    const data = {
+      stars: response.data.stargazers_count,
+    };
+
+    reply
+      .headers({
+        'Cache-Control': `max-age=${60 * 60}`,
+      })
+      .send({ data: data });
+  });
 };
 
-export default handler;
-
-async function github() {
-  let response = await axios.get('https://api.github.com/repos/dicebear/avatars', {
-    headers: {
-      Accept: 'application/vnd.github.v3+json',
-      'User-Agent': 'Dicebear-Avatars',
-    },
-  });
-
-  return {
-    stars: response.data.stargazers_count,
-  };
-}
+export default plugin;

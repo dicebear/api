@@ -1,21 +1,11 @@
-import 'make-promises-safe';
-import v44 from '@dicebear/avatars-api-4.4';
-import v45 from '@dicebear/avatars-api-4.5';
-import v46 from '@dicebear/avatars-api-4.6';
-import v47 from '@dicebear/avatars-api-4.7';
-import v48 from '@dicebear/avatars-api-4.8';
-import v49 from '@dicebear/avatars-api-4.9';
-import v410 from '@dicebear/avatars-api-4.10';
-import statsAction from './actions/stats';
 import fastify from 'fastify';
-import qs from 'qs';
-import serve from 'fastify-static';
-import path from 'path';
+import swagger from 'fastify-swagger';
+
+import routes from './routes';
 
 const port = process.env.PORT || 3000;
 const app = fastify({
   logger: true,
-  querystringParser: (str) => qs.parse(str),
   ajv: {
     customOptions: {
       coerceTypes: 'array',
@@ -25,24 +15,39 @@ const app = fastify({
   },
 });
 
-app.get('/stats.json', statsAction);
-app.register(serve, {
-  root: path.join(__dirname, 'public'),
-});
-app.register(v44, { prefix: '/4.4' });
-app.register(v45, { prefix: '/4.5' });
-app.register(v46, { prefix: '/4.6' });
-app.register(v47, { prefix: '/4.7' });
-app.register(v48, { prefix: '/4.8' });
-app.register(v49, { prefix: '/4.9' });
-app.register(v410, { prefix: '/4.10' });
-app.register(v410);
+const start = async () => {
+  app.register(swagger, {
+    routePrefix: '/docs',
+    swagger: {
+      info: {
+        title: 'DiceBear API',
+        description:
+          '[Privacy Policy](https://avatars.dicebear.com/legal/privacy-policy) | [Legal Notice / Impressum](https://avatars.dicebear.com/legal/legal-notice)',
+        version: '5.0.0',
+      },
+      produces: ['image/svg+xml', 'image/png'],
+      externalDocs: {
+        url: 'https://dicebear.com',
+        description: 'Find more info here',
+      },
+      schemes: ['https'],
+    },
+    uiConfig: {},
+    exposeRoute: true,
+  });
 
-app.listen(port, '0.0.0.0', (err, address) => {
-  if (err) {
-    app.log.error(err.message);
+  await app.register(routes);
+
+  app.ready((err) => {
+    if (err) throw err;
+    app.swagger();
+  });
+
+  try {
+    await app.listen(port, '0.0.0.0');
+  } catch (err) {
+    app.log.error(err);
     process.exit(1);
   }
-
-  app.log.info(`server listening on ${address}`);
-});
+};
+start();
