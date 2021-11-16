@@ -1,11 +1,16 @@
 import fastify from 'fastify';
 import swagger from 'fastify-swagger';
+import qs from 'query-string';
 
 import routes from './routes';
 
 const port = process.env.PORT || 3000;
 const app = fastify({
   logger: true,
+  querystringParser: (str) =>
+    qs.parse(str, {
+      arrayFormat: 'comma',
+    }),
   ajv: {
     customOptions: {
       coerceTypes: 'array',
@@ -18,6 +23,7 @@ const app = fastify({
 const start = async () => {
   app.register(swagger, {
     routePrefix: '/docs',
+    hideUntagged: true,
     swagger: {
       info: {
         title: 'DiceBear API',
@@ -30,9 +36,10 @@ const start = async () => {
         url: 'https://dicebear.com',
         description: 'Find more info here',
       },
-      schemes: ['https'],
     },
-    uiConfig: {},
+    uiConfig: {
+      docExpansion: 'none',
+    },
     exposeRoute: true,
   });
 

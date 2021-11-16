@@ -27,6 +27,7 @@
     "fastify": "^3.24.0",
     "fastify-swagger": "^4.12.6",
     "json-schema-merge-allof": "^0.8.1",
+    "query-string": "^7.0.1",
     "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   },
