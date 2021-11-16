@@ -5,8 +5,6 @@ export function adjustPngOptions(options: Record<string, any>) {
   const maxSize = parseInt(process.env.MAX_PNG_SIZE ?? '0') || 128;
   const validatedSize = size < minSize || size > maxSize ? maxSize : size;
 
-console.log({size, minSize, maxSize, validatedSize});
-
   delete options['size'];
   delete options['w'];
   delete options['width'];
