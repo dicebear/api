@@ -9,6 +9,7 @@ on:
 
 env:
   DOKKU_REMOTE_URL: 'ssh://dokku@de02.api.dicebear.com:22/app'
+  CDN_PULL_ZONE: 147563
 
 jobs:
   deploy:
