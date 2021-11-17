@@ -27,7 +27,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Purge CDN Cache
-      - run: >
+        run: >
           curl --request POST \
             --url https://api.bunny.net/pullzone/${{ env.CDN_PULL_ZONE }}/purgeCache \
             --header 'AccessKey: ${{ secrets.CDN_ACCESS_KEY }}'
