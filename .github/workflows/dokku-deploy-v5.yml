@@ -8,7 +8,7 @@ on:
       - '5.x'
 
 env:
-  DOKKU_REMOTE_URL: 'ssh://dokku@de02.api.dicebear.com:22/app'
+  DOKKU_REMOTE_URL: 'ssh://dokku@de03.api.dicebear.com:22/v5'
   CDN_PULL_ZONE: 147563
 
 jobs:
