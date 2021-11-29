@@ -5,7 +5,7 @@ name: 'Deploy to Pull Server'
 on:
   push:
     branches:
-      - '5.x'
+      - 'main'
 
 env:
   DOKKU_REMOTE_URL: 'ssh://dokku@pull.api.dicebear.com:22/app'

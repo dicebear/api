@@ -6,8 +6,7 @@ on:
     - cron: '0 0 * * *'
   push:
     branches:
-      - '4.x'
-
+      - 'main'
 
 env:
   REGISTRY: ghcr.io
