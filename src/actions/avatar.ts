@@ -1,7 +1,7 @@
 import { renderAsync } from '@resvg/resvg-js';
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
-import mergeAllOf from 'json-schema-merge-allof';
+import * as mergeAllOf from 'json-schema-merge-allof';
 import { paramCase } from 'param-case';
 import config from '../../config';
 import { AvatarRouteParams, Version } from '../types';

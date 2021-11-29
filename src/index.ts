@@ -1,6 +1,6 @@
 import fastify from 'fastify';
-import qs from 'qs';
-import deepmerge from 'deepmerge';
+import * as qs from 'qs';
+import * as deepmerge from 'deepmerge';
 
 import config from '../config';
 import routes from './routes';
