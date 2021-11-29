@@ -17,7 +17,7 @@ const routes = [
 ];
 
 const createAvatar = (style: any, options: any) => {
-  let avatars = new Avatars(style);
+  let avatars = new Avatars(style.create);
 
   return avatars.create(options.seed, options);
 };
