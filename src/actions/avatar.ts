@@ -1,4 +1,4 @@
-import { renderAsync } from '@resvg/resvg-js';
+import { renderAsync, ResvgRenderOptions } from '@resvg/resvg-js';
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
 import * as mergeAllOf from 'json-schema-merge-allof';
@@ -49,7 +49,7 @@ const plugin: FastifyPluginCallback<Options> = async (
 
     // Allow numeric values for boolean fields
     queryStringSchema = JSON.parse(
-      JSON.stringify(schema).replace(
+      JSON.stringify(queryStringSchema).replace(
         /"type":"boolean"/g,
         '"type":["boolean","number"]'
       )
@@ -98,15 +98,22 @@ const plugin: FastifyPluginCallback<Options> = async (
               return svg;
 
             case 'png':
-              const png = await renderAsync(svg, {
-                font: {
-                  loadSystemFonts: false,
-                },
-              });
-
               reply.header('Content-Type', 'image/png');
 
-              return png;
+              const options: ResvgRenderOptions = {};
+
+              if (styleName === 'initials') {
+                options.font = {
+                  loadSystemFonts: false,
+                  defaultFontFamily: 'Inter',
+                  fontFiles: [
+                    require.resolve('../fonts/inter/inter-regular.otf'),
+                    require.resolve('../fonts/inter/inter-bold.otf'),
+                  ],
+                };
+              }
+
+              return await renderAsync(svg, options);
           }
         }
       );
