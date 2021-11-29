@@ -29,6 +29,12 @@ export type Config = {
   port: string;
   address: string;
   versions: Array<Promise<Version>>;
+  png: {
+    size: {
+      max: string;
+      min: string;
+    };
+  };
   cacheControl: {
     stats: string; // 1 hour
     avatar: string; // 1 year

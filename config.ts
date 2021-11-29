@@ -3,6 +3,12 @@ import { Config, Version } from './src/types';
 const config: Config = {
   port: process.env.PORT ?? '3000',
   address: process.env.ADDRESS ?? '0.0.0.0',
+  png: {
+    size: {
+      min: process.env.PNG_SIZE_MIN ?? '1',
+      max: process.env.PNG_SIZE_MAX ?? '256',
+    },
+  },
   versions: [
     process.env.DISABLE_VERSION_4_4 ? undefined : import('@dicebear/api-4.4'),
     process.env.DISABLE_VERSION_4_5 ? undefined : import('@dicebear/api-4.5'),
