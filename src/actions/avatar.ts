@@ -3,26 +3,19 @@ import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
 import mergeAllOf from 'json-schema-merge-allof';
 import { paramCase } from 'param-case';
+import config from '../../config';
+import { AvatarRouteParams, Version } from '../types';
 import { adjustPngOptions } from '../utils/adjustPngOptions';
 
-type Options = {
-  alias: string;
-  core: {
-    schema: JSONSchema7;
-    createAvatar: (style: unknown, options: unknown) => string;
-  };
-  collection: Record<
-    string,
-    {
-      schema: JSONSchema7;
-    }
-  >;
-};
+type Options = Version;
 
 const paramsSchema: JSONSchema7 = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   type: 'object',
   properties: {
+    seed: {
+      type: 'string',
+    },
     format: {
       type: 'string',
       enum: ['svg', 'png'],
@@ -40,63 +33,84 @@ const propertiesOverrideSchema: JSONSchema7 = {
   },
 };
 
-const plugin: FastifyPluginCallback<Options> = async (app, { core, collection, alias }) => {
-  for (const key in collection) {
-    if (false === collection.hasOwnProperty(key)) {
-      continue;
-    }
-
-    const style = collection[key];
-
-    let schema = mergeAllOf(
+const plugin: FastifyPluginCallback<Options> = async (
+  app,
+  { createAvatar, routes, schema, styles }
+) => {
+  for (const [styleName, style] of Object.entries(styles)) {
+    // Combine core schema with style schema.
+    let queryStringSchema = mergeAllOf(
       {
-        allOf: [core.schema, style.schema, propertiesOverrideSchema],
+        allOf: [schema, style.schema, propertiesOverrideSchema],
         additionalItems: true,
       },
       { ignoreAdditionalProperties: true }
     );
 
-    app.get<{ Params: { format: 'svg' | 'png' } }>(
-      `/${paramCase(key)}/:format`,
-      {
-        schema: { querystring: schema, params: paramsSchema, tags: [`v${alias}`] },
-      },
-      async (request, reply) => {
-        let options: any = request.query;
-        const format = request.params.format;
-
-        // Validate Size for PNG Format
-        if (format === 'png') {
-          options = adjustPngOptions(options);
-        }
-
-        // Define default seed
-        options['seed'] = options['seed'] ?? '';
-
-        // Create avatar
-        const svg = core.createAvatar(style, options);
-
-        reply.header('Cache-Control', `max-age=${60 * 60 * 24 * 365}`);
-
-        switch (format) {
-          case 'svg':
-            reply.header('Content-Type', 'image/svg+xml');
-
-            return svg;
-
-          case 'png':
-            const png = await renderAsync(svg, {
-              font: {
-                loadSystemFonts: key === 'identicon',
-              },
-            });
-
-            reply.header('Content-Type', 'image/png');
-
-            return png;
-        }
-      }
+    // Allow numeric values for boolean fields
+    queryStringSchema = JSON.parse(
+      JSON.stringify(schema).replace(
+        /"type":"boolean"/g,
+        '"type":["boolean","number"]'
+      )
     );
+
+    // Create handler for all routes
+    for (const route of routes) {
+      // Replace ':style' in Route with style name.
+      const parsedRoute = route.replace(':style', paramCase(styleName));
+
+      if (parsedRoute === route) {
+        throw new Error(`Missing ":style" placeholder in Route "${route}"`);
+      }
+
+      // Create GET handler
+      app.get<{ Params: AvatarRouteParams }>(
+        parsedRoute,
+        {
+          schema: { querystring: queryStringSchema, params: paramsSchema },
+        },
+        async (request, reply) => {
+          let options: any = request.query;
+
+          const format = request.params.format ?? 'svg';
+
+          // Validate Size for PNG Format
+          if (format === 'png') {
+            options = adjustPngOptions(options);
+          }
+
+          // Define default seed
+          options['seed'] = request.params.seed ?? options['seed'] ?? '';
+
+          // Create avatar
+          const svg = createAvatar(style, options);
+
+          reply.header(
+            'Cache-Control',
+            `max-age=${config.cacheControl.avatar}`
+          );
+
+          switch (format) {
+            case 'svg':
+              reply.header('Content-Type', 'image/svg+xml');
+
+              return svg;
+
+            case 'png':
+              const png = await renderAsync(svg, {
+                font: {
+                  loadSystemFonts: false,
+                },
+              });
+
+              reply.header('Content-Type', 'image/png');
+
+              return png;
+          }
+        }
+      );
+    }
   }
 };
 

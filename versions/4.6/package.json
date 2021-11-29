@@ -1,0 +1,19 @@
+{
+  "name": "@dicebear/api-4.6",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@dicebear/avatars": "~4.6.0",
+    "@dicebear/avatars-avataaars-sprites": "~4.6.0",
+    "@dicebear/avatars-bottts-sprites": "~4.6.0",
+    "@dicebear/avatars-female-sprites": "~4.6.0",
+    "@dicebear/avatars-gridy-sprites": "~4.6.0",
+    "@dicebear/avatars-human-sprites": "~4.6.0",
+    "@dicebear/avatars-identicon-sprites": "~4.6.0",
+    "@dicebear/avatars-initials-sprites": "~4.6.0",
+    "@dicebear/avatars-jdenticon-sprites": "~4.6.0",
+    "@dicebear/avatars-male-sprites": "~4.6.0",
+    "@dicebear/micah": "~4.6.10"
+  },
+  "private": true
+}

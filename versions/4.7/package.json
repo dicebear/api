@@ -1,0 +1,10 @@
+{
+  "name": "@dicebear/api-4.7",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "dependencies": {
+    "@dicebear/avatars": "~4.7.0",
+    "@dicebear/collection": "~4.7.0"
+  },
+  "private": true
+}
