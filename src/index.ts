@@ -7,7 +7,7 @@ import routes from './routes';
 
 const app = fastify({
   logger: true,
-  querystringParser: (str) => qs.parse(str),
+  querystringParser: (str) => qs.parse(str, { comma: true }),
   ajv: {
     customOptions: {
       coerceTypes: 'array',
