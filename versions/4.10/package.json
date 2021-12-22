@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
-    "@dicebear/avatars": "~4.10.0",
-    "@dicebear/collection": "~4.10.0"
+    "@dicebear/avatars": "~4.10.2",
+    "@dicebear/collection": "~4.10.2"
   },
   "private": true
 }
