@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.ts",
   "dependencies": {
-    "@dicebear/core": "5.0.0-alpha.10",
-    "@dicebear/collection": "5.0.0-alpha.10"
+    "@dicebear/core": "5.0.0-alpha.15",
+    "@dicebear/collection": "5.0.0-alpha.15"
   },
   "private": true
 }
