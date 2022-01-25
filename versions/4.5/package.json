@@ -2,6 +2,7 @@
   "name": "@dicebear/api-4.5",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "dependencies": {
     "@dicebear/avatars": "~4.5.0",
     "@dicebear/avatars-avataaars-sprites": "~4.5.0",

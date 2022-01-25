@@ -1,4 +1,4 @@
-import config from '../../config';
+import config from '../../config.js';
 
 export function adjustPngOptions(options: Record<string, any>) {
   // Validate Size for PNG Format

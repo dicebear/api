@@ -8,15 +8,15 @@ import initialsStyle from '@dicebear/avatars-initials-sprites';
 import jdenticonStyle from '@dicebear/avatars-jdenticon-sprites';
 import maleStyle from '@dicebear/avatars-male-sprites';
 
-import avataaarsSchema from './schemas/avataaars';
-import botttsSchema from './schemas/bottts';
-import femaleSchema from './schemas/female';
-import gridySchema from './schemas/gridy';
-import humanSchema from './schemas/human';
-import identiconSchema from './schemas/identicon';
-import initialsSchema from './schemas/initials';
-import jdenticonSchema from './schemas/jdenticon';
-import maleSchema from './schemas/male';
+import avataaarsSchema from './schemas/avataaars.js';
+import botttsSchema from './schemas/bottts.js';
+import femaleSchema from './schemas/female.js';
+import gridySchema from './schemas/gridy.js';
+import humanSchema from './schemas/human.js';
+import identiconSchema from './schemas/identicon.js';
+import initialsSchema from './schemas/initials.js';
+import jdenticonSchema from './schemas/jdenticon.js';
+import maleSchema from './schemas/male.js';
 
 export const avataaars = {
   create: avataaarsStyle,

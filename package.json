@@ -3,8 +3,9 @@
   "private": true,
   "license": "MIT",
   "author": "Florian Körner <contact@florian-koerner.com>",
+  "type": "module",
   "scripts": {
-    "start": "ts-node src/index.ts"
+    "start": "node --loader ts-node/esm src/index.ts"
   },
   "dependencies": {
     "@dicebear/api-4.10": "file:./versions/4.10",

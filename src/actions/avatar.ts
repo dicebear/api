@@ -1,11 +1,13 @@
 import { renderAsync, ResvgRenderOptions } from '@resvg/resvg-js';
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
-import * as mergeAllOf from 'json-schema-merge-allof';
+
+// @ts-ignore
+import mergeAllOf from 'json-schema-merge-allof';
 import { paramCase } from 'param-case';
-import config from '../../config';
-import { AvatarRouteParams, Version } from '../types';
-import { adjustPngOptions } from '../utils/adjustPngOptions';
+import config from '../../config.js';
+import { AvatarRouteParams, Version } from '../types.js';
+import { adjustPngOptions } from '../utils/adjustPngOptions.js';
 
 type Options = Version;
 
@@ -38,6 +40,11 @@ const plugin: FastifyPluginCallback<Options> = async (
   { createAvatar, routes, schema, styles }
 ) => {
   for (const [styleName, style] of Object.entries(styles)) {
+    // Skip private values
+    if (styleName[0] === '_' || styleName === 'default') {
+      continue;
+    }
+
     // Combine core schema with style schema.
     let queryStringSchema = mergeAllOf(
       {

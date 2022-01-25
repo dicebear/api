@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
-import config from '../../config';
+import config from '../../config.js';
 
 const plugin: FastifyPluginCallback = async (app) => {
   app.get(

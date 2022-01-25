@@ -2,6 +2,7 @@
   "name": "@dicebear/api-4.9",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "dependencies": {
     "@dicebear/avatars": "~4.9.0",
     "@dicebear/collection": "~4.9.0"

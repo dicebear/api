@@ -2,8 +2,8 @@ import fastify from 'fastify';
 import * as qs from 'qs';
 import * as deepmerge from 'deepmerge';
 
-import config from '../config';
-import routes from './routes';
+import config from '../config.js';
+import routes from './routes.js';
 
 const app = fastify({
   logger: true,

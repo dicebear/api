@@ -1,8 +1,8 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import stats from './actions/stats';
-import avatar from './actions/avatar';
-import config from '../config';
+import stats from './actions/stats.js';
+import avatar from './actions/avatar.js';
+import config from '../config.js';
 
 const plugin: FastifyPluginCallback = async (app) => {
   await app.register(stats);

@@ -1,5 +1,5 @@
 import { createAvatar, schema } from '@dicebear/avatars';
-import * as styles from './collection';
+import * as styles from './collection.js';
 
 const routes = [
   // Legacy API Routes
