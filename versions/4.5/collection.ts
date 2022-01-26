@@ -19,46 +19,55 @@ import jdenticonSchema from './schemas/jdenticon.js';
 import maleSchema from './schemas/male.js';
 
 export const avataaars = {
-  create: avataaarsStyle,
+  // @ts-ignore
+  create: avataaarsStyle.default,
   schema: avataaarsSchema,
 };
 
 export const bottts = {
-  create: botttsStyle,
+  // @ts-ignore
+  create: botttsStyle.default,
   schema: botttsSchema,
 };
 
 export const female = {
-  create: femaleStyle,
+  // @ts-ignore
+  create: femaleStyle.default,
   schema: femaleSchema,
 };
 
 export const gridy = {
-  create: gridyStyle,
+  // @ts-ignore
+  create: gridyStyle.default,
   schema: gridySchema,
 };
 
 export const human = {
-  create: humanStyle,
+  // @ts-ignore
+  create: humanStyle.default,
   schema: humanSchema,
 };
 
 export const identicon = {
-  create: identiconStyle,
+  // @ts-ignore
+  create: identiconStyle.default,
   schema: identiconSchema,
 };
 
 export const initials = {
-  create: initialsStyle,
+  // @ts-ignore
+  create: initialsStyle.default,
   schema: initialsSchema,
 };
 
 export const jdenticon = {
-  create: jdenticonStyle,
+  // @ts-ignore
+  create: jdenticonStyle.default,
   schema: jdenticonSchema,
 };
 
 export const male = {
-  create: maleStyle,
+  // @ts-ignore
+  create: maleStyle.default,
   schema: maleSchema,
 };

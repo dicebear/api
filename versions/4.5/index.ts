@@ -1,5 +1,4 @@
 import Avatars from '@dicebear/avatars';
-
 import * as styles from './collection.js';
 import schema from './schemas/core.js';
 
@@ -17,7 +16,8 @@ const routes = [
 ];
 
 const createAvatar = (style: any, options: any) => {
-  let avatars = new Avatars(style.create);
+  // @ts-ignore
+  let avatars = new Avatars.default(style.create);
 
   return avatars.create(options.seed, options);
 };
