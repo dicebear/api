@@ -28,6 +28,7 @@ export type Version = {
 export type Config = {
   port: string;
   address: string;
+  logger: boolean;
   versions: Array<Promise<Version>>;
   png: {
     size: {

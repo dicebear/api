@@ -3,6 +3,7 @@ import { Config, Version } from './src/types';
 const config: Config = {
   port: process.env.PORT ?? '3000',
   address: process.env.ADDRESS ?? '0.0.0.0',
+  logger: true,
   png: {
     size: {
       min: process.env.PNG_SIZE_MIN ?? '1',
