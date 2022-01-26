@@ -5,7 +5,10 @@
   "author": "Florian Körner <contact@florian-koerner.com>",
   "type": "module",
   "scripts": {
-    "start": "node --loader ts-node/esm src/index.ts"
+    "test": "npm run test:ts && npm run test:uvu",
+    "test:ts": "tsc --noEmit",
+    "test:uvu": "loadr -- uvu",
+    "start": "node --loader ts-node/esm/transpile-only src/index.ts"
   },
   "dependencies": {
     "@dicebear/api-4.10": "file:./versions/4.10",
@@ -32,7 +35,9 @@
     "typescript": "^4.5.2"
   },
   "devDependencies": {
-    "prettier": "^2.4.1"
+    "loadr": "^0.1.1",
+    "prettier": "^2.4.1",
+    "uvu": "^0.5.3"
   },
   "engines": {
     "node": "16.x"

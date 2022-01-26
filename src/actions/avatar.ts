@@ -1,6 +1,7 @@
 import { renderAsync, ResvgRenderOptions } from '@resvg/resvg-js';
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
+import { createRequire } from 'module';
 
 // @ts-ignore
 import mergeAllOf from 'json-schema-merge-allof';
@@ -8,6 +9,8 @@ import { paramCase } from 'param-case';
 import config from '../../config.js';
 import { AvatarRouteParams, Version } from '../types.js';
 import { adjustPngOptions } from '../utils/adjustPngOptions.js';
+
+const require = createRequire(import.meta.url);
 
 type Options = Version;
 

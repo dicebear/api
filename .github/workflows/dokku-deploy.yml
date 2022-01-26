@@ -3,9 +3,10 @@ name: 'Deploy to Pull Server'
 
 # yamllint disable-line rule:truthy
 on:
-  push:
-    branches:
-      - 'main'
+  workflow_run:
+    workflows: [Test]
+    types:
+      - completed
 
 env:
   DOKKU_REMOTE_URL: 'ssh://dokku@de01.api.dicebear.com:22/app'
@@ -14,6 +15,9 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    if: github.ref == 'refs/heads/main'
+
     steps:
       - name: Cloning repo
         uses: actions/checkout@v2
