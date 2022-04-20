@@ -3,7 +3,7 @@ import deepmerge from 'deepmerge';
 
 import config from '../config.js';
 import routes from './routes.js';
-import * as qs from './utils/query-string';
+import * as qs from './utils/query-string.js';
 
 type Options = {
   logger?: boolean;
