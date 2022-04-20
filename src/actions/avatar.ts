@@ -57,14 +57,6 @@ const plugin: FastifyPluginCallback<Options> = async (
       { ignoreAdditionalProperties: true }
     );
 
-    // Allow numeric values for boolean fields
-    queryStringSchema = JSON.parse(
-      JSON.stringify(queryStringSchema).replace(
-        /"type":"boolean"/g,
-        '"type":["boolean","number"]'
-      )
-    );
-
     // Create handler for all routes
     for (const route of routes) {
       // Replace ':style' in Route with style name.
