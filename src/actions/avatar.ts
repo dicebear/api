@@ -8,7 +8,7 @@ import mergeAllOf from 'json-schema-merge-allof';
 import { paramCase } from 'param-case';
 import config from '../../config.js';
 import { AvatarRouteParams, Version } from '../types.js';
-import { adjustPngOptions } from '../utils/adjustPngOptions.js';
+import { adjustPngOptions } from '../utils/adjust-png-options.js';
 
 const require = createRequire(import.meta.url);
 

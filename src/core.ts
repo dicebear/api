@@ -1,10 +1,9 @@
 import fastify from 'fastify';
-import * as qs from 'qs';
 import deepmerge from 'deepmerge';
-import isNumber from 'is-number';
 
 import config from '../config.js';
 import routes from './routes.js';
+import * as qs from './utils/query-string';
 
 type Options = {
   logger?: boolean;
@@ -13,15 +12,7 @@ type Options = {
 export const core = async ({ logger = config.logger }: Options) => {
   const app = fastify({
     logger,
-    querystringParser: (str) =>
-      qs.parse(str, {
-        comma: true,
-        decoder: (str, defaultDecoder, charset) => {
-          return isNumber(str)
-            ? parseFloat(str)
-            : defaultDecoder(str, undefined, charset);
-        },
-      }),
+    querystringParser: (str: string) => qs.parse(str),
     ajv: {
       customOptions: {
         coerceTypes: 'array',

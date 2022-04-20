@@ -1,5 +1,7 @@
 import { JSONSchema7 } from 'json-schema';
 
+export type ArrayFormats = 'separator' | 'bracket-separator';
+
 export type CreateAvatar = (
   style: unknown,
   options: Record<string, unknown>
