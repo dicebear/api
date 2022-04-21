@@ -1,38 +1,22 @@
 {
-  "name": "@dicebear/api",
+  "name": "root",
   "private": true,
-  "license": "MIT",
-  "author": "Florian Körner <contact@florian-koerner.com>",
-  "type": "module",
+  "workspaces": {
+    "packages": [
+      "app",
+      "versions/*"
+    ]
+  },
   "scripts": {
-    "test": "npm run test:ts && npm run test:uvu",
-    "test:ts": "tsc --noEmit",
-    "test:uvu": "loadr -- uvu",
-    "start": "node --loader ts-node/esm/transpile-only src/index.ts"
+    "start": "npm start --workspace app",
+    "test": "npm run test --workspace app"
   },
   "dependencies": {
-    "@dicebear/api-4.10": "file:./versions/4.10",
-    "@dicebear/api-4.4": "file:./versions/4.4",
-    "@dicebear/api-4.5": "file:./versions/4.5",
-    "@dicebear/api-4.6": "file:./versions/4.6",
-    "@dicebear/api-4.7": "file:./versions/4.7",
-    "@dicebear/api-4.8": "file:./versions/4.8",
-    "@dicebear/api-4.9": "file:./versions/4.9",
-    "@dicebear/api-5.0": "file:./versions/5.0",
-    "@resvg/resvg-js": "^1.1.0",
     "@tsconfig/node16": "^1.0.2",
     "@types/json-schema": "^7.0.9",
     "@types/json-schema-merge-allof": "^0.6.1",
     "@types/node": "^16.11.7",
     "@types/qs": "^6.9.7",
-    "ajv": "^8.11.0",
-    "axios": "^0.24.0",
-    "change-case": "^4.1.2",
-    "deepmerge": "^4.2.2",
-    "fastify": "^3.24.0",
-    "json-schema-merge-allof": "^0.8.1",
-    "query-string": "^7.1.1",
-    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   },
   "devDependencies": {

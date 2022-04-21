@@ -1,7 +1,8 @@
 import { createAvatar, schema } from '@dicebear/avatars';
 import * as styles from '@dicebear/collection';
+import { Routes } from '../../types';
 
-const routes = [
+const routes: Routes = [
   // Legacy API Routes
   `/v2/:style/.:format`,
   `/v2/:style/:seed(^.*(?=\.[a-z]{3}$)).:format`,
@@ -18,8 +19,6 @@ const routes = [
   // New API Routes
   '/4.10/:style/:format',
   '/4.x/:style/:format',
-  '/4.10/:style/:seed/:format',
-  '/4.x/:style/:seed/:format',
 ];
 
 export { routes, createAvatar, schema, styles };

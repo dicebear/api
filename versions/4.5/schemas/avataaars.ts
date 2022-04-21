@@ -1,4 +1,6 @@
-export default {
+import { JSONSchema7 } from 'json-schema';
+
+const schema: JSONSchema7 = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   definitions: {
     chance: {
@@ -188,3 +190,5 @@ export default {
     },
   },
 };
+
+export default schema;

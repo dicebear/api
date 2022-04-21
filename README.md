@@ -1,23 +1,85 @@
 <h1 align="center"><img src="https://avatars.dicebear.com/api/male/seed.svg?mood=happy" width="124" /> <br />DiceBear Avatars API</h1>
 <p align="center"><strong>DiceBear Avatars API build on <a href="https://fastify.io/" target="_blank">fastify</a></strong></p>
 
-## Deploy to DigitalOcean App Platform
+## Start application
 
-Click this button to deploy the app to the DigitalOcean App Platform. If you are not logged in, you will be prompted to log in with your DigitalOcean account.
+```bash
+git clone git@github.com:dicebear/api.git
+cd api
 
-[![Deploy to DigitalOcean](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/DiceBear/avatars-api/tree/main)
+npm install
+npm start
+```
 
-After clicking the "Deploy to DigitalOcean" button, follow these steps:
+## Environment variables
 
-1. Select which region you wish to deploy your app to and click Next. The closest region to you should be selected by default. All App Platform apps are routed through a global CDN so this will not affect your app performance, unless it needs to talk to external services.
-2. On the following screen, leave all the fields as they are and click Next.
-3. Confirm your Plan settings and how many containers you want to launch and click **Launch Basic/Pro App**.
-4. You should see a "Building..." progress indicator. And you can click "Deployments"→"Details" to see more details of the build.
-5. It can take a few minutes for the build to finish, but you can follow the progress by clicking the "Details" link in the top banner.
-6. Once the build completes successfully, click the "Live App" link in the header and you should see your running application in a new tab.
+### PORT
 
-## Deploy to Heroku
+- Default: `3000`
 
-Click this button to deploy the app to Heroku. If you are not logged in, you will be prompted to log in with your Heroku account.
+### ADDRESS
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/DiceBear/avatars-api)
+- Default: `0.0.0.0`
+
+### ENABLE_LOGGER
+
+- Default: `1`
+
+### ENABLE_PNG
+
+- Default: `1`
+
+### PNG_SIZE_MIN
+
+- Default: `1`
+
+### PNG_SIZE_MAX
+
+- Default: `256`
+
+### ENABLE_PNG_EXIF
+
+- Default: `0`
+- Requirements:
+  - Perl (https://www.npmjs.com/package/exiftool-vendored#installation)
+  - procps (https://www.npmjs.com/package/exiftool-vendored#user-content-this-package-requires-procps)
+
+### ENABLE_VERSION_4_4
+
+- Default: `1`
+
+### ENABLE_VERSION_4_5
+
+- Default: `1`
+
+### ENABLE_VERSION_4_6
+
+- Default: `1`
+
+### ENABLE_VERSION_4_7
+
+- Default: `1`
+
+### ENABLE_VERSION_4_8
+
+- Default: `1`
+
+### ENABLE_VERSION_4_9
+
+- Default: `1`
+
+### ENABLE_VERSION_4_10
+
+- Default: `1`
+
+### ENABLE_VERSION_5_0
+
+- Default: `1`
+
+### CACHE_CONTROL_STATS
+
+- Default: `3600` (1 hour)
+
+### CACHE_CONTROL_AVATARS
+
+- Default: `31536000` (1 year)
