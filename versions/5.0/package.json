@@ -4,8 +4,8 @@
   "main": "index.ts",
   "type": "module",
   "dependencies": {
-    "@dicebear/core": "5.0.0-alpha.21",
-    "@dicebear/collection": "5.0.0-alpha.21"
+    "@dicebear/core": "5.0.0-alpha.24",
+    "@dicebear/collection": "5.0.0-alpha.24"
   },
   "private": true
 }
