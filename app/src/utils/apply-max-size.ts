@@ -1,6 +1,8 @@
-import config from '../../config.js';
-
-export function adjustPngOptions(options: Record<string, any>) {
+export function applyMaxSize(
+  options: Record<string, any>,
+  minWidth: number,
+  maxWidth: number
+) {
   // Validate Size for PNG Format
   const size = parseInt(
     options['size'] ||
@@ -11,9 +13,7 @@ export function adjustPngOptions(options: Record<string, any>) {
       '0'
   );
 
-  const { min, max } = config.png.size;
-
-  const validatedSize = size < min || size > max ? max : size;
+  const validatedSize = size < minWidth || size > maxWidth ? maxWidth : size;
 
   delete options['size'];
   delete options['w'];

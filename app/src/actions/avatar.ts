@@ -6,7 +6,7 @@ import mergeAllOf from 'json-schema-merge-allof';
 import { paramCase } from 'param-case';
 import config from '../../config.js';
 import { AvatarRouteParams, Version } from '../../../types.js';
-import { adjustPngOptions } from '../utils/adjust-png-options.js';
+import { applyMaxSize } from '../utils/apply-max-size.js';
 import * as license from '../utils/license.js';
 import { toFormat } from '@dicebear/converter';
 
@@ -21,7 +21,7 @@ const paramsSchema: JSONSchema7 = {
     },
     format: {
       type: 'string',
-      enum: ['svg', 'png'],
+      enum: ['svg', 'png', 'jpg'],
     },
   },
   required: ['format'],
@@ -73,7 +73,20 @@ const plugin: FastifyPluginCallback<Options> = async (
 
           // Validate Size for PNG Format
           if (format === 'png') {
-            options = adjustPngOptions(options);
+            options = applyMaxSize(
+              options,
+              config.png.size.min,
+              config.png.size.max
+            );
+          }
+
+          // Validate Size for JPEG Format
+          if (format === 'jpg') {
+            options = applyMaxSize(
+              options,
+              config.jpeg.size.min,
+              config.jpeg.size.max
+            );
           }
 
           // Define default seed
@@ -87,29 +100,47 @@ const plugin: FastifyPluginCallback<Options> = async (
             `max-age=${config.cacheControl.avatar}`
           );
 
-          switch (format) {
-            case 'svg':
-              reply.header('Content-Type', 'image/svg+xml');
+          if (format)
+            switch (format) {
+              case 'svg':
+                reply.header('Content-Type', 'image/svg+xml');
 
-              return svg;
+                return svg;
 
-            case 'png':
-              if (false === config.png.enabled) {
-                reply.status(404);
+              case 'png':
+                if (false === config.png.enabled) {
+                  reply.status(404);
 
-                return;
-              }
+                  return;
+                }
 
-              reply.header('Content-Type', 'image/png');
+                reply.header('Content-Type', 'image/png');
 
-              const exif = config.png.exif
-                ? license.exif(styleName)
-                : undefined;
+                var exif = config.png.exif
+                  ? license.exif(styleName)
+                  : undefined;
 
-              let result = await toFormat(svg, format, exif).toArrayBuffer();
+                var result = await toFormat(svg, 'png', exif).toArrayBuffer();
 
-              return Buffer.from(result);
-          }
+                return Buffer.from(result);
+
+              case 'jpg':
+                if (false === config.jpeg.enabled) {
+                  reply.status(404);
+
+                  return;
+                }
+
+                reply.header('Content-Type', 'image/jpeg');
+
+                var exif = config.jpeg.exif
+                  ? license.exif(styleName)
+                  : undefined;
+
+                var result = await toFormat(svg, 'jpeg', exif).toArrayBuffer();
+
+                return Buffer.from(result);
+            }
         }
       );
     }

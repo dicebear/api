@@ -24,6 +24,14 @@ const config: Config = {
     },
     exif: env('ENABLE_PNG_EXIF', '0') === '1',
   },
+  jpeg: {
+    enabled: env('ENABLE_JPEG', '1') === '1',
+    size: {
+      min: parseInt(env('JPEG_SIZE_MIN', '1')),
+      max: parseInt(env('JPEG_SIZE_MAX', '256')),
+    },
+    exif: env('ENABLE_JPEG_EXIF', '0') === '1',
+  },
   versions,
   cacheControl: {
     stats: parseInt(env('CACHE_CONTROL_STATS', '3600')), // 1 hour

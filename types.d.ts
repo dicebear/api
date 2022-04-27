@@ -19,7 +19,7 @@ export type CollectionType = Record<
 >;
 
 export type AvatarRouteParams = {
-  format?: 'svg' | 'png';
+  format?: 'svg' | 'png' | 'jpg';
   seed?: string;
 };
 
@@ -36,6 +36,14 @@ export type Config = {
   logger: boolean;
   versions: Array<Promise<Version>>;
   png: {
+    enabled: boolean;
+    size: {
+      max: number;
+      min: number;
+    };
+    exif: boolean;
+  };
+  jpeg: {
     enabled: boolean;
     size: {
       max: number;

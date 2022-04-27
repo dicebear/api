@@ -44,6 +44,25 @@ npm start
   - Perl (https://www.npmjs.com/package/exiftool-vendored#installation)
   - procps (https://www.npmjs.com/package/exiftool-vendored#user-content-this-package-requires-procps)
 
+### ENABLE_JPEG
+
+- Default: `1`
+
+### JPEG_SIZE_MIN
+
+- Default: `1`
+
+### JPEG_SIZE_MAX
+
+- Default: `256`
+
+### ENABLE_JPEG_EXIF
+
+- Default: `0`
+- Requirements:
+  - Perl (https://www.npmjs.com/package/exiftool-vendored#installation)
+  - procps (https://www.npmjs.com/package/exiftool-vendored#user-content-this-package-requires-procps)
+
 ### ENABLE_VERSION_4_4
 
 - Default: `1`
