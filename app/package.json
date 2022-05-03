@@ -20,8 +20,6 @@
     "@dicebear/api-4.9": "*",
     "@dicebear/api-5.0": "*",
     "@dicebear/converter": "^5.0.0-alpha.30",
-    "@dicebear/core": "^5.0.0-alpha.30",
-    "@dicebear/collection": "^5.0.0-alpha.30",
     "@resvg/resvg-js": "^2.0.0",
     "ajv": "^8.11.0",
     "axios": "^0.24.0",

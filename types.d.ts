@@ -28,6 +28,7 @@ export type Version = {
   routes: Routes;
   schema: JSONSchema7;
   styles: CollectionType;
+  exif?: (style: any) => Record<string, string> | undefined;
 };
 
 export type Config = {

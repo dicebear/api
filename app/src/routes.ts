@@ -8,13 +8,20 @@ const plugin: FastifyPluginCallback = async (app) => {
   await app.register(stats);
 
   for (const version of config.versions) {
-    const { createAvatar, routes, schema, styles } = await version;
+    const {
+      createAvatar,
+      routes,
+      schema,
+      styles,
+      exif = undefined,
+    } = await version;
 
     app.register(avatar, {
       createAvatar,
       routes,
       schema,
       styles,
+      exif,
     });
   }
 };

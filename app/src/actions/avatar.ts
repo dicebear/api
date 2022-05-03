@@ -7,7 +7,6 @@ import { paramCase } from 'param-case';
 import config from '../../config.js';
 import { AvatarRouteParams, Version } from '../../../types.js';
 import { applyMaxSize } from '../utils/apply-max-size.js';
-import * as license from '../utils/license.js';
 import { toFormat } from '@dicebear/converter';
 
 type Options = Version;
@@ -38,7 +37,7 @@ const propertiesOverrideSchema: JSONSchema7 = {
 
 const plugin: FastifyPluginCallback<Options> = async (
   app,
-  { createAvatar, routes, schema, styles }
+  { createAvatar, routes, schema, styles, exif = undefined }
 ) => {
   for (const [styleName, style] of Object.entries(styles)) {
     // Skip private values
@@ -116,11 +115,11 @@ const plugin: FastifyPluginCallback<Options> = async (
 
                 reply.header('Content-Type', 'image/png');
 
-                var exif = config.png.exif
-                  ? license.exif(styleName)
-                  : undefined;
-
-                var result = await toFormat(svg, 'png', exif).toArrayBuffer();
+                var result = await toFormat(
+                  svg,
+                  'png',
+                  config.png.exif && exif ? exif(style) : undefined
+                ).toArrayBuffer();
 
                 return Buffer.from(result);
 
@@ -133,11 +132,11 @@ const plugin: FastifyPluginCallback<Options> = async (
 
                 reply.header('Content-Type', 'image/jpeg');
 
-                var exif = config.jpeg.exif
-                  ? license.exif(styleName)
-                  : undefined;
-
-                var result = await toFormat(svg, 'jpeg', exif).toArrayBuffer();
+                var result = await toFormat(
+                  svg,
+                  'jpeg',
+                  config.jpeg.exif && exif ? exif(style) : undefined
+                ).toArrayBuffer();
 
                 return Buffer.from(result);
             }
