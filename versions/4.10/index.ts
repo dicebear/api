@@ -18,7 +18,9 @@ const routes: Routes = [
 
   // New API Routes
   '/4.10/:style/:format',
+  '/4.10/:style/:format/:options',
   '/4.x/:style/:format',
+  '/4.x/:style/:format/:options',
 ];
 
 export { routes, createAvatar, schema, styles };

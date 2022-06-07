@@ -21,6 +21,7 @@ export type CollectionType = Record<
 export type AvatarRouteParams = {
   format?: 'svg' | 'png' | 'jpg';
   seed?: string;
+  options?: unknown;
 };
 
 export type Version = {

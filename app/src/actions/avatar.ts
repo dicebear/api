@@ -1,5 +1,6 @@
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
+import * as qs from '../utils/query-string.js';
 
 // @ts-ignore
 import mergeAllOf from 'json-schema-merge-allof';
@@ -11,19 +12,25 @@ import { toFormat } from '@dicebear/converter';
 
 type Options = Version;
 
-const paramsSchema: JSONSchema7 = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
-  type: 'object',
-  properties: {
-    seed: {
-      type: 'string',
+const paramsSchema = (options: JSONSchema7): JSONSchema7 => {
+  const { definitions, ...restOptions } = options;
+
+  return {
+    $schema: 'http://json-schema.org/draft-07/schema#',
+    type: 'object',
+    definitions: definitions,
+    properties: {
+      seed: {
+        type: 'string',
+      },
+      format: {
+        type: 'string',
+        enum: ['svg', 'png', 'jpg'],
+      },
+      options: restOptions,
     },
-    format: {
-      type: 'string',
-      enum: ['svg', 'png', 'jpg'],
-    },
-  },
-  required: ['format'],
+    required: ['format'],
+  };
 };
 
 const propertiesOverrideSchema: JSONSchema7 = {
@@ -63,12 +70,20 @@ const plugin: FastifyPluginCallback<Options> = async (
       app.get<{ Params: AvatarRouteParams }>(
         parsedRoute,
         {
-          schema: { querystring: queryStringSchema, params: paramsSchema },
+          preValidation: async (request) => {
+            if (typeof request.params.options === 'string') {
+              request.params.options = qs.parse(request.params.options);
+            }
+          },
+          schema: {
+            querystring: queryStringSchema,
+            params: paramsSchema(queryStringSchema),
+          },
         },
         async (request, reply) => {
-          let options: any = request.query;
-
           const format = request.params.format ?? 'svg';
+
+          let options: any = request.params.options || request.query;
 
           // Validate Size for PNG Format
           if (format === 'png') {

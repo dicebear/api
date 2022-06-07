@@ -11,8 +11,9 @@ const routes: Routes = [
   `/4.5/api/:style/.:format`,
   `/4.5/api/:style/:seed(^.*(?=\.[a-z]{3}$)).:format`,
 
-  // New API Route
+  // New API Routes
   '/4.5/:style/:format',
+  '/4.5/:style/:format/:options',
 ];
 
 const createAvatar = (style: any, options: any) => {

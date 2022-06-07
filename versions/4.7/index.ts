@@ -10,8 +10,9 @@ const routes: Routes = [
   `/4.7/api/:style/.:format`,
   `/4.7/api/:style/:seed(^.*(?=\.[a-z]{3}$)).:format`,
 
-  // New API Route
+  // New API Routes
   '/4.7/:style/:format',
+  '/4.7/:style/:format/:options',
 ];
 
 export { routes, createAvatar, schema, styles };

@@ -16,6 +16,7 @@ export const core = async () => {
         useDefaults: false,
       },
     },
+    maxParamLength: 1024,
   });
 
   app.addHook<{ Querystring: any }>('preValidation', async (request) => {
