@@ -1,6 +1,7 @@
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
 import * as qs from '../utils/query-string.js';
+import sanitizeFilename from 'sanitize-filename';
 
 // @ts-ignore
 import mergeAllOf from 'json-schema-merge-allof';
@@ -105,6 +106,15 @@ const plugin: FastifyPluginCallback<Options> = async (
 
           // Define default seed
           options['seed'] = request.params.seed ?? options['seed'] ?? '';
+
+          // Define filename
+          const filenameSeed = sanitizeFilename(options['seed']);
+          const filename =
+            filenameSeed.length > 0
+              ? `${styleName}_${filenameSeed}.${format}`
+              : `${styleName}.${format}`;
+
+          reply.header('Content-Disposition', `inline; filename="${filename}"`);
 
           // Create avatar
           const svg = createAvatar(style, options).toString();
