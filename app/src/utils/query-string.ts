@@ -9,7 +9,7 @@ export function parse(str: string): Record<string, unknown> {
     const values = qs.parse(str, { arrayFormat });
 
     for (const key of Object.keys(values)) {
-      const isValidKey = /^[a-z]+$/i.test(key);
+      const isValidKey = /^[a-z0-9]+$/i.test(key);
       const isUndefinedKey = undefined === result[key];
       const isArrayValue = Array.isArray(values[key]);
 
