@@ -6,7 +6,7 @@ export function parse(str: string): Record<string, unknown> {
   const result = Object.create(null);
 
   for (const arrayFormat of arrayFormats) {
-    const values = qs.parse(str, { parseNumbers: true, arrayFormat });
+    const values = qs.parse(str, { arrayFormat });
 
     for (const key of Object.keys(values)) {
       const isValidKey = /^[a-z]+$/i.test(key);
