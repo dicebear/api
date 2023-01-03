@@ -4,8 +4,8 @@
   "main": "index.ts",
   "type": "module",
   "dependencies": {
-    "@dicebear/avatars": "~4.10.5",
-    "@dicebear/collection": "~4.10.5"
+    "@dicebear/avatars": "~4.10.8",
+    "@dicebear/collection": "~4.10.8"
   },
   "private": true
 }
