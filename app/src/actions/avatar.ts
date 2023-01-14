@@ -114,6 +114,7 @@ const plugin: FastifyPluginCallback<Options> = async (
           // Create avatar
           const svg = createAvatar(style, options).toString();
 
+          reply.header('X-Robots-Tag', 'noindex');
           reply.header(
             'Cache-Control',
             `max-age=${config.cacheControl.avatar}`

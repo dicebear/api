@@ -1,12 +1,9 @@
 import { FastifyPluginCallback } from 'fastify';
 
-import stats from './actions/stats.js';
 import avatar from './actions/avatar.js';
 import config from '../config.js';
 
 const plugin: FastifyPluginCallback = async (app) => {
-  await app.register(stats);
-
   for (const version of config.versions) {
     const {
       createAvatar,

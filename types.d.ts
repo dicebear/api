@@ -54,7 +54,6 @@ export type Config = {
     exif: boolean;
   };
   cacheControl: {
-    stats: number; // 1 hour
     avatar: number; // 1 year
   };
 };

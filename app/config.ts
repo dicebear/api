@@ -34,7 +34,6 @@ const config: Config = {
   },
   versions,
   cacheControl: {
-    stats: parseInt(env('CACHE_CONTROL_STATS', '3600')), // 1 hour
     avatar: parseInt(env('CACHE_CONTROL_AVATARS', '31536000')), // 1 year
   },
 };
