@@ -1,9 +1,16 @@
 import type { JSONSchema7 } from 'json-schema';
-import type { Result } from '@dicebear/core';
+import type { ConverterResult } from '@dicebear/converter';
 
 export type ArrayFormats = 'separator' | 'bracket-separator';
 
 export type Routes = `${string}/:style/${string}`[];
+
+export interface Result extends ConverterResult {
+  png(options?: ResultConvertOptions): ConverterResult;
+  jpeg(options?: ResultConvertOptions): ConverterResult;
+  toString(): string;
+  toJson?: () => Record<string, unknown>;
+}
 
 export type CreateAvatar = (
   style: any,
