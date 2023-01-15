@@ -25,7 +25,7 @@ const paramsSchema = (options: JSONSchema7): JSONSchema7 => {
       },
       format: {
         type: 'string',
-        enum: ['svg', 'png', 'jpg'],
+        enum: ['svg', 'png', 'jpg', 'json'],
       },
       options: restOptions,
     },
@@ -81,7 +81,7 @@ const plugin: FastifyPluginCallback<Options> = async (
           },
         },
         async (request, reply) => {
-          const format = request.params.format ?? 'svg';
+          const format: 'svg' | 'png' | 'jpg' | 'json' = request.params.format ?? 'svg';
 
           let options: any = request.params.options || request.query;
 
@@ -112,7 +112,7 @@ const plugin: FastifyPluginCallback<Options> = async (
           reply.header('Content-Disposition', `inline; filename="${filename}"`);
 
           // Create avatar
-          const svg = createAvatar(style, options).toString();
+          const avatar = createAvatar(style, options);
 
           reply.header('X-Robots-Tag', 'noindex');
           reply.header(
@@ -125,11 +125,12 @@ const plugin: FastifyPluginCallback<Options> = async (
               case 'svg':
                 reply.header('Content-Type', 'image/svg+xml');
 
-                return svg;
+                return avatar.toString();
 
               case 'png':
                 if (false === config.png.enabled) {
                   reply.status(404);
+                  reply.send();
 
                   return;
                 }
@@ -137,7 +138,7 @@ const plugin: FastifyPluginCallback<Options> = async (
                 reply.header('Content-Type', 'image/png');
 
                 var result = await toFormat(
-                  svg,
+                  avatar.toString(),
                   'png',
                   config.png.exif && exif ? exif(style) : undefined
                 ).toArrayBuffer();
@@ -147,6 +148,7 @@ const plugin: FastifyPluginCallback<Options> = async (
               case 'jpg':
                 if (false === config.jpeg.enabled) {
                   reply.status(404);
+                  reply.send();
 
                   return;
                 }
@@ -154,12 +156,24 @@ const plugin: FastifyPluginCallback<Options> = async (
                 reply.header('Content-Type', 'image/jpeg');
 
                 var result = await toFormat(
-                  svg,
+                  avatar.toString(),
                   'jpeg',
                   config.jpeg.exif && exif ? exif(style) : undefined
                 ).toArrayBuffer();
 
                 return Buffer.from(result);
+
+              case 'json':
+                if (typeof avatar !== 'object' || !avatar.toJson || false === config.json.enabled) {
+                  reply.status(404);
+                  reply.send();
+
+                  return;
+                }
+
+                reply.header('Content-Type', 'application/json');
+
+                return JSON.stringify(avatar.toJson());
             }
         }
       );

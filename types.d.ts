@@ -19,7 +19,7 @@ export type CollectionType = Record<
 >;
 
 export type AvatarRouteParams = {
-  format?: 'svg' | 'png' | 'jpg';
+  format?: 'svg' | 'png' | 'jpg' | 'json';
   seed?: string;
   options?: unknown;
 };
@@ -53,6 +53,9 @@ export type Config = {
     };
     exif: boolean;
   };
+  json: {
+    enabled: boolean;
+  },
   cacheControl: {
     avatar: number; // 1 year
   };

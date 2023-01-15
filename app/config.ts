@@ -11,6 +11,7 @@ env('ENABLE_VERSION_4_8', '1') && versions.push(import('@dicebear/api-4.8'));
 env('ENABLE_VERSION_4_9', '1') && versions.push(import('@dicebear/api-4.9'));
 env('ENABLE_VERSION_4_10', '1') && versions.push(import('@dicebear/api-4.10'));
 env('ENABLE_VERSION_5_0', '1') && versions.push(import('@dicebear/api-5.0'));
+env('ENABLE_VERSION_5_1', '1') && versions.push(import('@dicebear/api-5.1'));
 
 const config: Config = {
   port: parseInt(env('PORT', '3000')),
@@ -31,6 +32,9 @@ const config: Config = {
       max: parseInt(env('JPEG_SIZE_MAX', '256')),
     },
     exif: env('ENABLE_JPEG_EXIF', '0') === '1',
+  },
+  json: {
+    enabled: env('ENABLE_JSON', '1') === '1',
   },
   versions,
   cacheControl: {
