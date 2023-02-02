@@ -4,6 +4,11 @@ import { Routes } from '../../types';
 
 const exif = license.exif;
 
-const routes: Routes = ['/5.2/:style/:format', '/5.2/:style/:format/:options'];
+const routes: Routes = [
+  '/5.3/:style/:format',
+  '/5.3/:style/:format/:options',
+  '/5.x/:style/:format',
+  '/5.x/:style/:format/:options',
+];
 
 export { routes, createAvatar, schema, styles, exif };
