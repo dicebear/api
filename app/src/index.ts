@@ -6,6 +6,8 @@ import config from '../config.js';
 
   try {
     await app.listen(config.port, config.address);
+
+    console.info(`Server listening at http://${config.address}:${config.port}`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);
