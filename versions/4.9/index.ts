@@ -1,5 +1,5 @@
 import { createAvatar, schema } from '@dicebear/avatars';
-import * as styles from '@dicebear/collection';
+import * as styles from './collection.js';
 import { Routes } from '../../types';
 
 const routes: Routes = [
