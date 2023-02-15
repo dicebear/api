@@ -1,5 +1,4 @@
 import fastify from 'fastify';
-import deepmerge from 'deepmerge';
 
 import config from '../config.js';
 import routes from './routes.js';
@@ -14,15 +13,10 @@ export const core = async () => {
         coerceTypes: 'array',
         removeAdditional: true,
         useDefaults: false,
+        strictTypes: false,
       },
     },
     maxParamLength: 1024,
-  });
-
-  app.addHook<{ Querystring: any }>('preValidation', async (request) => {
-    if (request.query && request.query.options) {
-      request.query = deepmerge(request.query.options, request.query);
-    }
   });
 
   await app.register(routes);
