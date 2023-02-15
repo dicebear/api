@@ -5,10 +5,7 @@ import config from '../config.js';
   const app = await core();
 
   try {
-    await app.listen({
-      port: config.port,
-      host: config.address
-    });
+    await app.listen(config.port, config.address);
 
     console.info(`Server listening at http://${config.address}:${config.port}`);
   } catch (err) {

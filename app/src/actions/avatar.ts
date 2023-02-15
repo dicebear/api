@@ -56,6 +56,7 @@ const plugin: FastifyPluginCallback<Options> = async (
     let queryStringSchema = mergeAllOf(
       {
         allOf: [schema, style.schema, propertiesOverrideSchema],
+        additionalItems: true,
       },
       { ignoreAdditionalProperties: true }
     );
