@@ -8,10 +8,6 @@ on:
     types:
       - completed
 
-env:
-  DOKKU_REMOTE_URL: 'ssh://dokku@pull.api.dicebear.com:22/app'
-  CDN_PULL_ZONE: 147563
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,18 +16,18 @@ jobs:
 
     steps:
       - name: Cloning repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
-          git_remote_url: ${{ env.DOKKU_REMOTE_URL }}
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          git_remote_url: ${{ vars.DOKKU_REMOTE_URL }}/api
+          ssh_private_key: ${{ secrets.DOKKU_SSH_PRIVATE_KEY }}
 
       - name: Purge CDN Cache
         run: |
           curl --request POST \
-            --url https://api.bunny.net/pullzone/${{ env.CDN_PULL_ZONE }}/purgeCache \
+            --url https://api.bunny.net/pullzone/${{ vars.CDN_PULL_ZONE }}/purgeCache \
             --header 'AccessKey: ${{ secrets.CDN_ACCESS_KEY }}'
