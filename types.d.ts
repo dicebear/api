@@ -49,6 +49,7 @@ export type Config = {
     size: {
       max: number;
       min: number;
+      default: number;
     };
     exif: boolean;
   };
@@ -57,6 +58,7 @@ export type Config = {
     size: {
       max: number;
       min: number;
+      default: number;
     };
     exif: boolean;
   };

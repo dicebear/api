@@ -90,7 +90,8 @@ const plugin: FastifyPluginCallback<Options> = async (
             options = applyMaxSize(
               options,
               config.png.size.min,
-              config.png.size.max
+              config.png.size.max,
+              config.png.size.default
             );
           }
 
@@ -99,7 +100,8 @@ const plugin: FastifyPluginCallback<Options> = async (
             options = applyMaxSize(
               options,
               config.jpeg.size.min,
-              config.jpeg.size.max
+              config.jpeg.size.max,
+              config.jpeg.size.default
             );
           }
 

@@ -24,6 +24,7 @@ const config: Config = {
     size: {
       min: parseInt(env('PNG_SIZE_MIN', '1')),
       max: parseInt(env('PNG_SIZE_MAX', '256')),
+      default: parseInt(env('PNG_SIZE_DEFAULT', '256')),
     },
     exif: env('ENABLE_PNG_EXIF', '0') === '1',
   },
@@ -32,6 +33,7 @@ const config: Config = {
     size: {
       min: parseInt(env('JPEG_SIZE_MIN', '1')),
       max: parseInt(env('JPEG_SIZE_MAX', '256')),
+      default: parseInt(env('JPEG_SIZE_DEFAULT', '256')),
     },
     exif: env('ENABLE_JPEG_EXIF', '0') === '1',
   },

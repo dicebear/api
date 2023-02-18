@@ -1,7 +1,8 @@
 export function applyMaxSize(
   options: Record<string, any>,
   minWidth: number,
-  maxWidth: number
+  maxWidth: number,
+  defaultWidth: number
 ) {
   // Validate Size for PNG Format
   const size = parseInt(
@@ -13,7 +14,7 @@ export function applyMaxSize(
       '0'
   );
 
-  const validatedSize = size < minWidth || size > maxWidth ? maxWidth : size;
+  const validatedSize = size < minWidth || size > maxWidth ? defaultWidth : size;
 
   delete options['size'];
   delete options['w'];
