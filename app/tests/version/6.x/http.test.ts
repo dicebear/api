@@ -4,28 +4,28 @@ import * as assert from 'uvu/assert';
 import { core } from '../../../src/core.js';
 
 const requests = {
-  '/5.0/v2/initials/.svg': {
+  '/6.x/v2/initials/.svg': {
     status: 404,
   },
-  '/5.0/v2/initials/seed.svg': {
+  '/6.x/v2/initials/seed.svg': {
     status: 404,
   },
-  '/5.0/api/initials/.svg': {
+  '/6.x/api/initials/.svg': {
     status: 404,
   },
-  '/5.0/api/initials/seed.svg': {
+  '/6.x/api/initials/seed.svg': {
     status: 404,
   },
-  '/5.0/initials/svg': {
+  '/6.x/initials/svg': {
     status: 200,
   },
-  '/5.0/initials/png': {
+  '/6.x/initials/png': {
     status: 200,
   },
-  '/5.0/initials/png?size=10': {
+  '/6.x/initials/png?size=10': {
     status: 200,
   },
-  '/5.0/initials/png?size=a': {
+  '/6.x/initials/png?size=a': {
     status: 400,
   },
 };
