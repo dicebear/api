@@ -25,7 +25,7 @@ const paramsSchema = (options: JSONSchema7): JSONSchema7 => {
       },
       format: {
         type: 'string',
-        enum: ['svg', 'png', 'jpg', 'json'],
+        enum: ['svg', 'png', 'jpg', 'json', 'schema.json'],
       },
       options: restOptions,
     },
@@ -81,7 +81,13 @@ const plugin: FastifyPluginCallback<Options> = async (
           },
         },
         async (request, reply) => {
-          const format: 'svg' | 'png' | 'jpg' | 'json' = request.params.format ?? 'svg';
+          const format = request.params.format ?? 'svg';
+
+          if (format === 'schema.json') {
+            reply.header('Content-Type', 'application/json');
+
+            return JSON.stringify(queryStringSchema, undefined, 2);
+          }
 
           let options: any = request.params.options || request.query;
 

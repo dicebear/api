@@ -26,7 +26,7 @@ export type CollectionType = Record<
 >;
 
 export type AvatarRouteParams = {
-  format?: 'svg' | 'png' | 'jpg' | 'json';
+  format?: 'svg' | 'png' | 'jpg' | 'json' | 'schema.json';
   seed?: string;
   options?: unknown;
 };
