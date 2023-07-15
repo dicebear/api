@@ -81,7 +81,7 @@ const plugin: FastifyPluginCallback<Options> = async (
           },
         },
         async (request, reply) => {
-          const format: 'svg' | 'png' | 'jpg' | 'json' | 'schema.json' = request.params.format ?? 'svg';
+          const format = request.params.format ?? 'svg';
 
           if (format === 'schema.json') {
             reply.header('Content-Type', 'application/json');
