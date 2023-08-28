@@ -15,6 +15,7 @@ env('ENABLE_VERSION_5_1', '1') && versions.push(import('@dicebear/api-5.1'));
 env('ENABLE_VERSION_5_2', '1') && versions.push(import('@dicebear/api-5.2'));
 env('ENABLE_VERSION_5_3', '1') && versions.push(import('@dicebear/api-5.3'));
 env('ENABLE_VERSION_6', '1') && versions.push(import('@dicebear/api-6.x'));
+env('ENABLE_VERSION_7', '1') && versions.push(import('@dicebear/api-7.x'));
 
 const config: Config = {
   port: parseInt(env('PORT', '3000')),

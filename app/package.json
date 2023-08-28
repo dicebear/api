@@ -23,6 +23,7 @@
     "@dicebear/api-5.2": "*",
     "@dicebear/api-5.3": "*",
     "@dicebear/api-6.x": "*",
+    "@dicebear/api-7.x": "*",
     "@dicebear/converter": "^5.3.1",
     "@resvg/resvg-js": "^2.4.0",
     "ajv": "^8.11.0",
