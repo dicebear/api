@@ -1,9 +1,10 @@
-FROM --platform=linux/amd64 oven/bun:1
+FROM --platform=linux/amd64 node:18-slim
 
 EXPOSE 3000
 
-COPY package.json ./
-COPY bun.lockb ./
-COPY src ./
+WORKDIR /dicebear-api
 
-RUN bun install
+COPY . .
+RUN npm install
+
+CMD ["npm", "start"]

@@ -1,0 +1,11 @@
+{
+  "name": "@dicebear/api-7.x",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "type": "module",
+  "dependencies": {
+    "@dicebear/core": "^7.0.1",
+    "@dicebear/collection": "^7.0.1"
+  },
+  "private": true
+}
