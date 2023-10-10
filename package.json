@@ -5,10 +5,10 @@
   "author": "Florian Körner <contact@florian-koerner.com>",
   "type": "module",
   "scripts": {
-    "dev": "tsx --watch ./src/index.ts",
+    "dev": "tsx --watch ./src/server.ts",
     "build": "tsc --build",
-    "start": "node ./dist/index.js",
-    "test": "node --test"
+    "start": "node ./dist/server.js",
+    "test": "node --test tests/*.js"
   },
   "dependencies": {
     "@dicebear/collection-5": "npm:@dicebear/collection@^5.3.4",

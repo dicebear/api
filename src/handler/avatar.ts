@@ -1,7 +1,7 @@
 import type { RouteHandlerMethod } from 'fastify';
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
 
-export function schemaHandler(
+export function avatarHandler(
   properties: Record<string, JSONSchema7Definition>
 ): RouteHandlerMethod {
   return (request, reply) => {

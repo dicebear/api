@@ -4,6 +4,7 @@ import type { Core } from '../types.js';
 import { schemaHandler } from '../handler/schema.js';
 import { parseQueryString } from '../utils/parseQueryString.js';
 import { JSONSchema7Definition } from 'json-schema';
+import { avatarHandler } from '../handler/avatar.js';
 
 type Options = {
   core: Core;
@@ -12,7 +13,8 @@ type Options = {
 
 export const styleRoutes: FastifyPluginCallback<Options> = (
   app,
-  { core, style }
+  { core, style },
+  done
 ) => {
   const optionsSchema: Record<string, JSONSchema7Definition> = {
     ...core.schema.properties,
@@ -39,7 +41,7 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
       querystring: optionsSchema,
       params: paramsSchema,
     },
-    handler: schemaHandler(optionsSchema),
+    handler: avatarHandler(optionsSchema),
   });
 
   app.route<{ Params: { options: string | StyleSchema } }>({
@@ -54,6 +56,8 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
       querystring: optionsSchema,
       params: paramsSchema,
     },
-    handler: schemaHandler(optionsSchema),
+    handler: avatarHandler(optionsSchema),
   });
+
+  done();
 };
