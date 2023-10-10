@@ -1,12 +1,12 @@
 import { FastifyPluginCallback } from 'fastify';
 import { JSONSchema7 } from 'json-schema';
-import * as qs from '../utils/query-string.js';
+import * as qs from '../utils/parseQueryString.js';
 
 // @ts-ignore
 import mergeAllOf from 'json-schema-merge-allof';
-import { paramCase } from 'param-case';
-import config from '../../config.js';
-import { AvatarRouteParams, Version } from '../../../types.js';
+import { paramCase } from 'change-case';
+import { config } from '../config.js';
+import { AvatarRouteParams, Version } from '../types.js';
 import { applyMaxSize } from '../utils/apply-max-size.js';
 import { toFormat } from '@dicebear/converter';
 
@@ -112,7 +112,7 @@ const plugin: FastifyPluginCallback<Options> = async (
           }
 
           // Define default seed
-          options['seed'] = request.params.seed ?? options['seed'] ?? '';
+          options['seed'] = options['seed'] ?? '';
 
           // Define filename
           const filename = `${styleName}.${format}`;
@@ -172,7 +172,11 @@ const plugin: FastifyPluginCallback<Options> = async (
                 return Buffer.from(result);
 
               case 'json':
-                if (typeof avatar !== 'object' || !avatar.toJson || false === config.json.enabled) {
+                if (
+                  typeof avatar !== 'object' ||
+                  !avatar.toJson ||
+                  false === config.json.enabled
+                ) {
                   reply.status(404);
                   reply.send();
 

@@ -1,10 +1,13 @@
-FROM --platform=linux/amd64 node:18-slim
+FROM --platform=linux/amd64 node:20-slim
 
 EXPOSE 3000
 
-WORKDIR /dicebear-api
+COPY src ./
+COPY .npmrc ./
+COPY package.json ./
+COPY package-lock.json ./
 
-COPY . .
 RUN npm install
+RUN npm run build
 
 CMD ["npm", "start"]

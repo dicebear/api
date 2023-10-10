@@ -1,8 +1,10 @@
 {
-  "extends": "@tsconfig/node16/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
-		"module": "ES2020",
-    "target": "ES2019",
-		"moduleResolution": "node"
-  }
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "dist"
+  },
+  "include": ["src/"]
 }
