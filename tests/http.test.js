@@ -10,23 +10,23 @@ for (let version of [5, 6, 7]) {
       status: 200,
     },
     {
-      path: `/${version}.x/initials/png`,
+      path: `/${version}.x/initials/svg?size=10`,
       status: 200,
     },
     {
-      path: `/${version}.x/initials/png?size=10`,
+      path: `/${version}.x/initials/svg?size=a`,
+      status: 400,
+    },
+    {
+      path: `/${version}.x/initials/svg/size=10`,
       status: 200,
     },
     {
-      path: `/${version}.x/initials/png?size=a`,
+      path: `/${version}.x/initials/svg/size=a`,
       status: 400,
     },
     {
       path: `/${version}.x/initials/schema.json`,
-      status: 200,
-    },
-    {
-      path: `/${version}.x/initials/json`,
       status: 200,
     },
   ];

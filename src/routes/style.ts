@@ -1,14 +1,27 @@
 import type { FastifyPluginCallback } from 'fastify';
-import type { Style, StyleSchema } from '@dicebear/core';
+import type { JSONSchema7Definition } from 'json-schema';
+import type { Style } from '@dicebear/core';
 import type { Core } from '../types.js';
 import { schemaHandler } from '../handler/schema.js';
 import { parseQueryString } from '../utils/parseQueryString.js';
-import { JSONSchema7Definition } from 'json-schema';
-import { avatarHandler } from '../handler/avatar.js';
+import { AvatarRequest, avatarHandler } from '../handler/avatar.js';
+import { config } from '../config.js';
 
 type Options = {
   core: Core;
   style: Style<any>;
+};
+
+const paramsSchema: Record<string, JSONSchema7Definition> = {
+  format: {
+    type: 'string',
+    enum: [
+      'svg',
+      ...(config.png.enabled ? ['png'] : []),
+      ...(config.jpeg.enabled ? ['jpg', 'jpeg'] : []),
+      ...(config.json.enabled ? ['json'] : []),
+    ],
+  },
 };
 
 export const styleRoutes: FastifyPluginCallback<Options> = (
@@ -21,30 +34,23 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
     ...style.schema?.properties,
   };
 
-  const paramsSchema: Record<string, JSONSchema7Definition> = {
-    format: {
-      type: 'string',
-      enum: ['svg', 'png', 'jpg', 'json'],
-    },
-  };
-
   app.route({
     method: 'GET',
     url: '/schema.json',
     handler: schemaHandler(optionsSchema),
   });
 
-  app.route({
+  app.route<AvatarRequest>({
     method: 'GET',
     url: '/:format',
     schema: {
       querystring: optionsSchema,
       params: paramsSchema,
     },
-    handler: avatarHandler(optionsSchema),
+    handler: avatarHandler(core, style),
   });
 
-  app.route<{ Params: { options: string | StyleSchema } }>({
+  app.route<AvatarRequest>({
     method: 'GET',
     url: '/:format/:options',
     preValidation: async (request) => {
@@ -56,7 +62,7 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
       querystring: optionsSchema,
       params: paramsSchema,
     },
-    handler: avatarHandler(optionsSchema),
+    handler: avatarHandler(core, style),
   });
 
   done();
