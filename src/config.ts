@@ -11,7 +11,7 @@ export const config: Config = {
       max: Number(process.env.PNG_SIZE_MAX ?? 256),
       default: Number(process.env.PNG_SIZE_DEFAULT ?? 128),
     },
-    exif: Boolean(Number(process.env.PNG_EXIF) ?? 0),
+    exif: Boolean(Number(process.env.PNG_EXIF) ?? 1),
   },
   jpeg: {
     enabled: Boolean(Number(process.env.JPEG ?? 1)),
@@ -20,7 +20,7 @@ export const config: Config = {
       max: Number(process.env.JPEG_SIZE_MAX ?? 256),
       default: Number(process.env.JPEG_SIZE_DEFAULT ?? 128),
     },
-    exif: Boolean(Number(process.env.JPEG_EXIF) ?? 0),
+    exif: Boolean(Number(process.env.JPEG_EXIF) ?? 1),
   },
   json: {
     enabled: Boolean(Number(process.env.JSON) ?? 1),
