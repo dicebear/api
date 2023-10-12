@@ -9,7 +9,6 @@ EXPOSE 3000
 WORKDIR /app
 COPY --from=build /app/dist /app/dist
 COPY versions /app/versions
-COPY .npmrc /app/.npmrc
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm ci --production
