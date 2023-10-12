@@ -10,13 +10,15 @@
     "start": "node ./dist/server.js",
     "test": "node --test tests/*.js"
   },
+  "workspaces": [
+    "./versions/*"
+  ],
   "dependencies": {
-    "@dicebear/collection-5": "npm:@dicebear/collection@^5.3.4",
-    "@dicebear/collection-6": "npm:@dicebear/collection@^6.0.4",
-    "@dicebear/collection-7": "npm:@dicebear/collection@^7.0.1",
-    "@dicebear/core-5": "npm:@dicebear/core@^5.3.4",
-    "@dicebear/core-6": "npm:@dicebear/core@^6.0.4",
-    "@dicebear/core-7": "npm:@dicebear/core@^7.0.1",
+    "@dicebear/api-5": "*",
+    "@dicebear/api-6": "*",
+    "@dicebear/api-7": "*",
+    "@dnlup/fastify-traps": "^3.0.0",
+    "@fastify/cors": "^8.4.0",
     "@resvg/resvg-js": "^2.4.1",
     "change-case": "^5.0.2",
     "exiftool-vendored": "^23.3.0",
@@ -27,7 +29,6 @@
   "devDependencies": {
     "@dicebear/core": "^7.0.1",
     "@tsconfig/node18": "^1.0.2",
-    "@types/change-case": "^2.3.1",
     "@types/json-schema": "^7.0.13",
     "@types/node": "^16.11.7",
     "@types/qs": "^6.9.8",

@@ -9,7 +9,12 @@ export function parseQueryString(str: string): Record<string, unknown> {
   });
 
   for (const key of Object.keys(parsed)) {
-    const value = parsed[key];
+    let value = parsed[key];
+
+    // A seed could be parsed as an array due to commas. In this case convert back to a string.
+    if (key === 'seed' && Array.isArray(value)) {
+      value = value.join(',');
+    }
 
     // Only add non-empty values
     if (Array.isArray(value)) {

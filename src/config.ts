@@ -2,7 +2,7 @@ import { Config } from './types.js';
 
 export const config: Config = {
   port: Number(process.env.PORT ?? 3000),
-  host: process.env.HOST ?? 'localhost',
+  host: process.env.HOST ?? '0.0.0.0',
   logger: Boolean(Number(process.env.LOGGER) ?? 0),
   png: {
     enabled: Boolean(Number(process.env.PNG ?? 1)),

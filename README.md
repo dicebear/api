@@ -4,4 +4,4 @@ This is the source code for the [DiceBear API](https://dicebear.com/how-to-use/h
 Learn how to set up your own instance of the API in the [documentation](https://dicebear.com/guides/host-the-http-api-yourself).
 
 [Playground](https://dicebear.com/playground) |
-[Documentation](https://dicebear.com/introduction)
+[Documentation](https://dicebear.com/guides/host-the-http-api-yourself)

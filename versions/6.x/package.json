@@ -1,0 +1,13 @@
+{
+  "name": "@dicebear/api-6",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "default": "./index.js",
+    "types": "./index.d.ts"
+  },
+  "dependencies": {
+    "@dicebear/collection": "^6.0.0",
+    "@dicebear/core": "^6.0.0"
+  }
+}

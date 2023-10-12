@@ -1,0 +1,13 @@
+{
+  "name": "@dicebear/api-7",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "default": "./index.js",
+    "types": "./index.d.ts"
+  },
+  "dependencies": {
+    "@dicebear/collection": "^7.0.0",
+    "@dicebear/core": "^7.0.0"
+  }
+}
