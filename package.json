@@ -17,7 +17,6 @@
     "@dicebear/api-5": "*",
     "@dicebear/api-6": "*",
     "@dicebear/api-7": "*",
-    "@dnlup/fastify-traps": "^3.0.0",
     "@fastify/cors": "^8.4.0",
     "@resvg/resvg-js": "^2.4.1",
     "change-case": "^5.0.2",
