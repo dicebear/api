@@ -26,6 +26,22 @@ for (let version of [5, 6, 7]) {
       status: 400,
     },
     {
+      path: `/${version}.x/initials/svg?backgroundColor=000000,ffffff`,
+      status: 200,
+    },
+    {
+      path: `/${version}.x/initials/svg/backgroundColor=000000,ffffff`,
+      status: 200,
+    },
+    {
+      path: `/${version}.x/initials/svg?backgroundColor=000000%2Cffffff`,
+      status: 200,
+    },
+    {
+      path: `/${version}.x/initials/svg/backgroundColor=000000%2Cffffff`,
+      status: 200,
+    },
+    {
       path: `/${version}.x/initials/schema.json`,
       status: 200,
     },

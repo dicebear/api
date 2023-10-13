@@ -2,7 +2,9 @@ import qs from 'qs';
 
 export function parseQueryString(str: string): Record<string, unknown> {
   const result = Object.create(null);
-  const parsed = qs.parse(str, {
+  // @see https://github.com/dicebear/dicebear/issues/382
+  const preparedStr = str.replaceAll('%2C', ',');
+  const parsed = qs.parse(preparedStr, {
     comma: true,
     plainObjects: true,
     depth: 1,
