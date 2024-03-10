@@ -14,6 +14,7 @@ export type Config = {
   port: number;
   host: string;
   logger: boolean;
+  workers: number,
   versions: number[];
   png: {
     enabled: boolean;
