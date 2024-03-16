@@ -16,5 +16,9 @@ export async function getVersions(): Promise<Record<string, Version>> {
     versions['7.x'] = await import('@dicebear/api-7');
   }
 
+  if (config.versions.includes(8)) {
+    versions['8.x'] = await import('@dicebear/api-8');
+  }
+
   return versions;
 }
