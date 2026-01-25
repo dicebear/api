@@ -21,8 +21,10 @@ export function parseQueryString(str: string): Record<string, unknown> {
     // Only add non-empty values
     if (Array.isArray(value)) {
       result[key] = value.filter((v) => v !== '');
-    } else if (value !== '') {
+    } else if (value !== '' || key === 'seed') {
       result[key] = [value];
+    } else {
+      result[key] = [];
     }
   }
 
