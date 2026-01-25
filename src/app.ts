@@ -15,7 +15,6 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 export const app = async () => {
   const app = fastify({
     logger: config.logger,
-    querystringParser: (str) => parseQueryString(str),
     ajv: {
       customOptions: {
         coerceTypes: 'array',
@@ -23,7 +22,10 @@ export const app = async () => {
         useDefaults: false,
       },
     },
-    maxParamLength: 1024,
+    routerOptions: {
+      maxParamLength: 1024,
+      querystringParser: (str) => parseQueryString(str),
+    },
   });
 
   const fonts = JSON.parse(
