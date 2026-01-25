@@ -25,48 +25,32 @@ export type Version = {
   collection: Record<string, any>;
 };
 
+// Generic types for image format configuration
+export type SizeConfig = {
+  min: number;
+  max: number;
+  default: number;
+};
+
+export type ImageFormatConfig = {
+  enabled: boolean;
+  size: SizeConfig;
+  exif: boolean;
+};
+
+export type ImageFormat = 'png' | 'jpeg' | 'webp' | 'avif';
+export type RequestFormat = 'svg' | 'png' | 'jpg' | 'jpeg' | 'webp' | 'avif' | 'json';
+
 export type Config = {
   port: number;
   host: string;
   logger: boolean;
   workers: number;
   versions: number[];
-  png: {
-    enabled: boolean;
-    size: {
-      max: number;
-      min: number;
-      default: number;
-    };
-    exif: boolean;
-  };
-  jpeg: {
-    enabled: boolean;
-    size: {
-      max: number;
-      min: number;
-      default: number;
-    };
-    exif: boolean;
-  };
-  webp: {
-    enabled: boolean;
-    size: {
-      max: number;
-      min: number;
-      default: number;
-    };
-    exif: boolean;
-  };
-  avif: {
-    enabled: boolean;
-    size: {
-      max: number;
-      min: number;
-      default: number;
-    };
-    exif: boolean;
-  };
+  png: ImageFormatConfig;
+  jpeg: ImageFormatConfig;
+  webp: ImageFormatConfig;
+  avif: ImageFormatConfig;
   json: {
     enabled: boolean;
   };

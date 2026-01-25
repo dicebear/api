@@ -1,46 +1,26 @@
-import { Config } from './types.js';
+import { Config, ImageFormatConfig, ImageFormat } from './types.js';
+
+function createImageFormatConfig(envPrefix: string): ImageFormatConfig {
+  return {
+    enabled: Boolean(Number(process.env[envPrefix] ?? 1)),
+    size: {
+      min: Number(process.env[`${envPrefix}_SIZE_MIN`] ?? 1),
+      max: Number(process.env[`${envPrefix}_SIZE_MAX`] ?? 256),
+      default: Number(process.env[`${envPrefix}_SIZE_DEFAULT`] ?? 128),
+    },
+    exif: Boolean(Number(process.env[`${envPrefix}_EXIF`] ?? 1)),
+  };
+}
 
 export const config: Config = {
   port: Number(process.env.PORT ?? 3000),
   host: process.env.HOST ?? '0.0.0.0',
   logger: Boolean(Number(process.env.LOGGER) ?? 0),
   workers: Number(process.env.WORKERS ?? 1),
-  png: {
-    enabled: Boolean(Number(process.env.PNG ?? 1)),
-    size: {
-      min: Number(process.env.PNG_SIZE_MIN ?? 1),
-      max: Number(process.env.PNG_SIZE_MAX ?? 256),
-      default: Number(process.env.PNG_SIZE_DEFAULT ?? 128),
-    },
-    exif: Boolean(Number(process.env.PNG_EXIF ?? 1)),
-  },
-  jpeg: {
-    enabled: Boolean(Number(process.env.JPEG ?? 1)),
-    size: {
-      min: Number(process.env.JPEG_SIZE_MIN ?? 1),
-      max: Number(process.env.JPEG_SIZE_MAX ?? 256),
-      default: Number(process.env.JPEG_SIZE_DEFAULT ?? 128),
-    },
-    exif: Boolean(Number(process.env.JPEG_EXIF ?? 1)),
-  },
-  webp: {
-    enabled: Boolean(Number(process.env.WEBP ?? 1)),
-    size: {
-      min: Number(process.env.WEBP_SIZE_MIN ?? 1),
-      max: Number(process.env.WEBP_SIZE_MAX ?? 256),
-      default: Number(process.env.WEBP_SIZE_DEFAULT ?? 128),
-    },
-    exif: Boolean(Number(process.env.WEBP_EXIF ?? 1)),
-  },
-  avif: {
-    enabled: Boolean(Number(process.env.AVIF ?? 1)),
-    size: {
-      min: Number(process.env.AVIF_SIZE_MIN ?? 1),
-      max: Number(process.env.AVIF_SIZE_MAX ?? 256),
-      default: Number(process.env.AVIF_SIZE_DEFAULT ?? 128),
-    },
-    exif: Boolean(Number(process.env.AVIF_EXIF ?? 1)),
-  },
+  png: createImageFormatConfig('PNG'),
+  jpeg: createImageFormatConfig('JPEG'),
+  webp: createImageFormatConfig('WEBP'),
+  avif: createImageFormatConfig('AVIF'),
   json: {
     enabled: Boolean(Number(process.env.JSON ?? 1)),
   },
@@ -48,4 +28,13 @@ export const config: Config = {
   cacheControl: {
     avatar: Number(process.env.CACHE_CONTROL_AVATARS ?? 60 * 60 * 24 * 365),
   },
+};
+
+// Format metadata mapping request formats to config keys and content types
+export const IMAGE_FORMATS: Record<string, { configKey: ImageFormat; contentType: string }> = {
+  png: { configKey: 'png', contentType: 'image/png' },
+  jpg: { configKey: 'jpeg', contentType: 'image/jpeg' },
+  jpeg: { configKey: 'jpeg', contentType: 'image/jpeg' },
+  webp: { configKey: 'webp', contentType: 'image/webp' },
+  avif: { configKey: 'avif', contentType: 'image/avif' },
 };

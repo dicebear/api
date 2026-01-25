@@ -1,5 +1,5 @@
-import type { FastifyPluginAsync, FastifyPluginCallback } from 'fastify';
-import type { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import type { FastifyPluginCallback } from 'fastify';
+import type { JSONSchema7 } from 'json-schema';
 import type { Core } from '../types.js';
 import { schemaHandler } from '../handler/schema.js';
 import { parseQueryString } from '../utils/query-string.js';
@@ -29,6 +29,12 @@ const paramsSchema: JSONSchema7 = {
   },
 };
 
+// Route patterns for avatar endpoints
+const AVATAR_ROUTES = [
+  { url: '/:format', hasPathOptions: false },
+  { url: '/:format/:options', hasPathOptions: true },
+] as const;
+
 export const styleRoutes: FastifyPluginCallback<Options> = (
   app,
   { core, style },
@@ -49,30 +55,24 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
     handler: schemaHandler(optionsSchema),
   });
 
-  app.route<AvatarRequest>({
-    method: 'GET',
-    url: '/:format',
-    schema: {
-      querystring: optionsSchema,
-      params: paramsSchema,
-    },
-    handler: avatarHandler(app, core, style),
-  });
-
-  app.route<AvatarRequest>({
-    method: 'GET',
-    url: '/:format/:options',
-    preValidation: async (request) => {
-      if (typeof request.params.options === 'string') {
-        request.query = parseQueryString(request.params.options);
-      }
-    },
-    schema: {
-      querystring: optionsSchema,
-      params: paramsSchema,
-    },
-    handler: avatarHandler(app, core, style),
-  });
+  for (const { url, hasPathOptions } of AVATAR_ROUTES) {
+    app.route<AvatarRequest>({
+      method: 'GET',
+      url,
+      ...(hasPathOptions && {
+        preValidation: async (request) => {
+          if (typeof request.params.options === 'string') {
+            request.query = parseQueryString(request.params.options);
+          }
+        },
+      }),
+      schema: {
+        querystring: optionsSchema,
+        params: paramsSchema,
+      },
+      handler: avatarHandler(app, core, style),
+    });
+  }
 
   done();
 };
