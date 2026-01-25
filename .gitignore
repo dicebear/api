@@ -133,3 +133,6 @@ dist
 
 # font build
 fonts
+
+# AI
+.claude
