@@ -1,9 +1,16 @@
 import path from 'path';
 import { Font } from '../types.js';
-import { isCharacterInUnicodeRange } from './unicode.js';
 import { fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+export function isCharacterInUnicodeRange(
+  char: string,
+  range: [number, number],
+) {
+  const charCode = char.charCodeAt(0);
+  return charCode >= range[0] && charCode <= range[1];
+}
 
 export function getRequiredFonts(svg: string, fonts: Font[]): string[] {
   const textNodes = svg.matchAll(/<text.*?>(.*?)<\/text>/gs);
