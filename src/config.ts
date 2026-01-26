@@ -31,7 +31,10 @@ export const config: Config = {
 };
 
 // Format metadata mapping request formats to config keys and content types
-export const IMAGE_FORMATS: Record<string, { configKey: ImageFormat; contentType: string }> = {
+export const IMAGE_FORMATS: Record<
+  string,
+  { configKey: ImageFormat; contentType: string }
+> = {
   png: { configKey: 'png', contentType: 'image/png' },
   jpg: { configKey: 'jpeg', contentType: 'image/jpeg' },
   jpeg: { configKey: 'jpeg', contentType: 'image/jpeg' },

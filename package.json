@@ -10,7 +10,8 @@
     "prebuild": "tsx ./scripts/build-fonts.ts",
     "build": "tsc --build",
     "start": "node ./dist/server.js",
-    "test": "node --test tests/*.js"
+    "test": "node --test tests/*.js",
+    "format": "prettier --write ."
   },
   "workspaces": [
     "./versions/*"

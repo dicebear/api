@@ -16,8 +16,14 @@ function extractTextContent(svg: string): string[] {
     // Ensure it's <text> or <text ...>, not <textPath> etc.
     const charAfterTag = svg.charCodeAt(openStart + 5);
     // Must be '>' (62), '/' (47), space (32), tab (9), newline (10), or carriage return (13)
-    if (charAfterTag !== 62 && charAfterTag !== 47 && charAfterTag !== 32 &&
-        charAfterTag !== 9 && charAfterTag !== 10 && charAfterTag !== 13) {
+    if (
+      charAfterTag !== 62 &&
+      charAfterTag !== 47 &&
+      charAfterTag !== 32 &&
+      charAfterTag !== 9 &&
+      charAfterTag !== 10 &&
+      charAfterTag !== 13
+    ) {
       pos = openStart + 5;
       continue;
     }

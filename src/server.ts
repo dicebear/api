@@ -11,7 +11,7 @@ if (cluster.isPrimary && useCluster) {
 
   cluster.on('exit', (worker, code, signal) => {
     console.log(
-      `Worker ${worker.process.pid} died with code ${code} and signal ${signal}`
+      `Worker ${worker.process.pid} died with code ${code} and signal ${signal}`,
     );
 
     // Fork a new worker
@@ -34,6 +34,6 @@ if (cluster.isPrimary && useCluster) {
       }
 
       console.info(`Server listening at http://${config.host}:${config.port}`);
-    }
+    },
   );
 }

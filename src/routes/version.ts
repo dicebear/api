@@ -9,7 +9,7 @@ type Options = {
 export const versionRoutes: FastifyPluginCallback<Options> = (
   app,
   { versions },
-  done
+  done,
 ) => {
   for (const [prefix, version] of Object.entries(versions)) {
     app.register(collectionRoutes, {

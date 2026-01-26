@@ -11,7 +11,7 @@ declare module 'fastify' {
 export type Core = {
   createAvatar: (
     style: any,
-    options?: any
+    options?: any,
   ) => {
     toString: () => string;
     toJson: () => {
@@ -41,7 +41,14 @@ export type ImageFormatConfig = {
 };
 
 export type ImageFormat = 'png' | 'jpeg' | 'webp' | 'avif';
-export type RequestFormat = 'svg' | 'png' | 'jpg' | 'jpeg' | 'webp' | 'avif' | 'json';
+export type RequestFormat =
+  | 'svg'
+  | 'png'
+  | 'jpg'
+  | 'jpeg'
+  | 'webp'
+  | 'avif'
+  | 'json';
 
 export type Config = {
   port: number;
