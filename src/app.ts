@@ -6,6 +6,7 @@ import { parseQueryString } from './utils/query-string.js';
 import { versionRoutes } from './routes/version.js';
 import { getVersions } from './utils/versions.js';
 import { Font } from './types.js';
+import { FontLookup } from './utils/fonts.js';
 import { fileURLToPath } from 'url';
 import { promises as fs } from 'fs';
 import * as path from 'path';
@@ -29,10 +30,10 @@ export const app = async () => {
   });
 
   const fonts = JSON.parse(
-    await fs.readFile(path.join(__dirname, '../fonts/fonts.json'), 'utf-8')
+    await fs.readFile(path.join(__dirname, '../fonts/fonts.json'), 'utf-8'),
   ) as Font[];
 
-  app.decorate('fonts', fonts);
+  app.decorate('fontLookup', new FontLookup(fonts));
 
   await app.register(cors);
 

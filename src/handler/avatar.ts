@@ -2,7 +2,6 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import type { Core, RequestFormat } from '../types.js';
 import { config, IMAGE_FORMATS } from '../config.js';
 import { toJpeg, toPng, toWebp, toAvif } from '@dicebear/converter';
-import { getRequiredFonts } from '../utils/fonts.js';
 
 export type AvatarRequest = {
   Params: {
@@ -69,7 +68,7 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
 
       // Cache SVG string and fonts (called once instead of multiple times)
       const svgString = avatar.toString();
-      const fonts = getRequiredFonts(svgString, app.fonts);
+      const fonts = app.fontLookup.getRequiredFonts(svgString);
 
       reply.header('Content-Type', formatMeta.contentType);
       const result = await converter(svgString, {

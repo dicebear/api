@@ -3,37 +3,88 @@ import { Font } from '../types.js';
 import { fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
+const FONTS_DIR = path.join(__dirname, '../../fonts');
+const TEXT_NODE_REGEX = /<text.*?>(.*?)<\/text>/gs;
 
-export function isCharacterInUnicodeRange(
-  char: string,
-  range: [number, number],
-) {
-  const charCode = char.charCodeAt(0);
-  return charCode >= range[0] && charCode <= range[1];
-}
+type SortedFont = {
+  fontPath: string;
+  ranges: [number, number][]; // Sorted by start value
+};
 
-export function getRequiredFonts(svg: string, fonts: Font[]): string[] {
-  const textNodes = svg.matchAll(/<text.*?>(.*?)<\/text>/gs);
-  const requiredFonts = new Set<string>();
+/**
+ * FontLookup provides optimized font resolution using binary search.
+ * Create once at app startup and reuse for all requests.
+ */
+export class FontLookup {
+  private fonts: SortedFont[];
 
-  if (!textNodes) {
-    return [...requiredFonts];
+  constructor(fonts: Font[]) {
+    // Pre-compute font paths and sort ranges for binary search
+    this.fonts = fonts.map((font) => ({
+      fontPath: path.join(FONTS_DIR, font.font),
+      ranges: [...font.ranges].sort((a, b) => a[0] - b[0]),
+    }));
   }
 
-  for (const textNode of textNodes) {
-    const text = textNode[1];
+  /**
+   * Binary search to check if a character code is covered by any range in a font.
+   * Returns true if found, false otherwise.
+   */
+  private hasCharCode(ranges: [number, number][], charCode: number): boolean {
+    let left = 0;
+    let right = ranges.length - 1;
 
-    char: for (const char of text) {
-      for (const font of fonts) {
-        for (const range of font.ranges) {
-          if (isCharacterInUnicodeRange(char, range)) {
-            requiredFonts.add(path.join(__dirname, '../../fonts', font.font));
-            continue char;
-          }
+    while (left <= right) {
+      const mid = (left + right) >>> 1;
+      const [start, end] = ranges[mid];
+
+      if (charCode < start) {
+        right = mid - 1;
+      } else if (charCode > end) {
+        left = mid + 1;
+      } else {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Find the first font that covers the given character code.
+   * Maintains priority order from the original fonts array.
+   */
+  findFont(charCode: number): string | undefined {
+    for (const font of this.fonts) {
+      if (this.hasCharCode(font.ranges, charCode)) {
+        return font.fontPath;
+      }
+    }
+    return undefined;
+  }
+
+  /**
+   * Get all required font paths for rendering text in an SVG.
+   * Uses binary search for O(fonts × log(ranges)) instead of O(fonts × ranges).
+   */
+  getRequiredFonts(svg: string): string[] {
+    const requiredFonts = new Set<string>();
+
+    // Reset regex lastIndex since we're reusing a global regex
+    TEXT_NODE_REGEX.lastIndex = 0;
+
+    let match;
+    while ((match = TEXT_NODE_REGEX.exec(svg)) !== null) {
+      const text = match[1];
+
+      for (const char of text) {
+        const fontPath = this.findFont(char.charCodeAt(0));
+        if (fontPath) {
+          requiredFonts.add(fontPath);
         }
       }
     }
-  }
 
-  return [...requiredFonts];
+    return [...requiredFonts];
+  }
 }

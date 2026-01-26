@@ -1,8 +1,10 @@
 import { JSONSchema7 } from 'json-schema';
+import { FontLookup } from './utils/fonts.js';
 
 declare module 'fastify' {
   interface FastifyInstance {
     fonts: Font[];
+    fontLookup: FontLookup;
   }
 }
 
