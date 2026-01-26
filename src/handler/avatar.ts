@@ -28,10 +28,12 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
     const options = request.query;
     const format = request.params.format;
 
-    // Validate and apply size constraints for image formats
+    // Get format metadata and config once (reused for size constraints and conversion)
     const formatMeta = IMAGE_FORMATS[format];
-    if (formatMeta) {
-      const formatConfig = config[formatMeta.configKey];
+    const formatConfig = formatMeta ? config[formatMeta.configKey] : undefined;
+
+    // Validate and apply size constraints for image formats
+    if (formatConfig) {
       options['size'] = options['size']
         ? Math.min(Math.max(options['size'], formatConfig.size.min), formatConfig.size.max)
         : formatConfig.size.default;
@@ -63,14 +65,11 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
 
     // Handle image formats (png, jpg, jpeg, webp, avif)
     const converter = FORMAT_CONVERTERS[format as keyof typeof FORMAT_CONVERTERS];
-    if (converter && formatMeta) {
-      const formatConfig = config[formatMeta.configKey];
-
-      // Cache SVG string and fonts (called once instead of multiple times)
+    if (converter && formatConfig) {
       const svgString = avatar.toString();
       const fonts = app.fontLookup.getRequiredFonts(svgString);
 
-      reply.header('Content-Type', formatMeta.contentType);
+      reply.header('Content-Type', formatMeta!.contentType);
       const result = await converter(svgString, {
         includeExif: formatConfig.exif,
         fonts,
