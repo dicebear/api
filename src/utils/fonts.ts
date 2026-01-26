@@ -4,7 +4,36 @@ import { fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const FONTS_DIR = path.join(__dirname, '../../fonts');
-const TEXT_NODE_REGEX = /<text.*?>(.*?)<\/text>/gs;
+// Extract text content between <text> tags using indexOf for safety (no regex backtracking)
+function extractTextContent(svg: string): string[] {
+  const results: string[] = [];
+  let pos = 0;
+
+  while (true) {
+    const openStart = svg.indexOf('<text', pos);
+    if (openStart === -1) break;
+
+    // Ensure it's <text> or <text ...>, not <textPath> etc.
+    const charAfterTag = svg.charCodeAt(openStart + 5);
+    // Must be '>' (62), '/' (47), space (32), tab (9), newline (10), or carriage return (13)
+    if (charAfterTag !== 62 && charAfterTag !== 47 && charAfterTag !== 32 &&
+        charAfterTag !== 9 && charAfterTag !== 10 && charAfterTag !== 13) {
+      pos = openStart + 5;
+      continue;
+    }
+
+    const openEnd = svg.indexOf('>', openStart);
+    if (openEnd === -1) break;
+
+    const closeStart = svg.indexOf('</text>', openEnd);
+    if (closeStart === -1) break;
+
+    results.push(svg.slice(openEnd + 1, closeStart));
+    pos = closeStart + 7;
+  }
+
+  return results;
+}
 
 type SortedFont = {
   fontPath: string;
@@ -70,13 +99,7 @@ export class FontLookup {
   getRequiredFonts(svg: string): string[] {
     const requiredFonts = new Set<string>();
 
-    // Reset regex lastIndex since we're reusing a global regex
-    TEXT_NODE_REGEX.lastIndex = 0;
-
-    let match;
-    while ((match = TEXT_NODE_REGEX.exec(svg)) !== null) {
-      const text = match[1];
-
+    for (const text of extractTextContent(svg)) {
       for (const char of text) {
         const fontPath = this.findFont(char.charCodeAt(0));
         if (fontPath) {

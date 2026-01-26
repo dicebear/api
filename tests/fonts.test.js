@@ -116,6 +116,19 @@ describe('FontLookup.getRequiredFonts', () => {
     const result = lookup.getRequiredFonts(svg);
     assert.deepEqual(result, []);
   });
+
+  test('ignores textPath elements', () => {
+    const svg = '<svg><textPath>Hello</textPath><text>A</text></svg>';
+    const result = lookup.getRequiredFonts(svg);
+    assert.equal(result.length, 1);
+    assert.ok(result[0].endsWith('latin.ttf'));
+  });
+
+  test('ignores other text-prefixed elements', () => {
+    const svg = '<svg><textArea>Ignored</textArea></svg>';
+    const result = lookup.getRequiredFonts(svg);
+    assert.deepEqual(result, []);
+  });
 });
 
 describe('FontLookup binary search', () => {
