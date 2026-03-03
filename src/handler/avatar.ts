@@ -75,6 +75,7 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
 
       reply.header('Content-Type', formatMeta!.contentType);
       const result = await converter(svgString, {
+        size: options['size'],
         includeExif: formatConfig.exif,
         fonts,
       }).toArrayBuffer();

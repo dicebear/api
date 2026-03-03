@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const FONTS_DIR = path.join(__dirname, '../../fonts');
+
 // Extract text content between <text> tags using indexOf for safety (no regex backtracking)
 function extractTextContent(svg: string): string[] {
   const results: string[] = [];

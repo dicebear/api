@@ -22,7 +22,7 @@
     "@dicebear/api-7": "*",
     "@dicebear/api-8": "*",
     "@dicebear/api-9": "*",
-    "@dicebear/converter": "^9.2.3",
+    "@dicebear/converter": "^9.4.0",
     "@fastify/cors": "^11.0.1",
     "change-case": "^5.4.4",
     "fastify": "^5.4.0",
