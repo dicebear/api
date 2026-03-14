@@ -144,10 +144,9 @@ describe('parseQueryString', () => {
   });
 
   test('throws when parameterLimit is exceeded', () => {
-    assert.throws(
-      () => parseQueryString('a=1&b=2&c=3', 100, 1),
-      { name: 'QueryStringRangeError' },
-    );
+    assert.throws(() => parseQueryString('a=1&b=2&c=3', 100, 1), {
+      name: 'QueryStringRangeError',
+    });
   });
 
   test('does not throw when within parameterLimit', () => {

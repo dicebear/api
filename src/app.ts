@@ -39,6 +39,7 @@ export const app = async () => {
           if (error instanceof QueryStringRangeError) {
             return { _error: error };
           }
+
           throw error;
         }
       },
@@ -53,6 +54,7 @@ export const app = async () => {
 
   app.addHook('onRequest', (request, reply, done) => {
     const query = request.query as Record<string, unknown>;
+
     if (query._error instanceof QueryStringRangeError) {
       const { statusCode, code, message } = query._error;
       reply.status(statusCode).send({
@@ -63,6 +65,7 @@ export const app = async () => {
       });
       return;
     }
+
     done();
   });
 

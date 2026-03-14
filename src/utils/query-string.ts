@@ -22,6 +22,7 @@ export function parseQueryString(
   const preparedStr = str.replaceAll('%2C', ',');
 
   let parsed;
+
   try {
     parsed = qs.parse(preparedStr, {
       comma: true,
@@ -35,6 +36,7 @@ export function parseQueryString(
     if (error instanceof RangeError) {
       throw new QueryStringRangeError(error.message);
     }
+
     throw error;
   }
 
