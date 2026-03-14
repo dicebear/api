@@ -11,6 +11,7 @@
     "build": "tsc --build",
     "start": "node ./dist/server.js",
     "test": "node --test tests/*.js",
+    "lint": "eslint src",
     "format": "prettier --write ."
   },
   "workspaces": [
@@ -39,9 +40,11 @@
     "@types/node": "^22.15.30",
     "@types/qs": "^6.14.0",
     "@woff2/woff2-rs": "^1.0.1",
+    "eslint": "^10.0.3",
     "prettier": "^3.5.3",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.57.0"
   },
   "engines": {
     "node": ">=20.10"

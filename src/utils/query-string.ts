@@ -1,14 +1,42 @@
 import qs from 'qs';
 
-export function parseQueryString(str: string): Record<string, unknown> {
+import { config } from '../config.js';
+
+export class QueryStringRangeError extends Error {
+  statusCode = 400;
+  code = 'FST_ERR_VALIDATION';
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'QueryStringRangeError';
+  }
+}
+
+export function parseQueryString(
+  str: string,
+  arrayLimit = config.queryString.arrayLimitMin,
+  parameterLimit = config.queryString.parameterLimitMin,
+): Record<string, unknown> {
   const result = Object.create(null);
   // @see https://github.com/dicebear/dicebear/issues/382
   const preparedStr = str.replaceAll('%2C', ',');
-  const parsed = qs.parse(preparedStr, {
-    comma: true,
-    plainObjects: true,
-    depth: 1,
-  });
+
+  let parsed;
+  try {
+    parsed = qs.parse(preparedStr, {
+      comma: true,
+      plainObjects: true,
+      arrayLimit,
+      parameterLimit,
+      throwOnLimitExceeded: true,
+      depth: 1,
+    });
+  } catch (error) {
+    if (error instanceof RangeError) {
+      throw new QueryStringRangeError(error.message);
+    }
+    throw error;
+  }
 
   for (const key of Object.keys(parsed)) {
     let value = parsed[key];

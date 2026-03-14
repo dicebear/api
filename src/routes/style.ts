@@ -1,14 +1,15 @@
 import type { FastifyPluginCallback } from 'fastify';
 import type { JSONSchema7 } from 'json-schema';
-import type { Core } from '../types.js';
+import type { Core, Style } from '../types.js';
 import { schemaHandler } from '../handler/schema.js';
 import { parseQueryString } from '../utils/query-string.js';
+import { getSchemaLimits } from '../utils/schema.js';
 import { AvatarRequest, avatarHandler } from '../handler/avatar.js';
 import { config } from '../config.js';
 
 type Options = {
   core: Core;
-  style: any;
+  style: Style;
 };
 
 const paramsSchema: JSONSchema7 = {
@@ -49,6 +50,8 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
     },
   };
 
+  const { arrayLimit, parameterLimit } = getSchemaLimits(optionsSchema);
+
   app.route({
     method: 'GET',
     url: '/schema.json',
@@ -62,7 +65,11 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
       ...(hasPathOptions && {
         preValidation: async (request) => {
           if (typeof request.params.options === 'string') {
-            request.query = parseQueryString(request.params.options);
+            request.query = parseQueryString(
+              request.params.options,
+              arrayLimit,
+              parameterLimit,
+            );
           }
         },
       }),

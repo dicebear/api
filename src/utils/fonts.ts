@@ -12,10 +12,12 @@ function extractTextContent(svg: string): string[] {
 
   while (true) {
     const openStart = svg.indexOf('<text', pos);
+
     if (openStart === -1) break;
 
     // Ensure it's <text> or <text ...>, not <textPath> etc.
     const charAfterTag = svg.charCodeAt(openStart + 5);
+
     // Must be '>' (62), '/' (47), space (32), tab (9), newline (10), or carriage return (13)
     if (
       charAfterTag !== 62 &&
@@ -30,9 +32,11 @@ function extractTextContent(svg: string): string[] {
     }
 
     const openEnd = svg.indexOf('>', openStart);
+
     if (openEnd === -1) break;
 
     const closeStart = svg.indexOf('</text>', openEnd);
+
     if (closeStart === -1) break;
 
     results.push(svg.slice(openEnd + 1, closeStart));
@@ -96,6 +100,7 @@ export class FontLookup {
         return font.fontPath;
       }
     }
+
     return undefined;
   }
 
@@ -109,6 +114,7 @@ export class FontLookup {
     for (const text of extractTextContent(svg)) {
       for (const char of text) {
         const fontPath = this.findFont(char.charCodeAt(0));
+
         if (fontPath) {
           requiredFonts.add(fontPath);
         }

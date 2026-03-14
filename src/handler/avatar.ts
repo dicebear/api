@@ -1,14 +1,14 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import type { Core, RequestFormat } from '../types.js';
+import type { Core, RequestFormat, Style } from '../types.js';
 import { config, IMAGE_FORMATS } from '../config.js';
 import { toJpeg, toPng, toWebp, toAvif } from '@dicebear/converter';
 
 export type AvatarRequest = {
   Params: {
     format: RequestFormat;
-    options?: Record<string, any>;
+    options?: Record<string, unknown>;
   };
-  Querystring: Record<string, any>;
+  Querystring: Record<string, unknown>;
 };
 
 // Map format names to converter functions
@@ -20,7 +20,7 @@ const FORMAT_CONVERTERS = {
   avif: toAvif,
 } as const;
 
-export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
+export function avatarHandler(app: FastifyInstance, core: Core, style: Style) {
   return async (
     request: FastifyRequest<AvatarRequest>,
     reply: FastifyReply,
@@ -36,7 +36,7 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
     if (formatConfig) {
       options['size'] = options['size']
         ? Math.min(
-            Math.max(options['size'], formatConfig.size.min),
+            Math.max(options['size'] as number, formatConfig.size.min),
             formatConfig.size.max,
           )
         : formatConfig.size.default;
@@ -69,13 +69,14 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: any) {
     // Handle image formats (png, jpg, jpeg, webp, avif)
     const converter =
       FORMAT_CONVERTERS[format as keyof typeof FORMAT_CONVERTERS];
+
     if (converter && formatConfig) {
       const svgString = avatar.toString();
       const fonts = app.fontLookup.getRequiredFonts(svgString);
 
       reply.header('Content-Type', formatMeta!.contentType);
       const result = await converter(svgString, {
-        size: options['size'],
+        size: options['size'] as number,
         includeExif: formatConfig.exif,
         fonts,
       }).toArrayBuffer();

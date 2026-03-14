@@ -6,9 +6,11 @@ import { parseQueryString } from '../dist/utils/query-string.js';
 // Helper to create expected objects with null prototype (matching parseQueryString output)
 function expected(obj) {
   const result = Object.create(null);
+
   for (const [key, value] of Object.entries(obj)) {
     result[key] = value;
   }
+
   return result;
 }
 
@@ -127,5 +129,30 @@ describe('parseQueryString', () => {
       result,
       expected({ backgroundColor: ['000000', 'ffffff'] }),
     );
+  });
+
+  test('respects custom arrayLimit for indexed arrays', () => {
+    // With arrayLimit=5, up to 5 indexed elements parse as a proper array
+    const params = Array.from(
+      { length: 5 },
+      (_, i) => `color[${i}]=val${i}`,
+    ).join('&');
+    const result = parseQueryString(params, 5);
+
+    assert.ok(Array.isArray(result['color']));
+    assert.equal(result['color'].length, 5);
+  });
+
+  test('throws when parameterLimit is exceeded', () => {
+    assert.throws(
+      () => parseQueryString('a=1&b=2&c=3', 100, 1),
+      { name: 'QueryStringRangeError' },
+    );
+  });
+
+  test('does not throw when within parameterLimit', () => {
+    const result = parseQueryString('a=1', 100, 1);
+
+    assert.equal(Object.keys(result).length, 1);
   });
 });

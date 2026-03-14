@@ -8,10 +8,14 @@ declare module 'fastify' {
   }
 }
 
+// DiceBear styles are dynamically loaded modules with no shared TypeScript interface.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Style = any;
+
 export type Core = {
   createAvatar: (
-    style: any,
-    options?: any,
+    style: Style,
+    options?: Record<string, unknown>,
   ) => {
     toString: () => string;
     toJson: () => {
@@ -24,7 +28,7 @@ export type Core = {
 
 export type Version = {
   core: Core;
-  collection: Record<string, any>;
+  collection: Record<string, Style>;
 };
 
 // Generic types for image format configuration
@@ -65,6 +69,10 @@ export type Config = {
   };
   cacheControl: {
     avatar: number;
+  };
+  queryString: {
+    arrayLimitMin: number;
+    parameterLimitMin: number;
   };
 };
 

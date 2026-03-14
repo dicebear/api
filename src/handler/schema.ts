@@ -1,5 +1,5 @@
 import type { RouteHandlerMethod } from 'fastify';
-import { JSONSchema7, JSONSchema7Definition } from 'json-schema';
+import { JSONSchema7 } from 'json-schema';
 
 export function schemaHandler(schema: JSONSchema7): RouteHandlerMethod {
   return (request, reply) => {
