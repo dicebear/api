@@ -46,6 +46,7 @@ export type Config = {
   logger: boolean;
   workers: number;
   versions: number[];
+  excludedOptions: string[];
   png: ImageFormatConfig;
   jpeg: ImageFormatConfig;
   webp: ImageFormatConfig;

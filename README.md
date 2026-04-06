@@ -73,6 +73,7 @@ npm start
 | `AVIF_EXIF`                        | `1`         | Enable EXIF metadata for AVIF (1 = on, 0 = off).           |
 | `JSON`                             | `1`         | Enable the JSON endpoint (1 = on, 0 = off).                |
 | `QUERY_STRING_ARRAY_LIMIT_MIN`     | `20`        | Minimum number of values allowed per array parameter.      |
+| `EXCLUDED_OPTIONS`                 | `idRandomization,fontFamily,fontWeight,title` | Comma-separated list of option names to exclude.           |
 | `QUERY_STRING_PARAMETER_LIMIT_MIN` | `100`       | Minimum number of query string parameters allowed.         |
 
 > [!NOTE]

@@ -28,6 +28,9 @@ export const config: Config = {
   cacheControl: {
     avatar: Number(process.env.CACHE_CONTROL_AVATARS ?? 60 * 60 * 24 * 365),
   },
+  excludedOptions: (
+    process.env.EXCLUDED_OPTIONS ?? 'idRandomization,fontFamily,fontWeight,title'
+  ).split(',').filter(Boolean),
   queryString: {
     arrayLimitMin: Number(process.env.QUERY_STRING_ARRAY_LIMIT_MIN ?? 20),
     parameterLimitMin: Number(

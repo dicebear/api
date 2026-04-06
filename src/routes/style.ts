@@ -11,6 +11,10 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const optionsSchema = require('@dicebear/schema/options.json');
 
+for (const key of config.excludedOptions) {
+  delete optionsSchema.properties[key];
+}
+
 const paramsSchema = {
   type: 'object' as const,
   properties: {
