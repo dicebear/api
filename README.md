@@ -11,7 +11,7 @@ Self-host the DiceBear avatar API for privacy-by-design and commercial use. Buil
 ### With Docker
 
 ```sh
-docker run --tmpfs /run --tmpfs /tmp -p 3000:3000 -i -t dicebear/api:3
+docker run --tmpfs /run --tmpfs /tmp -p 3000:3000 -i -t dicebear/api:4
 ```
 
 Or with `docker-compose.yml`:
@@ -19,7 +19,7 @@ Or with `docker-compose.yml`:
 ```yaml
 services:
   dicebear:
-    image: dicebear/api:3
+    image: dicebear/api:4
     restart: always
     ports:
       - '3000:3000'
@@ -49,7 +49,7 @@ npm start
 | `HOST`                             | `0.0.0.0`   | Host to bind to (all IPv4 addresses by default).           |
 | `LOGGER`                           | `0`         | Enable request logger (1 = on, 0 = off).                   |
 | `WORKERS`                          | `1`         | Number of Node.js worker threads.                          |
-| `VERSIONS`                         | `5,6,7,8,9` | Comma-separated list of supported DiceBear major versions. |
+| `VERSIONS`                         | `10`        | Comma-separated list of supported DiceBear major versions. |
 | `CACHE_CONTROL_AVATARS`            | `31536000`  | Cache duration for avatar responses in seconds (1 year).   |
 | `PNG`                              | `1`         | Enable the PNG endpoint (1 = on, 0 = off).                 |
 | `PNG_SIZE_MIN`                     | `1`         | Minimum allowed PNG size in px.                            |
