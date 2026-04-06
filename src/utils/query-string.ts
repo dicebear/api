@@ -60,3 +60,31 @@ export function parseQueryString(
 
   return result;
 }
+
+export function transformWeightedFields(
+  query: Record<string, unknown>,
+  weightedFields: Set<string>,
+): void {
+  for (const key of weightedFields) {
+    const value = query[key];
+    if (!Array.isArray(value)) continue;
+
+    const hasWeights = value.some(
+      (v: unknown) => typeof v === 'string' && v.includes(':'),
+    );
+    if (!hasWeights) continue;
+
+    const result: Record<string, number> = {};
+
+    for (const pair of value) {
+      if (typeof pair !== 'string') continue;
+      const [name, weight] = pair.split(':');
+
+      if (name) {
+        result[name.trim()] = weight !== undefined ? Number(weight) : 1;
+      }
+    }
+
+    query[key] = result;
+  }
+}

@@ -1,206 +1,114 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 
-import {
-  getSchemaLimits,
-  getVersionsQueryLimits,
-} from '../dist/utils/schema.js';
+import { getQueryLimits } from '../dist/utils/schema.js';
 
-describe('getSchemaLimits', () => {
-  test('returns zero limits for empty schema', () => {
-    assert.deepEqual(getSchemaLimits({}), { parameterLimit: 0, arrayLimit: 0 });
-  });
+// Minimal mock that mimics Style's public API
+function mockStyle({ components = {}, colors = {} }) {
+  return {
+    style: {
+      components: () =>
+        new Map(
+          Object.entries(components).map(([name, variantCount]) => [
+            name,
+            {
+              variants: () => new Map(Array.from({ length: variantCount }, (_, i) => [`v${i}`, {}])),
+            },
+          ]),
+        ),
+      colors: () =>
+        new Map(
+          Object.entries(colors).map(([name, valueCount]) => [
+            name,
+            { values: () => Array.from({ length: valueCount }, (_, i) => `#${i}`) },
+          ]),
+        ),
+    },
+    weightedFields: new Set(),
+  };
+}
 
-  test('counts all properties as parameterLimit', () => {
-    const result = getSchemaLimits({
-      properties: {
-        seed: { type: 'string' },
-        size: { type: 'number' },
-        flip: { type: 'boolean' },
-      },
-    });
-
-    assert.equal(result.parameterLimit, 3);
-    assert.equal(result.arrayLimit, 0);
-  });
-
-  test('returns max enum length for array property', () => {
-    const result = getSchemaLimits({
-      properties: {
-        hair: {
-          type: 'array',
-          items: { type: 'string', enum: ['short', 'long', 'bun'] },
-        },
-      },
-    });
-
-    assert.equal(result.arrayLimit, 3);
-  });
-
-  test('returns max enum length across multiple array properties', () => {
-    const result = getSchemaLimits({
-      properties: {
-        hair: {
-          type: 'array',
-          items: { type: 'string', enum: ['short', 'long'] },
-        },
-        eyes: {
-          type: 'array',
-          items: { type: 'string', enum: ['open', 'closed', 'squint', 'wink'] },
-        },
-      },
-    });
-
-    assert.equal(result.arrayLimit, 4);
-  });
-
-  test('ignores array properties without enum', () => {
-    const result = getSchemaLimits({
-      properties: {
-        tags: { type: 'array', items: { type: 'string' } },
-      },
-    });
-
-    assert.equal(result.arrayLimit, 0);
-  });
-
-  test('ignores non-array properties for arrayLimit', () => {
-    const result = getSchemaLimits({
-      properties: {
-        backgroundColor: { type: 'string', enum: ['red', 'blue', 'green'] },
-      },
-    });
-
-    assert.equal(result.arrayLimit, 0);
-    assert.equal(result.parameterLimit, 1);
-  });
-});
-
-describe('getVersionsQueryLimits', () => {
-  test('returns configured minimums for empty versions', () => {
-    const result = getVersionsQueryLimits({});
-
+describe('getQueryLimits', () => {
+  test('returns config minimums for empty input', () => {
+    const result = getQueryLimits([]);
     assert.equal(result.arrayLimit, 20);
     assert.equal(result.parameterLimit, 100);
   });
 
-  test('merges core and style schema without double-counting overlapping properties', () => {
-    // Use 80 core + 80 style props with 30 overlapping → 130 unique (> config min of 100)
-    const coreProps = Object.fromEntries(
-      Array.from({ length: 80 }, (_, i) => [`prop${i}`, { type: 'string' }]),
-    );
-    const styleProps = Object.fromEntries([
-      // 30 overlapping with core (prop0..prop29)
-      ...Array.from({ length: 30 }, (_, i) => [`prop${i}`, { type: 'string' }]),
-      // 50 unique
-      ...Array.from({ length: 50 }, (_, i) => [`hair${i}`, { type: 'string' }]),
+  test('returns config minimums for styles with few options', () => {
+    const styles = new Map([['simple', mockStyle({ components: { eyes: 3 }, colors: { skin: 5 } })]]);
+    const result = getQueryLimits([styles]);
+
+    // 12 base + 1*5 components + 2*4 colors(skin+bg) = 12+5+8 = 25 < 100 min
+    assert.equal(result.parameterLimit, 100);
+    // max(3 variants, 5 colors) = 5 < 20 min
+    assert.equal(result.arrayLimit, 20);
+  });
+
+  test('computes parameterLimit from components and colors', () => {
+    // 12 base + 10*5 + 6*4 = 12 + 50 + 24 = 86 < 100 min
+    const smallStyle = mockStyle({
+      components: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`comp${i}`, 2])),
+      colors: Object.fromEntries(Array.from({ length: 5 }, (_, i) => [`color${i}`, 3])),
+    });
+    // 12 base + 20*5 + 11*4 = 12 + 100 + 44 = 156 > 100 min
+    const largeStyle = mockStyle({
+      components: Object.fromEntries(Array.from({ length: 20 }, (_, i) => [`comp${i}`, 2])),
+      colors: Object.fromEntries(Array.from({ length: 10 }, (_, i) => [`color${i}`, 3])),
+    });
+
+    const styles = new Map([
+      ['small', smallStyle],
+      ['large', largeStyle],
     ]);
-    const versions = {
-      '9.x': {
-        core: { schema: { properties: coreProps } },
-        collection: { style1: { schema: { properties: styleProps } } },
-      },
-    };
-    const result = getVersionsQueryLimits(versions);
-
-    // 80 core + 50 unique style = 130 merged (not 160 with double-counting)
-    assert.equal(result.parameterLimit, 130);
+    const result = getQueryLimits([styles]);
+    assert.equal(result.parameterLimit, 156);
   });
 
-  test('takes maximum arrayLimit across all styles', () => {
-    const versions = {
-      '9.x': {
-        core: { schema: { properties: {} } },
-        collection: {
-          styleA: {
-            schema: {
-              properties: {
-                hair: {
-                  type: 'array',
-                  items: { type: 'string', enum: ['a', 'b'] },
-                },
-              },
-            },
-          },
-          styleB: {
-            schema: {
-              properties: {
-                eyes: {
-                  type: 'array',
-                  items: {
-                    type: 'string',
-                    enum: ['a', 'b', 'c', 'd', 'e'],
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    };
-    const result = getVersionsQueryLimits(versions);
-
-    assert.equal(result.arrayLimit, 20); // minimum applies, actual max enum is 5
+  test('computes arrayLimit from max variant count', () => {
+    const styles = new Map([
+      ['style1', mockStyle({ components: { eyes: 5, mouth: 30 }, colors: {} })],
+      ['style2', mockStyle({ components: { hair: 10 }, colors: {} })],
+    ]);
+    const result = getQueryLimits([styles]);
+    assert.equal(result.arrayLimit, 30);
   });
 
-  test('exceeds minimum when enum is larger than 100', () => {
-    const largeEnum = Array.from({ length: 150 }, (_, i) => `item${i}`);
-    const versions = {
-      '9.x': {
-        core: { schema: { properties: {} } },
-        collection: {
-          icons: {
-            schema: {
-              properties: {
-                icon: {
-                  type: 'array',
-                  items: { type: 'string', enum: largeEnum },
-                },
-              },
-            },
-          },
-        },
-      },
-    };
-    const result = getVersionsQueryLimits(versions);
-
-    assert.equal(result.arrayLimit, 150);
+  test('computes arrayLimit from max color value count', () => {
+    const styles = new Map([
+      ['style1', mockStyle({ components: {}, colors: { skin: 25, hair: 15 } })],
+    ]);
+    const result = getQueryLimits([styles]);
+    assert.equal(result.arrayLimit, 25);
   });
 
-  test('takes maximum parameterLimit across all versions and styles', () => {
-    // Use property counts that exceed the config minimum of 100
-    const smallProps = Object.fromEntries(
-      Array.from({ length: 10 }, (_, i) => [`prop${i}`, { type: 'string' }]),
-    );
-    const largeProps = Object.fromEntries(
-      Array.from({ length: 120 }, (_, i) => [`prop${i}`, { type: 'string' }]),
-    );
-    const versions = {
-      '8.x': {
-        core: { schema: { properties: smallProps } },
-        collection: { styleA: { schema: { properties: smallProps } } },
-      },
-      '9.x': {
-        core: { schema: { properties: {} } },
-        collection: { styleB: { schema: { properties: largeProps } } },
-      },
-    };
-    const result = getVersionsQueryLimits(versions);
+  test('takes max across multiple version maps', () => {
+    const v10 = new Map([['small', mockStyle({ components: { a: 5 }, colors: {} })]]);
+    const v11 = new Map([['big', mockStyle({ components: { a: 50 }, colors: {} })]]);
 
-    // 8.x: 10+10 unique = 20; 9.x: 0+120 = 120 → max is 120
-    assert.equal(result.parameterLimit, 120);
+    const result = getQueryLimits([v10, v11]);
+    assert.equal(result.arrayLimit, 50);
   });
 
-  test('handles styles without a schema', () => {
-    const versions = {
-      '9.x': {
-        core: { schema: { properties: { seed: { type: 'string' } } } },
-        collection: {
-          styleWithoutSchema: {},
-        },
-      },
-    };
+  test('counts background as extra color', () => {
+    // 0 components, 2 defined colors + 1 background = 3 colors
+    // 12 base + 0 + 3*4 = 24
+    const styles = new Map([
+      ['style', mockStyle({ components: {}, colors: { skin: 3, hair: 3 } })],
+    ]);
+    const result = getQueryLimits([styles]);
 
-    assert.doesNotThrow(() => getVersionsQueryLimits(versions));
+    // parameterLimit won't exceed 100 min, but let's verify the formula with a larger example
+    // 12 base + 0 components + (20 colors + 1 bg) * 4 = 12 + 84 = 96 < 100
+    const manyColors = Object.fromEntries(Array.from({ length: 20 }, (_, i) => [`c${i}`, 3]));
+    const styles2 = new Map([['style', mockStyle({ components: {}, colors: manyColors })]]);
+    const result2 = getQueryLimits([styles2]);
+    assert.equal(result2.parameterLimit, 100); // 96 < 100 min
+
+    // 12 base + 0 + (25 colors + 1 bg) * 4 = 12 + 104 = 116 > 100
+    const evenMoreColors = Object.fromEntries(Array.from({ length: 25 }, (_, i) => [`c${i}`, 3]));
+    const styles3 = new Map([['style', mockStyle({ components: {}, colors: evenMoreColors })]]);
+    const result3 = getQueryLimits([styles3]);
+    assert.equal(result3.parameterLimit, 116);
   });
 });

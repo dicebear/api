@@ -6,9 +6,9 @@ import {
   parseQueryString,
   QueryStringRangeError,
 } from './utils/query-string.js';
-import { getVersionsQueryLimits } from './utils/schema.js';
-import { versionRoutes } from './routes/version.js';
-import { getVersions } from './utils/versions.js';
+import { getQueryLimits } from './utils/schema.js';
+import { collectionRoutes } from './routes/collection.js';
+import { loadDefinitions } from './utils/definitions.js';
 import { Font } from './types.js';
 import { FontLookup } from './utils/fonts.js';
 import { fileURLToPath } from 'url';
@@ -18,9 +18,14 @@ import * as path from 'path';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export const app = async () => {
-  const versions = await getVersions();
+  const versionMap = new Map<number, ReturnType<typeof loadDefinitions>>();
 
-  const { arrayLimit, parameterLimit } = getVersionsQueryLimits(versions);
+  for (const version of config.versions) {
+    versionMap.set(version, loadDefinitions(version));
+  }
+
+  const { arrayLimit, parameterLimit } = getQueryLimits([...versionMap.values()]);
+
   const app = fastify({
     logger: config.logger,
     ajv: {
@@ -51,6 +56,7 @@ export const app = async () => {
   ) as Font[];
 
   app.decorate('fontLookup', new FontLookup(fonts));
+  app.decorate('queryLimits', { arrayLimit, parameterLimit });
 
   app.addHook('onRequest', (request, reply, done) => {
     const query = request.query as Record<string, unknown>;
@@ -63,7 +69,8 @@ export const app = async () => {
         error: 'Bad Request',
         message,
       });
-      return;
+
+      return done();
     }
 
     done();
@@ -71,7 +78,12 @@ export const app = async () => {
 
   await app.register(cors);
 
-  await app.register(versionRoutes, { versions });
+  for (const [version, styles] of versionMap) {
+    await app.register(collectionRoutes, {
+      prefix: `/${version}.x`,
+      styles,
+    });
+  }
 
   return app;
 };

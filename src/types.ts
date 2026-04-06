@@ -1,37 +1,23 @@
-import { JSONSchema7 } from 'json-schema';
-import { FontLookup } from './utils/fonts.js';
+import type { Style } from '@dicebear/core';
+import type { FontLookup } from './utils/fonts.js';
+
+export type QueryLimits = {
+  arrayLimit: number;
+  parameterLimit: number;
+};
 
 declare module 'fastify' {
   interface FastifyInstance {
-    fonts: Font[];
     fontLookup: FontLookup;
+    queryLimits: QueryLimits;
   }
 }
 
-// DiceBear styles are dynamically loaded modules with no shared TypeScript interface.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Style = any;
-
-export type Core = {
-  createAvatar: (
-    style: Style,
-    options?: Record<string, unknown>,
-  ) => {
-    toString: () => string;
-    toJson: () => {
-      svg: string;
-      extra: Record<string, unknown>;
-    };
-  };
-  schema: JSONSchema7;
+export type StyleEntry = {
+  style: Style;
+  weightedFields: Set<string>;
 };
 
-export type Version = {
-  core: Core;
-  collection: Record<string, Style>;
-};
-
-// Generic types for image format configuration
 export type SizeConfig = {
   min: number;
   max: number;

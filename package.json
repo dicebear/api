@@ -15,18 +15,12 @@
     "lint:fix": "eslint --fix src",
     "format": "prettier --write ."
   },
-  "workspaces": [
-    "./versions/*"
-  ],
   "dependencies": {
-    "@dicebear/api-5": "*",
-    "@dicebear/api-6": "*",
-    "@dicebear/api-7": "*",
-    "@dicebear/api-8": "*",
-    "@dicebear/api-9": "*",
-    "@dicebear/converter": "^9.4.2",
+    "@dicebear/converter": "^10.0.0-rc.2",
+    "@dicebear/core": "^10.0.0-rc.2",
+    "@dicebear/definitions-10": "npm:@dicebear/definitions@^10.0.0-rc.2",
+    "@dicebear/schema": "^0.10.1",
     "@fastify/cors": "^11.2.0",
-    "change-case": "^5.4.4",
     "fastify": "^5.8.2",
     "qs": "^6.15.0"
   },
@@ -36,7 +30,7 @@
     "@fontsource/noto-sans-kr": "^5.2.9",
     "@fontsource/noto-sans-sc": "^5.2.9",
     "@fontsource/noto-sans-thai": "^5.2.8",
-    "@tsconfig/node20": "^20.1.9",
+    "@tsconfig/node22": "^22.0.1",
     "@types/json-schema": "^7.0.15",
     "@types/node": "^25.5.0",
     "@types/qs": "^6.15.0",
@@ -48,6 +42,6 @@
     "typescript-eslint": "^8.57.0"
   },
   "engines": {
-    "node": ">=20.10"
+    "node": ">=22.0.0"
   }
 }

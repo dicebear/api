@@ -1,7 +1,10 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { parseQueryString } from '../dist/utils/query-string.js';
+import {
+  parseQueryString,
+  transformWeightedFields,
+} from '../dist/utils/query-string.js';
 
 // Helper to create expected objects with null prototype (matching parseQueryString output)
 function expected(obj) {
@@ -153,5 +156,87 @@ describe('parseQueryString', () => {
     const result = parseQueryString('a=1', 100, 1);
 
     assert.equal(Object.keys(result).length, 1);
+  });
+});
+
+describe('transformWeightedFields', () => {
+  const weighted = new Set(['eyesVariant', 'mouthVariant']);
+
+  test('converts variant:weight arrays to objects', () => {
+    const query = { eyesVariant: ['happy:3', 'wink:1'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, { happy: 3, wink: 1 });
+  });
+
+  test('weight is 0 when empty after colon', () => {
+    // 'happy:'.split(':') → ['happy', ''], Number('') → 0
+    const query = { eyesVariant: ['happy:', 'wink:2'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, { happy: 0, wink: 2 });
+  });
+
+  test('defaults weight to 1 when no colon', () => {
+    const query = { eyesVariant: ['happy:1', 'wink'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, { happy: 1, wink: 1 });
+  });
+
+  test('leaves non-weighted fields unchanged', () => {
+    const query = { size: ['128'], eyesVariant: ['happy:2', 'wink:1'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.size, ['128']);
+    assert.deepEqual(query.eyesVariant, { happy: 2, wink: 1 });
+  });
+
+  test('leaves arrays without colons unchanged for weighted fields', () => {
+    const query = { eyesVariant: ['happy', 'wink'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, ['happy', 'wink']);
+  });
+
+  test('does not transform non-array values', () => {
+    const query = { eyesVariant: 'happy:2' };
+    transformWeightedFields(query, weighted);
+    assert.equal(query.eyesVariant, 'happy:2');
+  });
+
+  test('handles empty array', () => {
+    const query = { eyesVariant: [] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, []);
+  });
+
+  test('handles empty weighted fields set', () => {
+    const query = { eyesVariant: ['happy:2', 'wink:1'] };
+    transformWeightedFields(query, new Set());
+    assert.deepEqual(query.eyesVariant, ['happy:2', 'wink:1']);
+  });
+
+  test('handles missing keys gracefully', () => {
+    const query = { seed: ['test'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query, { seed: ['test'] });
+  });
+
+  test('trims whitespace from variant names', () => {
+    const query = { eyesVariant: [' happy :2', ' wink :1'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, { happy: 2, wink: 1 });
+  });
+
+  test('handles multiple weighted fields', () => {
+    const query = {
+      eyesVariant: ['happy:3', 'wink:1'],
+      mouthVariant: ['smile:2', 'frown:1'],
+    };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, { happy: 3, wink: 1 });
+    assert.deepEqual(query.mouthVariant, { smile: 2, frown: 1 });
+  });
+
+  test('detects weighted format when at least one element has colon', () => {
+    const query = { eyesVariant: ['happy', 'wink:2'] };
+    transformWeightedFields(query, weighted);
+    assert.deepEqual(query.eyesVariant, { happy: 1, wink: 2 });
   });
 });

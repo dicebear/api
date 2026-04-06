@@ -1,22 +1,20 @@
 import type { FastifyPluginCallback } from 'fastify';
-import type { Version } from '../types.js';
-import { kebabCase } from 'change-case';
+import type { StyleEntry } from '../types.js';
 import { styleRoutes } from './style.js';
 
 type Options = {
-  version: Version;
+  styles: Map<string, StyleEntry>;
 };
 
 export const collectionRoutes: FastifyPluginCallback<Options> = (
   app,
-  { version },
+  { styles },
   done,
 ) => {
-  for (const [prefix, style] of Object.entries(version.collection)) {
+  for (const [name, entry] of styles) {
     app.register(styleRoutes, {
-      prefix: `/${kebabCase(prefix)}`,
-      core: version.core,
-      style,
+      prefix: `/${name}`,
+      entry,
     });
   }
 

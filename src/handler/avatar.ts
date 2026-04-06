@@ -1,17 +1,17 @@
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import type { Core, RequestFormat, Style } from '../types.js';
+import type { RequestFormat, StyleEntry } from '../types.js';
+import { Avatar } from '@dicebear/core';
 import { config, IMAGE_FORMATS } from '../config.js';
 import { toJpeg, toPng, toWebp, toAvif } from '@dicebear/converter';
 
 export type AvatarRequest = {
   Params: {
     format: RequestFormat;
-    options?: Record<string, unknown>;
+    options?: string;
   };
   Querystring: Record<string, unknown>;
 };
 
-// Map format names to converter functions
 const FORMAT_CONVERTERS = {
   png: toPng,
   jpg: toJpeg,
@@ -20,7 +20,7 @@ const FORMAT_CONVERTERS = {
   avif: toAvif,
 } as const;
 
-export function avatarHandler(app: FastifyInstance, core: Core, style: Style) {
+export function avatarHandler(app: FastifyInstance, entry: StyleEntry) {
   return async (
     request: FastifyRequest<AvatarRequest>,
     reply: FastifyReply,
@@ -28,11 +28,9 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: Style) {
     const options = request.query;
     const format = request.params.format;
 
-    // Get format metadata and config once (reused for size constraints and conversion)
     const formatMeta = IMAGE_FORMATS[format];
     const formatConfig = formatMeta ? config[formatMeta.configKey] : undefined;
 
-    // Validate and apply size constraints for image formats
     if (formatConfig) {
       options['size'] = options['size']
         ? Math.min(
@@ -42,31 +40,25 @@ export function avatarHandler(app: FastifyInstance, core: Core, style: Style) {
         : formatConfig.size.default;
     }
 
-    // Define default seed
     options['seed'] = options['seed'] ?? '';
 
-    // Define filename
     reply.header('Content-Disposition', `inline; filename="avatar.${format}"`);
 
-    // Create avatar
-    const avatar = core.createAvatar(style, options);
+    const avatar = new Avatar(entry.style, options);
 
     reply.header('X-Robots-Tag', 'noindex');
     reply.header('Cache-Control', `max-age=${config.cacheControl.avatar}`);
 
-    // Handle SVG format
     if (format === 'svg') {
       reply.header('Content-Type', 'image/svg+xml');
       return avatar.toString();
     }
 
-    // Handle JSON format
     if (format === 'json') {
       reply.header('Content-Type', 'application/json');
-      return JSON.stringify(avatar.toJson());
+      return JSON.stringify(avatar.toJSON());
     }
 
-    // Handle image formats (png, jpg, jpeg, webp, avif)
     const converter =
       FORMAT_CONVERTERS[format as keyof typeof FORMAT_CONVERTERS];
 

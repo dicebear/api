@@ -1,23 +1,21 @@
 import type { FastifyPluginCallback } from 'fastify';
-import type { JSONSchema7 } from 'json-schema';
-import type { Core, Style } from '../types.js';
-import { schemaHandler } from '../handler/schema.js';
-import { parseQueryString } from '../utils/query-string.js';
-import { getSchemaLimits } from '../utils/schema.js';
+import type { StyleEntry } from '../types.js';
+import {
+  parseQueryString,
+  transformWeightedFields,
+} from '../utils/query-string.js';
 import { AvatarRequest, avatarHandler } from '../handler/avatar.js';
 import { config } from '../config.js';
+import { createRequire } from 'node:module';
 
-type Options = {
-  core: Core;
-  style: Style;
-};
+const require = createRequire(import.meta.url);
+const optionsSchema = require('@dicebear/schema/options.json');
 
-const paramsSchema: JSONSchema7 = {
-  $schema: 'http://json-schema.org/draft-07/schema#',
-  type: 'object',
+const paramsSchema = {
+  type: 'object' as const,
   properties: {
     format: {
-      type: 'string',
+      type: 'string' as const,
       enum: [
         'svg',
         ...(config.png.enabled ? ['png'] : []),
@@ -30,54 +28,45 @@ const paramsSchema: JSONSchema7 = {
   },
 };
 
-// Route patterns for avatar endpoints
 const AVATAR_ROUTES = [
   { url: '/:format', hasPathOptions: false },
   { url: '/:format/:options', hasPathOptions: true },
 ] as const;
 
+type Options = {
+  entry: StyleEntry;
+};
+
 export const styleRoutes: FastifyPluginCallback<Options> = (
   app,
-  { core, style },
+  { entry },
   done,
 ) => {
-  const optionsSchema: JSONSchema7 = {
-    $schema: 'http://json-schema.org/draft-07/schema#',
-    type: 'object',
-    properties: {
-      ...core.schema.properties,
-      ...style.schema?.properties,
-    },
-  };
-
-  const { arrayLimit, parameterLimit } = getSchemaLimits(optionsSchema);
-
-  app.route({
-    method: 'GET',
-    url: '/schema.json',
-    handler: schemaHandler(optionsSchema),
-  });
+  const { arrayLimit, parameterLimit } = app.queryLimits;
 
   for (const { url, hasPathOptions } of AVATAR_ROUTES) {
     app.route<AvatarRequest>({
       method: 'GET',
       url,
-      ...(hasPathOptions && {
-        preValidation: async (request) => {
-          if (typeof request.params.options === 'string') {
-            request.query = parseQueryString(
-              request.params.options,
-              arrayLimit,
-              parameterLimit,
-            );
-          }
-        },
-      }),
+      preValidation: async (request) => {
+        if (hasPathOptions && typeof request.params.options === 'string') {
+          request.query = parseQueryString(
+            request.params.options,
+            arrayLimit,
+            parameterLimit,
+          );
+        }
+
+        transformWeightedFields(
+          request.query as Record<string, unknown>,
+          entry.weightedFields,
+        );
+      },
       schema: {
         querystring: optionsSchema,
         params: paramsSchema,
       },
-      handler: avatarHandler(app, core, style),
+      handler: avatarHandler(app, entry),
     });
   }
 

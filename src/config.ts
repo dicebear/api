@@ -24,7 +24,7 @@ export const config: Config = {
   json: {
     enabled: Boolean(Number(process.env.JSON ?? 1)),
   },
-  versions: process.env.VERSIONS?.split(',').map(Number) ?? [5, 6, 7, 8, 9],
+  versions: process.env.VERSIONS?.split(',').map(Number) ?? [10],
   cacheControl: {
     avatar: Number(process.env.CACHE_CONTROL_AVATARS ?? 60 * 60 * 24 * 365),
   },
@@ -36,7 +36,6 @@ export const config: Config = {
   },
 };
 
-// Format metadata mapping request formats to config keys and content types
 export const IMAGE_FORMATS: Record<
   string,
   { configKey: ImageFormat; contentType: string }
