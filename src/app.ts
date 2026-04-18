@@ -78,6 +78,8 @@ export const app = async () => {
 
   await app.register(cors);
 
+  app.get('/health', async () => ({ status: 'ok' }));
+
   for (const [version, styles] of versionMap) {
     await app.register(collectionRoutes, {
       prefix: `/${version}.x`,
