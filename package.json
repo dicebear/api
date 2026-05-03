@@ -19,7 +19,7 @@
     "@dicebear/converter": "^10.0.0-rc.2",
     "@dicebear/core": "^10.0.0-rc.2",
     "@dicebear/definitions-10": "npm:@dicebear/definitions@^10.0.0-rc.2",
-    "@dicebear/schema": "^0.10.1",
+    "@dicebear/schema": "^0.14.0",
     "@fastify/cors": "^11.2.0",
     "fastify": "^5.8.2",
     "qs": "^6.15.0"
