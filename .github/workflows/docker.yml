@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    uses: dicebear/api/.github/workflows/test.yml@3.x
+    uses: dicebear/api/.github/workflows/test.yml@4.x
   push_to_registries:
     needs: test
     name: Push Docker image to multiple registries
