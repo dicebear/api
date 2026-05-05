@@ -98,13 +98,18 @@ describe('PNG endpoint', () => {
     assert.ok(large.rawPayload.length > small.rawPayload.length);
   });
 
-  test('clamps size to max', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=9999' });
+  test('clamps size to format max', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=1024' });
     assert.equal(res.statusCode, 200);
   });
 
   test('rejects size below schema minimum', async () => {
     const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=0' });
+    assert.equal(res.statusCode, 400);
+  });
+
+  test('rejects size above schema maximum', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=9999' });
     assert.equal(res.statusCode, 400);
   });
 });
