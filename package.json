@@ -16,8 +16,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@dicebear/converter": "^10.0.0-rc.2",
-    "@dicebear/core": "^10.0.0-rc.2",
+    "@dicebear/converter": "^10.0.0-rc.3",
+    "@dicebear/core": "^10.0.0-rc.3",
     "@dicebear/definitions-10": "npm:@dicebear/definitions@^10.0.0-rc.6",
     "@dicebear/schema": "^0.14.1",
     "@fastify/cors": "^11.2.0",
