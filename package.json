@@ -5,9 +5,9 @@
   "author": "Florian Körner <contact@florian-koerner.com>",
   "type": "module",
   "scripts": {
-    "predev": "tsx ./scripts/build-fonts.ts",
+    "predev": "tsx ./scripts/build-fonts.ts && tsx ./scripts/build-blocklist.ts",
     "dev": "tsx --watch ./src/server.ts",
-    "prebuild": "tsx ./scripts/build-fonts.ts",
+    "prebuild": "tsx ./scripts/build-fonts.ts && tsx ./scripts/build-blocklist.ts",
     "build": "tsc --build",
     "start": "node ./dist/server.js",
     "test": "node --test tests/*.js",
@@ -16,11 +16,12 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@dicebear/converter": "^10.0.0-rc.3",
-    "@dicebear/core": "^10.0.0-rc.3",
+    "@dicebear/converter": "^10.0.0-rc.4",
+    "@dicebear/core": "^10.0.0-rc.4",
     "@dicebear/definitions-10": "npm:@dicebear/definitions@^10.0.0-rc.6",
     "@dicebear/schema": "^0.14.1",
     "@fastify/cors": "^11.2.0",
+    "fast-xml-parser": "^5.7.3",
     "fastify": "^5.8.2",
     "qs": "^6.15.0"
   },

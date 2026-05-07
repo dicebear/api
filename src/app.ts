@@ -51,12 +51,17 @@ export const app = async () => {
     },
   });
 
-  const fonts = JSON.parse(
-    await fs.readFile(path.join(__dirname, '../fonts/fonts.json'), 'utf-8'),
-  ) as Font[];
+  const [fontsRaw, blocklistRaw] = await Promise.all([
+    fs.readFile(path.join(__dirname, '../fonts/fonts.json'), 'utf-8'),
+    fs.readFile(path.join(__dirname, '../data/initials-blocklist.json'), 'utf-8'),
+  ]);
+
+  const fonts = JSON.parse(fontsRaw) as Font[];
+  const initialsBlocklist = JSON.parse(blocklistRaw) as string[];
 
   app.decorate('fontLookup', new FontLookup(fonts));
   app.decorate('queryLimits', { arrayLimit, parameterLimit });
+  app.decorate('initialsBlocklist', new Set(initialsBlocklist));
 
   app.addHook('onRequest', (request, reply, done) => {
     const query = request.query as Record<string, unknown>;

@@ -3,6 +3,7 @@ import type { RequestFormat, StyleEntry } from '../types.js';
 import { Avatar } from '@dicebear/core';
 import { config, IMAGE_FORMATS } from '../config.js';
 import { toJpeg, toPng, toWebp, toAvif } from '@dicebear/converter';
+import { filterInitialsSvg } from '../utils/initials-filter.js';
 
 export type AvatarRequest = {
   Params: {
@@ -49,21 +50,32 @@ export function avatarHandler(app: FastifyInstance, entry: StyleEntry) {
     reply.header('X-Robots-Tag', 'noindex');
     reply.header('Cache-Control', `max-age=${config.cacheControl.avatar}`);
 
+    const renderSvg = () => {
+      const svg = avatar.toString();
+
+      return config.initialsFilter.enabled
+        ? filterInitialsSvg(svg, app.initialsBlocklist)
+        : svg;
+    };
+
     if (format === 'svg') {
       reply.header('Content-Type', 'image/svg+xml');
-      return avatar.toString();
+      return renderSvg();
     }
 
     if (format === 'json') {
       reply.header('Content-Type', 'application/json');
-      return JSON.stringify(avatar.toJSON());
+      return JSON.stringify({
+        svg: renderSvg(),
+        options: avatar.toJSON().options,
+      });
     }
 
     const converter =
       FORMAT_CONVERTERS[format as keyof typeof FORMAT_CONVERTERS];
 
     if (converter && formatConfig) {
-      const svgString = avatar.toString();
+      const svgString = renderSvg();
       const fonts = app.fontLookup.getRequiredFonts(svgString);
 
       reply.header('Content-Type', formatMeta!.contentType);

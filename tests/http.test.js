@@ -68,10 +68,10 @@ describe('JSON endpoint', () => {
     assert.ok(json.svg.startsWith('<svg'));
   });
 
-  test('resolved options contain seed', async () => {
+  test('resolved options do not include the raw seed', async () => {
     const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/json?seed=myseed' });
     const json = JSON.parse(res.body);
-    assert.equal(json.options.seed, 'myseed');
+    assert.equal('seed' in json.options, false);
   });
 
   test('resolved options contain selected variants', async () => {

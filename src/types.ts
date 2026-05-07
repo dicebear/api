@@ -10,6 +10,7 @@ declare module 'fastify' {
   interface FastifyInstance {
     fontLookup: FontLookup;
     queryLimits: QueryLimits;
+    initialsBlocklist: ReadonlySet<string>;
   }
 }
 
@@ -52,6 +53,9 @@ export type Config = {
   webp: ImageFormatConfig;
   avif: ImageFormatConfig;
   json: {
+    enabled: boolean;
+  };
+  initialsFilter: {
     enabled: boolean;
   };
   cacheControl: {

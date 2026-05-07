@@ -24,6 +24,9 @@ export const config: Config = {
   json: {
     enabled: Boolean(Number(process.env.JSON ?? 1)),
   },
+  initialsFilter: {
+    enabled: Boolean(Number(process.env.INITIALS_FILTER ?? 1)),
+  },
   versions: process.env.VERSIONS?.split(',').map(Number) ?? [10],
   cacheControl: {
     avatar: Number(process.env.CACHE_CONTROL_AVATARS ?? 60 * 60 * 24 * 365),
