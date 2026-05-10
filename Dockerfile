@@ -9,6 +9,7 @@ EXPOSE 3000
 WORKDIR /app
 COPY --from=build /app/dist /app/dist
 COPY --from=build /app/fonts /app/fonts
+COPY --from=build /app/data /app/data
 COPY LICENSE /app/LICENSE
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
