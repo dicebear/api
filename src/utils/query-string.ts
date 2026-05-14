@@ -18,13 +18,11 @@ export function parseQueryString(
   parameterLimit = config.queryString.parameterLimitMin,
 ): Record<string, unknown> {
   const result = Object.create(null);
-  // @see https://github.com/dicebear/dicebear/issues/382
-  const preparedStr = str.replaceAll('%2C', ',');
 
   let parsed;
 
   try {
-    parsed = qs.parse(preparedStr, {
+    parsed = qs.parse(str, {
       comma: true,
       plainObjects: true,
       arrayLimit,
