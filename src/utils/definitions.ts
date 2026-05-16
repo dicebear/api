@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 
 export function loadDefinitions(version: number): Map<string, StyleEntry> {
   const definitionsDir = path.dirname(
-    require.resolve(`@dicebear/definitions-${version}/initials.json`),
+    require.resolve(`@dicebear/styles-${version}/initials.json`),
   );
   const styles = new Map<string, StyleEntry>();
 
