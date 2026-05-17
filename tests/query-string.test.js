@@ -36,12 +36,9 @@ describe('parseQueryString', () => {
     );
   });
 
-  test('handles URL-encoded commas (%2C)', () => {
+  test('treats URL-encoded commas (%2C) as literal, not as separators', () => {
     const result = parseQueryString('backgroundColor=000000%2Cffffff');
-    assert.deepEqual(
-      result,
-      expected({ backgroundColor: ['000000', 'ffffff'] }),
-    );
+    assert.deepEqual(result, expected({ backgroundColor: ['000000,ffffff'] }));
   });
 
   test('keeps seed with commas as string (not array)', () => {
