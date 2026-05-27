@@ -72,7 +72,7 @@ export function transformWeightedFields(
     );
     if (!hasWeights) continue;
 
-    const result: Record<string, number> = {};
+    const result: Record<string, number> = Object.create(null);
 
     for (const pair of value) {
       if (typeof pair !== 'string') continue;
