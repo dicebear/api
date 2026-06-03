@@ -136,14 +136,22 @@ multi-arch build or the image will fail to publish on release.
 
 ## Releasing (maintainers only)
 
-Releases are driven by Git tags:
+Record user-facing changes under the `## [Unreleased]` heading in
+[`CHANGELOG.md`](./CHANGELOG.md) as you merge them. To cut a release, run:
 
 ```sh
-git tag v4.x.y
-git push origin main --follow-tags
+scripts/version.sh <version>   # e.g. 4.5.3 or 4.6.0-rc.1
+git push && git push --tags
 ```
 
-The [`docker.yml`](.github/workflows/docker.yml) workflow builds and
+`scripts/version.sh` promotes the changelog's `[Unreleased]` section to a
+dated `## [<version>]` heading, refreshes the compare links, then creates
+the commit and the `v<version>` tag. Unlike the `schema` and `styles`
+repos, this package is private and unpublished, so there is no manifest
+`version` field to bump — the Git tag is the single source of truth.
+
+Pushing the tag triggers the
+[`docker.yml`](.github/workflows/docker.yml) workflow, which builds and
 pushes the multi-arch image to Docker Hub. The `test.yml` workflow runs
 on every push / PR and must stay green.
 
