@@ -11,6 +11,8 @@ export const collectionRoutes: FastifyPluginCallback<Options> = (
   { styles },
   done,
 ) => {
+  app.get('/', async () => ({ styles: [...styles.keys()] }));
+
   for (const [name, entry] of styles) {
     app.register(styleRoutes, {
       prefix: `/${name}`,

@@ -326,6 +326,18 @@ describe('options validation', () => {
   });
 });
 
+describe('styles listing', () => {
+  test('returns list of style names for a version', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x' });
+    const body = JSON.parse(res.body);
+
+    assert.equal(res.statusCode, 200);
+    assert.ok(Array.isArray(body.styles));
+    assert.ok(body.styles.length > 0);
+    assert.ok(body.styles.includes('initials'));
+  });
+});
+
 describe('schema.json endpoint removed', () => {
   test('returns 404 for schema.json', async () => {
     const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/schema.json' });
