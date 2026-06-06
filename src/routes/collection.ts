@@ -7,6 +7,11 @@ type Options = {
   styles: Map<string, StyleEntry>;
 };
 
+/**
+ * Fastify plugin for registering collection-level routes.
+ * Registers a GET endpoint to retrieve a sorted list of style names,
+ * and sub-routes for each style using the styleRoutes plugin.
+ */
 export const collectionRoutes: FastifyPluginCallback<Options> = (
   app,
   { styles },
