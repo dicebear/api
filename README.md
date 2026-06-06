@@ -51,6 +51,7 @@ npm start
 | `WORKERS`                          | `1`         | Number of Node.js worker threads.                          |
 | `VERSIONS`                         | `10`        | Comma-separated list of supported DiceBear major versions. |
 | `CACHE_CONTROL_AVATARS`            | `31536000`  | Cache duration for avatar responses in seconds (1 year).   |
+| `CACHE_CONTROL_STYLES`             | `3600`      | Cache duration for the styles listing in seconds (1 hour). |
 | `PNG`                              | `1`         | Enable the PNG endpoint (1 = on, 0 = off).                 |
 | `PNG_SIZE_MIN`                     | `1`         | Minimum allowed PNG size in px.                            |
 | `PNG_SIZE_MAX`                     | `256`       | Maximum allowed PNG size in px.                            |
