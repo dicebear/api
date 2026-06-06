@@ -60,6 +60,7 @@ export type Config = {
   };
   cacheControl: {
     avatar: number;
+    styles: number;
   };
   queryString: {
     arrayLimitMin: number;
