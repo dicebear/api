@@ -326,6 +326,32 @@ describe('options validation', () => {
   });
 });
 
+describe('styles listing', () => {
+  test('returns list of style names for a version', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x' });
+    const body = JSON.parse(res.body);
+
+    assert.equal(res.statusCode, 200);
+    assert.ok(Array.isArray(body.styles));
+    assert.ok(body.styles.length > 0);
+    assert.ok(body.styles.every((name) => typeof name === 'string'));
+    assert.ok(body.styles.includes('initials'));
+  });
+
+  test('returns style names sorted alphabetically', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x' });
+    const body = JSON.parse(res.body);
+
+    assert.deepEqual(body.styles, [...body.styles].sort());
+  });
+
+  test('sets a cache-control header', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x' });
+
+    assert.match(res.headers['cache-control'], /max-age=\d+/);
+  });
+});
+
 describe('schema.json endpoint removed', () => {
   test('returns 404 for schema.json', async () => {
     const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/schema.json' });

@@ -15,6 +15,13 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- The version root endpoint (e.g. `/10.x`) now returns the list of available
+  style names as `{ "styles": [...] }`, sorted alphabetically, so clients can
+  discover supported styles. The response is cached via the new
+  `CACHE_CONTROL_STYLES` environment variable (default 1 hour).
+
 ## [4.6.0] - 2026-06-03
 
 ### Changed
