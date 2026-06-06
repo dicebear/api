@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-06-06
+
 ### Added
 
 - The version root endpoint (e.g. `/10.x`) now returns the list of available
@@ -30,5 +32,6 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.6.0...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.7.0...HEAD
+[4.7.0]: https://github.com/dicebear/api/compare/v4.6.0...v4.7.0
 [4.6.0]: https://github.com/dicebear/api/compare/v4.5.2...v4.6.0
