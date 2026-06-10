@@ -16,10 +16,10 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@dicebear/converter": "^10.0.2",
-    "@dicebear/core": "^10.0.2",
-    "@dicebear/styles-10": "npm:@dicebear/styles@^10.1.0",
-    "@dicebear/schema": "^1.1.0",
+    "@dicebear/converter": "^10.2.0",
+    "@dicebear/core": "^10.2.0",
+    "@dicebear/styles-10": "npm:@dicebear/styles@^10.2.0",
+    "@dicebear/schema": "^1.2.0",
     "@fastify/cors": "^11.2.0",
     "fast-xml-parser": "^5.7.3",
     "fastify": "^5.8.2",
