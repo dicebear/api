@@ -15,6 +15,14 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- New per-style endpoints `/{version}.x/{style}/definition.json` (raw style
+  definition) and `/{version}.x/{style}/options.json` (options descriptor,
+  without the options listed in `EXCLUDED_OPTIONS`). Both are disabled by
+  default and can be enabled individually via the new `DEFINITION` and
+  `OPTIONS` environment variables.
+
 ## [4.7.0] - 2026-06-06
 
 ### Added

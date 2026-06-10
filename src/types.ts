@@ -55,6 +55,12 @@ export type Config = {
   json: {
     enabled: boolean;
   };
+  definition: {
+    enabled: boolean;
+  };
+  options: {
+    enabled: boolean;
+  };
   initialsFilter: {
     enabled: boolean;
   };

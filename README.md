@@ -73,6 +73,8 @@ npm start
 | `AVIF_SIZE_DEFAULT`                | `128`       | Default AVIF size in px.                                   |
 | `AVIF_EXIF`                        | `1`         | Enable EXIF metadata for AVIF (1 = on, 0 = off).           |
 | `JSON`                             | `1`         | Enable the JSON endpoint (1 = on, 0 = off).                |
+| `DEFINITION`                       | `0`         | Enable the per-style `/definition.json` endpoint serving the raw style definition (1 = on, 0 = off). |
+| `OPTIONS`                          | `0`         | Enable the per-style `/options.json` endpoint serving the options descriptor (1 = on, 0 = off). |
 | `INITIALS_FILTER`                  | `1`         | Replace blocked text in rendered avatars with `*` (1 = on, 0 = off). |
 | `QUERY_STRING_ARRAY_LIMIT_MIN`     | `20`        | Minimum number of values allowed per array parameter.      |
 | `EXCLUDED_OPTIONS`                 | `idRandomization,fontFamily,fontWeight,title` | Comma-separated list of option names to exclude.           |

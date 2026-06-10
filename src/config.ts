@@ -24,6 +24,12 @@ export const config: Config = {
   json: {
     enabled: Boolean(Number(process.env.JSON ?? 1)),
   },
+  definition: {
+    enabled: Boolean(Number(process.env.DEFINITION ?? 0)),
+  },
+  options: {
+    enabled: Boolean(Number(process.env.OPTIONS ?? 0)),
+  },
   initialsFilter: {
     enabled: Boolean(Number(process.env.INITIALS_FILTER ?? 1)),
   },

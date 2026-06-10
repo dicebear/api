@@ -6,6 +6,7 @@ import {
 } from '../utils/query-string.js';
 import { AvatarRequest, avatarHandler } from '../handler/avatar.js';
 import { config } from '../config.js';
+import { OptionsDescriptor } from '@dicebear/core';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
@@ -47,6 +48,34 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
   done,
 ) => {
   const { arrayLimit, parameterLimit } = app.queryLimits;
+
+  if (config.definition.enabled) {
+    const body = JSON.stringify(entry.style.definition());
+
+    app.get('/definition.json', (_request, reply) => {
+      reply
+        .header('Cache-Control', `max-age=${config.cacheControl.styles}`)
+        .type('application/json; charset=utf-8')
+        .send(body);
+    });
+  }
+
+  if (config.options.enabled) {
+    const descriptor = new OptionsDescriptor(entry.style).toJSON();
+
+    for (const key of config.excludedOptions) {
+      delete descriptor[key];
+    }
+
+    const body = JSON.stringify(descriptor);
+
+    app.get('/options.json', (_request, reply) => {
+      reply
+        .header('Cache-Control', `max-age=${config.cacheControl.styles}`)
+        .type('application/json; charset=utf-8')
+        .send(body);
+    });
+  }
 
   for (const { url, hasPathOptions } of AVATAR_ROUTES) {
     app.route<AvatarRequest>({
