@@ -8,7 +8,7 @@ and this project adheres to
 
 This repository is the self-hostable HTTP API for DiceBear, published as a Docker
 image on [Docker Hub](https://hub.docker.com/r/dicebear/api). The package itself
-is private and unpublished — the version lives only in the Git tag, and the
+is private and unpublished. The version lives only in the Git tag, and the
 [`docker.yml`](.github/workflows/docker.yml) workflow builds the image on every
 `v*` tag. Versions track the API's own release line (`4.x`), independently of the
 DiceBear library.

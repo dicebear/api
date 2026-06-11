@@ -50,15 +50,15 @@ npx tsx ./scripts/build-fonts.ts
 
 ## Scripts
 
-| Script              | What it does                                                |
-| ------------------- | ----------------------------------------------------------- |
-| `npm run dev`       | Starts the server with `tsx --watch` for instant reloads    |
-| `npm run build`     | Type-checks and compiles TypeScript into `dist/`            |
-| `npm start`         | Runs the compiled server from `dist/`                       |
-| `npm test`          | Runs the Node test runner against `tests/*.js`              |
-| `npm run lint`      | Runs ESLint over `src/`                                     |
-| `npm run lint:fix`  | Runs ESLint with `--fix`                                    |
-| `npm run format`    | Runs Prettier across the repo                               |
+| Script             | What it does                                             |
+| ------------------ | -------------------------------------------------------- |
+| `npm run dev`      | Starts the server with `tsx --watch` for instant reloads |
+| `npm run build`    | Type-checks and compiles TypeScript into `dist/`         |
+| `npm start`        | Runs the compiled server from `dist/`                    |
+| `npm test`         | Runs the Node test runner against `tests/*.js`           |
+| `npm run lint`     | Runs ESLint over `src/`                                  |
+| `npm run lint:fix` | Runs ESLint with `--fix`                                 |
+| `npm run format`   | Runs Prettier across the repo                            |
 
 ## Project layout
 
@@ -148,7 +148,7 @@ git push && git push --tags
 dated `## [<version>]` heading, refreshes the compare links, then creates
 the commit and the `v<version>` tag. Unlike the `schema` and `styles`
 repos, this package is private and unpublished, so there is no manifest
-`version` field to bump — the Git tag is the single source of truth.
+`version` field to bump. The Git tag is the single source of truth.
 
 Pushing the tag triggers the
 [`docker.yml`](.github/workflows/docker.yml) workflow, which builds and
