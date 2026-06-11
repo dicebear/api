@@ -15,42 +15,88 @@ after(async () => {
 
 describe('SVG endpoint', () => {
   test('returns SVG for valid style', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg',
+    });
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers['content-type'], 'image/svg+xml');
     assert.ok(res.body.startsWith('<svg'));
   });
 
   test('returns SVG with seed', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=hello' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=hello',
+    });
     assert.equal(res.statusCode, 200);
     assert.ok(res.body.includes('<svg'));
   });
 
   test('returns deterministic SVG for same seed', async () => {
-    const res1 = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=test123' });
-    const res2 = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=test123' });
+    const res1 = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=test123',
+    });
+    const res2 = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=test123',
+    });
     assert.equal(res1.body, res2.body);
   });
 
   test('returns different SVG for different seeds', async () => {
-    const res1 = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=alice' });
-    const res2 = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=bob' });
+    const res1 = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=alice',
+    });
+    const res2 = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=bob',
+    });
     assert.notEqual(res1.body, res2.body);
   });
 
   test('returns SVG for all known styles', async () => {
     const styles = [
-      'adventurer', 'adventurer-neutral', 'avataaars', 'avataaars-neutral',
-      'big-ears', 'big-ears-neutral', 'big-smile', 'bottts', 'bottts-neutral',
-      'croodles', 'croodles-neutral', 'dylan', 'fun-emoji', 'glass', 'icons',
-      'identicon', 'initials', 'lorelei', 'lorelei-neutral', 'micah',
-      'miniavs', 'notionists', 'notionists-neutral', 'open-peeps', 'personas',
-      'pixel-art', 'pixel-art-neutral', 'rings', 'shapes', 'thumbs', 'toon-head',
+      'adventurer',
+      'adventurer-neutral',
+      'avataaars',
+      'avataaars-neutral',
+      'big-ears',
+      'big-ears-neutral',
+      'big-smile',
+      'bottts',
+      'bottts-neutral',
+      'croodles',
+      'croodles-neutral',
+      'dylan',
+      'fun-emoji',
+      'glass',
+      'icons',
+      'identicon',
+      'initials',
+      'lorelei',
+      'lorelei-neutral',
+      'micah',
+      'miniavs',
+      'notionists',
+      'notionists-neutral',
+      'open-peeps',
+      'personas',
+      'pixel-art',
+      'pixel-art-neutral',
+      'rings',
+      'shapes',
+      'thumbs',
+      'toon-head',
     ];
 
     for (const style of styles) {
-      const res = await server.inject({ method: 'GET', path: `/10.x/${style}/svg?seed=test` });
+      const res = await server.inject({
+        method: 'GET',
+        path: `/10.x/${style}/svg?seed=test`,
+      });
       assert.equal(res.statusCode, 200, `${style} should return 200`);
     }
   });
@@ -58,7 +104,10 @@ describe('SVG endpoint', () => {
 
 describe('JSON endpoint', () => {
   test('returns JSON with svg and options', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/json?seed=hello' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/json?seed=hello',
+    });
     assert.equal(res.statusCode, 200);
     assert.ok(res.headers['content-type'].startsWith('application/json'));
 
@@ -69,13 +118,19 @@ describe('JSON endpoint', () => {
   });
 
   test('resolved options do not include the raw seed', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/json?seed=myseed' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/json?seed=myseed',
+    });
     const json = JSON.parse(res.body);
     assert.equal('seed' in json.options, false);
   });
 
   test('resolved options contain selected variants', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/json?seed=hello' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/json?seed=hello',
+    });
     const json = JSON.parse(res.body);
     assert.ok(typeof json.options.eyesVariant === 'string');
     assert.ok(typeof json.options.mouthVariant === 'string');
@@ -84,61 +139,97 @@ describe('JSON endpoint', () => {
 
 describe('PNG endpoint', () => {
   test('returns PNG image', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/png?seed=test',
+    });
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers['content-type'], 'image/png');
     assert.ok(res.rawPayload.length > 0);
   });
 
   test('respects size parameter', async () => {
-    const small = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=32' });
-    const large = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=256' });
+    const small = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/png?seed=test&size=32',
+    });
+    const large = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/png?seed=test&size=256',
+    });
     assert.equal(small.statusCode, 200);
     assert.equal(large.statusCode, 200);
     assert.ok(large.rawPayload.length > small.rawPayload.length);
   });
 
   test('clamps size to format max', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=1024' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/png?seed=test&size=1024',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('rejects size below schema minimum', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=0' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/png?seed=test&size=0',
+    });
     assert.equal(res.statusCode, 400);
   });
 
   test('rejects size above schema maximum', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/png?seed=test&size=9999' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/png?seed=test&size=9999',
+    });
     assert.equal(res.statusCode, 400);
   });
 });
 
 describe('path-based options', () => {
   test('parses options from path', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg/seed=test' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg/seed=test',
+    });
     assert.equal(res.statusCode, 200);
     assert.equal(res.headers['content-type'], 'image/svg+xml');
   });
 
   test('produces same result as query string', async () => {
-    const resQuery = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=hello' });
-    const resPath = await server.inject({ method: 'GET', path: '/10.x/initials/svg/seed=hello' });
+    const resQuery = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=hello',
+    });
+    const resPath = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg/seed=hello',
+    });
     assert.equal(resQuery.body, resPath.body);
   });
 
   test('handles multiple options in path', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg/seed=test&size=64' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg/seed=test&size=64',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('handles comma-separated values in path', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg/seed=test&backgroundColor=000000,ffffff' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg/seed=test&backgroundColor=000000,ffffff',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('handles encoded commas in path', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg/seed=test&backgroundColor=000000%2Cffffff' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg/seed=test&backgroundColor=000000%2Cffffff',
+    });
     assert.equal(res.statusCode, 200);
   });
 });
@@ -210,17 +301,26 @@ describe('weighted variants', () => {
 
 describe('response headers', () => {
   test('sets Cache-Control header', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=test' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=test',
+    });
     assert.ok(res.headers['cache-control']?.includes('max-age='));
   });
 
   test('sets X-Robots-Tag header', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=test' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=test',
+    });
     assert.equal(res.headers['x-robots-tag'], 'noindex');
   });
 
   test('sets Content-Disposition header', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=test' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=test',
+    });
     assert.ok(res.headers['content-disposition']?.includes('avatar.svg'));
   });
 
@@ -232,8 +332,14 @@ describe('response headers', () => {
     ];
 
     for (const [format, expectedType] of formats) {
-      const res = await server.inject({ method: 'GET', path: `/10.x/initials/${format}?seed=test` });
-      assert.ok(res.headers['content-type'].startsWith(expectedType), `${format} content-type`);
+      const res = await server.inject({
+        method: 'GET',
+        path: `/10.x/initials/${format}?seed=test`,
+      });
+      assert.ok(
+        res.headers['content-type'].startsWith(expectedType),
+        `${format} content-type`,
+      );
     }
   });
 
@@ -249,79 +355,124 @@ describe('response headers', () => {
 
 describe('error handling', () => {
   test('returns 404 for unknown style', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/nonexistent/svg' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/nonexistent/svg',
+    });
     assert.equal(res.statusCode, 404);
   });
 
   test('returns 404 for unknown version', async () => {
-    const res = await server.inject({ method: 'GET', path: '/9.x/initials/svg' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/9.x/initials/svg',
+    });
     assert.equal(res.statusCode, 404);
   });
 
   test('returns 400 for invalid format', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/gif' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/gif',
+    });
     assert.equal(res.statusCode, 400);
   });
 
   test('returns 400 for invalid size type', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?size=abc' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?size=abc',
+    });
     assert.equal(res.statusCode, 400);
   });
 
   test('strips unknown query parameters', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=test&unknown=foo' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=test&unknown=foo',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('handles empty seed', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/initials/svg?seed=' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('handles no parameters', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg',
+    });
     assert.equal(res.statusCode, 200);
   });
 });
 
 describe('options validation', () => {
   test('accepts valid backgroundColor', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?backgroundColor=ff0000' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?backgroundColor=ff0000',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts multiple backgroundColors', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?backgroundColor=000000,ffffff' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?backgroundColor=000000,ffffff',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts flip option', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?flip=horizontal' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?flip=horizontal',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts scale option', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?scale=1.2' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?scale=1.2',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts borderRadius option', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?borderRadius=50' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?borderRadius=50',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts rotate option', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?rotate=45' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?rotate=45',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts component probability', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?facialHairProbability=50' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?facialHairProbability=50',
+    });
     assert.equal(res.statusCode, 200);
   });
 
   test('accepts translateX and translateY', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/svg?translateX=10&translateY=-5' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/svg?translateX=10&translateY=-5',
+    });
     assert.equal(res.statusCode, 200);
   });
 });
@@ -354,7 +505,10 @@ describe('styles listing', () => {
 
 describe('schema.json endpoint removed', () => {
   test('returns 404 for schema.json', async () => {
-    const res = await server.inject({ method: 'GET', path: '/10.x/avataaars/schema.json' });
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/avataaars/schema.json',
+    });
     assert.equal(res.statusCode, 400);
   });
 });

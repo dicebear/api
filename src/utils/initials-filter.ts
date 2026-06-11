@@ -20,7 +20,10 @@ const builder = new XMLBuilder(XML_OPTIONS);
 
 type XmlNode = Record<string, unknown>;
 
-function filterTextNodes(nodes: XmlNode[], blocklist: ReadonlySet<string>): void {
+function filterTextNodes(
+  nodes: XmlNode[],
+  blocklist: ReadonlySet<string>,
+): void {
   for (const node of nodes) {
     for (const [key, value] of Object.entries(node)) {
       if (key === ATTRIBUTES_KEY || !Array.isArray(value)) {

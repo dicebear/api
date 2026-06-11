@@ -45,7 +45,10 @@ before(async () => {
   }
 
   assert.ok(blockedSeed, 'expected at least one 2-codepoint usable entry');
-  assert.ok(blockedSingleSeed, 'expected at least one 1-codepoint usable entry');
+  assert.ok(
+    blockedSingleSeed,
+    'expected at least one 1-codepoint usable entry',
+  );
 
   expectedMask = '*'.repeat([...blockedSeed].length);
 });
@@ -71,7 +74,8 @@ describe('filterInitialsSvg', () => {
   });
 
   test('returns SVG unchanged when there is no <text> element at all', () => {
-    const svg = '<svg xmlns="http://www.w3.org/2000/svg"><circle r="10"/></svg>';
+    const svg =
+      '<svg xmlns="http://www.w3.org/2000/svg"><circle r="10"/></svg>';
     assert.equal(filterInitialsSvg(svg, BLOCKLIST), svg);
   });
 

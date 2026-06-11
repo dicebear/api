@@ -5,9 +5,7 @@ const BASE_OPTION_COUNT = 12;
 const OPTIONS_PER_COMPONENT = 5;
 const OPTIONS_PER_COLOR = 4;
 
-export function getQueryLimits(
-  allVersionStyles: Map<string, StyleEntry>[],
-): {
+export function getQueryLimits(allVersionStyles: Map<string, StyleEntry>[]): {
   arrayLimit: number;
   parameterLimit: number;
 } {

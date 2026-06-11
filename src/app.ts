@@ -24,7 +24,9 @@ export const app = async () => {
     versionMap.set(version, loadDefinitions(version));
   }
 
-  const { arrayLimit, parameterLimit } = getQueryLimits([...versionMap.values()]);
+  const { arrayLimit, parameterLimit } = getQueryLimits([
+    ...versionMap.values(),
+  ]);
 
   const app = fastify({
     logger: config.logger,
@@ -53,7 +55,10 @@ export const app = async () => {
 
   const [fontsRaw, blocklistRaw] = await Promise.all([
     fs.readFile(path.join(__dirname, '../fonts/fonts.json'), 'utf-8'),
-    fs.readFile(path.join(__dirname, '../data/initials-blocklist.json'), 'utf-8'),
+    fs.readFile(
+      path.join(__dirname, '../data/initials-blocklist.json'),
+      'utf-8',
+    ),
   ]);
 
   const fonts = JSON.parse(fontsRaw) as Font[];

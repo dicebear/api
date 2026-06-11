@@ -16,7 +16,10 @@ describe('loadDefinitions', () => {
 
     for (const [name, entry] of styles) {
       assert.ok(entry.style, `${name} should have a style`);
-      assert.ok(entry.weightedFields instanceof Set, `${name} should have weightedFields as Set`);
+      assert.ok(
+        entry.weightedFields instanceof Set,
+        `${name} should have weightedFields as Set`,
+      );
     }
   });
 
@@ -24,16 +27,28 @@ describe('loadDefinitions', () => {
     const styles = loadDefinitions(10);
     const avataaars = styles.get('avataaars');
 
-    assert.ok(avataaars.style.components().size > 0, 'avataaars should have components');
-    assert.ok(avataaars.style.colors().size > 0, 'avataaars should have colors');
+    assert.ok(
+      avataaars.style.components().size > 0,
+      'avataaars should have components',
+    );
+    assert.ok(
+      avataaars.style.colors().size > 0,
+      'avataaars should have colors',
+    );
   });
 
   test('weightedFields contains variant fields', () => {
     const styles = loadDefinitions(10);
     const avataaars = styles.get('avataaars');
 
-    assert.ok(avataaars.weightedFields.has('eyesVariant'), 'should have eyesVariant');
-    assert.ok(avataaars.weightedFields.has('mouthVariant'), 'should have mouthVariant');
+    assert.ok(
+      avataaars.weightedFields.has('eyesVariant'),
+      'should have eyesVariant',
+    );
+    assert.ok(
+      avataaars.weightedFields.has('mouthVariant'),
+      'should have mouthVariant',
+    );
     assert.ok(!avataaars.weightedFields.has('seed'), 'should not have seed');
     assert.ok(!avataaars.weightedFields.has('size'), 'should not have size');
   });

@@ -39,8 +39,11 @@ export const config: Config = {
     styles: Number(process.env.CACHE_CONTROL_STYLES ?? 60 * 60),
   },
   excludedOptions: (
-    process.env.EXCLUDED_OPTIONS ?? 'idRandomization,fontFamily,fontWeight,title'
-  ).split(',').filter(Boolean),
+    process.env.EXCLUDED_OPTIONS ??
+    'idRandomization,fontFamily,fontWeight,title'
+  )
+    .split(',')
+    .filter(Boolean),
   queryString: {
     arrayLimitMin: Number(process.env.QUERY_STRING_ARRAY_LIMIT_MIN ?? 20),
     parameterLimitMin: Number(
