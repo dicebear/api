@@ -15,6 +15,11 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `@dicebear/core` and `@dicebear/converter` to `^10.3.0` (was
+  `^10.2.0`).
+
 ## [4.8.0] - 2026-06-10
 
 ### Added
