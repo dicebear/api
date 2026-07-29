@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.9.1] - 2026-07-29
+
 ### Changed
 
 - Refreshed `package-lock.json` within the existing version ranges.
@@ -58,7 +60,8 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.9.0...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.9.1...HEAD
+[4.9.1]: https://github.com/dicebear/api/compare/v4.9.0...v4.9.1
 [4.9.0]: https://github.com/dicebear/api/compare/v4.8.0...v4.9.0
 [4.8.0]: https://github.com/dicebear/api/compare/v4.7.0...v4.8.0
 [4.7.0]: https://github.com/dicebear/api/compare/v4.6.0...v4.7.0
