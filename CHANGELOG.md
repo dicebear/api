@@ -15,6 +15,15 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Changed
+
+- Refreshed `package-lock.json` within the existing version ranges.
+  `@dicebear/core` and `@dicebear/converter` now resolve to `10.3.2` (was
+  `10.3.0`). This picks up the converter fix that keeps text nodes, CDATA
+  sections, and deep nesting intact. `@dicebear/schema` resolves to `1.3.0`
+  (was `1.2.0`). Transitive dependencies moved as well, among them `fastify`
+  (`5.10.0`) and `sharp` (`0.35.3`).
+
 ## [4.9.0] - 2026-06-13
 
 ### Changed
