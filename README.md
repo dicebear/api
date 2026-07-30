@@ -1,9 +1,9 @@
-<h1><img src="https://dicebear.com/logo-readme.svg" width="28" /> DiceBear API</h1>
+<h1><img src="https://www.dicebear.com/logo-readme.svg" width="28" /> DiceBear API</h1>
 
-Run the [DiceBear](https://dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 35+ styles and five image formats, with no database and no calls to anyone else's servers.
+Run the [DiceBear](https://www.dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 35+ styles and five image formats, with no database and no calls to anyone else's servers.
 
-[Playground](https://dicebear.com/playground/) |
-[Documentation](https://dicebear.com/guides/host-the-http-api-yourself/) |
+[Playground](https://www.dicebear.com/playground/) |
+[Documentation](https://www.dicebear.com/guides/host-the-http-api-yourself/) |
 [Docker Hub](https://hub.docker.com/r/dicebear/api)
 
 ```sh
@@ -24,7 +24,7 @@ The project is MIT licensed, including commercial use.
 
 ## What's inside
 
-- 35+ avatar styles by various artists; try them all in the [playground](https://dicebear.com/playground/)
+- 35+ avatar styles by various artists; try them all in the [playground](https://www.dicebear.com/playground/)
 - SVG, PNG, JPEG, WebP, and AVIF output, plus a JSON endpoint for programmatic use
 - Every customization option of the DiceBear library as query parameters, validated against the official schema
 - Bundled Noto Sans fonts, so the initials style also renders CJK and Thai characters
@@ -43,7 +43,7 @@ The project is MIT licensed, including commercial use.
 | `GET /10.x/{style}/options.json`        | Options descriptor (opt-in via `OPTIONS`)         |
 | `GET /health`                           | Health check for load balancers and orchestrators |
 
-The version prefix follows the `VERSIONS` variable; DiceBear 10 is enabled by default. All options from the [style documentation](https://dicebear.com/styles/) work as query parameters:
+The version prefix follows the `VERSIONS` variable; DiceBear 10 is enabled by default. All options from the [style documentation](https://www.dicebear.com/styles/) work as query parameters:
 
 ```
 http://localhost:3000/10.x/lorelei/png?seed=Felix&size=96&backgroundColor=b6e3f4&radius=50
