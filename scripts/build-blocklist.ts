@@ -36,7 +36,7 @@ await fs.mkdir(TARGET_DIR, { recursive: true });
 
 const lists = await Promise.all(SOURCES.map(fetchList)).catch(
   (error: Error): never => {
-    // Offline / GitHub flake — keep an existing build artefact so CI and
+    // Offline / GitHub flake — keep an existing build artifact so CI and
     // sandboxed builds don't break. A truly first-time build still fails.
     if (!existsSync(TARGET_FILE)) {
       throw error;
