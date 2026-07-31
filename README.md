@@ -1,6 +1,6 @@
 <h1><img src="https://www.dicebear.com/logo-readme.svg" width="28" /> DiceBear API</h1>
 
-Run the [DiceBear](https://www.dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 35+ styles and five image formats, with no database and no calls to anyone else's servers.
+Run the [DiceBear](https://www.dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 45+ styles and five image formats, with no database and no calls to anyone else's servers.
 
 [Playground](https://www.dicebear.com/playground/) |
 [Documentation](https://www.dicebear.com/guides/host-the-http-api-yourself/) |
@@ -24,7 +24,7 @@ The project is MIT licensed, including commercial use.
 
 ## What's inside
 
-- 35+ avatar styles by various artists; try them all in the [playground](https://www.dicebear.com/playground/)
+- 45+ avatar styles by various artists; try them all in the [playground](https://www.dicebear.com/playground/)
 - SVG, PNG, JPEG, WebP, and AVIF output, plus a JSON endpoint for programmatic use
 - Every customization option of the DiceBear library as query parameters, validated against the official schema
 - Bundled Noto Sans fonts, so the initials style also renders CJK and Thai characters
