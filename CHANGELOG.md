@@ -15,6 +15,19 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- 13 new avatar styles, which takes the API from 37 to 50: Blobs, Clay,
+  Constellation, Critters, Landscape, Loops, Moods, Pixelbot, Planets, Sprouts,
+  Squircles, Waves, and Weave. They come from `@dicebear/styles` 10.3.0. The
+  API reads its style list from that package at boot, so the new styles appear
+  on the existing endpoints without a configuration change.
+
+### Changed
+
+- Updated `@dicebear/core` and `@dicebear/converter` to `^10.4.0` (was
+  `^10.4.0-rc.2`) and `@dicebear/styles-10` to `^10.3.0` (was `^10.3.0-rc.3`).
+
 ## [4.10.0-rc.2] - 2026-07-31
 
 ## [4.10.0-rc.1] - 2026-07-31
