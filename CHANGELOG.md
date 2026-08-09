@@ -15,6 +15,17 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- 2 new avatar styles, which takes the API from 50 to 52: Voxel Art and Voxel
+  Bot. They come from `@dicebear/styles` 10.4.0. The API reads its style list
+  from that package at boot, so the new styles appear on the existing
+  endpoints without a configuration change.
+
+### Changed
+
+- Updated `@dicebear/styles-10` to `^10.4.0` (was `^10.3.0`).
+
 ## [4.11.0-rc.1] - 2026-08-09
 
 ## [4.10.0] - 2026-08-01
