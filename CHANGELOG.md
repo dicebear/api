@@ -21,10 +21,19 @@ DiceBear library.
   Bot. They come from `@dicebear/styles` 10.4.0. The API reads its style list
   from that package at boot, so the new styles appear on the existing
   endpoints without a configuration change.
+- The `*ColorOrder` option, new in `@dicebear/core` 10.5.0, as a query
+  parameter on the avatar endpoints. With `fixed`, colors passed via a
+  `*Color` option keep exactly the given order: gradient fills apply them as
+  stops from first to last, and solid fills always use the first color. The
+  default `random` keeps the previous behavior, where the PRNG shuffles the
+  colors before use. `@dicebear/schema` 1.4.0 validates the new parameter.
 
 ### Changed
 
 - Updated `@dicebear/styles-10` to `^10.4.0` (was `^10.3.0`).
+- Updated `@dicebear/core` and `@dicebear/converter` to `^10.5.0` (was
+  `^10.4.0`). `@dicebear/schema` now resolves to `1.4.0` (was `1.3.0`) within
+  the unchanged `^1.3.0` range.
 
 ## [4.11.0-rc.1] - 2026-08-09
 
