@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.11.0] - 2026-08-09
+
 ### Added
 
 - 2 new avatar styles, which takes the API from 50 to 52: Voxel Art and Voxel
@@ -101,7 +103,8 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.11.0-rc.1...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.11.0...HEAD
+[4.11.0]: https://github.com/dicebear/api/compare/v4.11.0-rc.1...v4.11.0
 [4.11.0-rc.1]: https://github.com/dicebear/api/compare/v4.10.0...v4.11.0-rc.1
 [4.10.0]: https://github.com/dicebear/api/compare/v4.10.0-rc.2...v4.10.0
 [4.10.0-rc.2]: https://github.com/dicebear/api/compare/v4.10.0-rc.1...v4.10.0-rc.2
