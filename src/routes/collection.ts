@@ -3,6 +3,9 @@ import type { StyleEntry } from '../types.js';
 import { styleRoutes } from './style.js';
 import { config } from '../config.js';
 
+/** Where an agent that only knows the API host finds the documentation. */
+const DOCUMENTATION_URL = 'https://www.dicebear.com/llms.txt';
+
 type Options = {
   styles: Map<string, StyleEntry>;
 };
@@ -23,8 +26,9 @@ export const collectionRoutes: FastifyPluginCallback<Options> = (
             type: 'object',
             properties: {
               styles: { type: 'array', items: { type: 'string' } },
+              documentation: { type: 'string' },
             },
-            required: ['styles'],
+            required: ['styles', 'documentation'],
           },
         },
       },
@@ -32,7 +36,7 @@ export const collectionRoutes: FastifyPluginCallback<Options> = (
     async (_request, reply) => {
       reply.header('Cache-Control', `max-age=${config.cacheControl.styles}`);
 
-      return { styles: styleNames };
+      return { styles: styleNames, documentation: DOCUMENTATION_URL };
     },
   );
 

@@ -496,6 +496,13 @@ describe('styles listing', () => {
     assert.deepEqual(body.styles, [...body.styles].sort());
   });
 
+  test('links the documentation', async () => {
+    const res = await server.inject({ method: 'GET', path: '/10.x' });
+    const body = JSON.parse(res.body);
+
+    assert.equal(body.documentation, 'https://www.dicebear.com/llms.txt');
+  });
+
   test('sets a cache-control header', async () => {
     const res = await server.inject({ method: 'GET', path: '/10.x' });
 
