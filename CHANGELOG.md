@@ -28,10 +28,17 @@ DiceBear library.
   Neutral also split the face into groups of their own, among them `eyesColor`,
   `lipsColor` and `teethColor`. The API derives its query parameters from each
   definition, so these arrived with the package.
+- `notEqualTo` on the color fields of `/options.json`, new in `@dicebear/core`
+  10.6.0. It names the color groups a group has to differ from and sits next to
+  the existing `contrastTo`, so a client that picks its own colors can apply the
+  same constraints as the renderer. `thumbs`, for one, keeps its shape out of
+  the background color that way. The endpoint still needs `OPTIONS=1`.
 
 ### Changed
 
 - Updated `@dicebear/styles-10` to `^10.5.0` (was `^10.5.0-rc.1`).
+- Updated `@dicebear/core` and `@dicebear/converter` to `^10.6.0` (was
+  `^10.5.0`).
 
 ## [4.12.0-rc.1] - 2026-08-15
 
