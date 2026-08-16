@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.12.0] - 2026-08-16
+
 ### Added
 
 - 3 new avatar styles, which takes the API from 52 to 55: Cutouts, Line Face
@@ -130,7 +132,8 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.12.0-rc.1...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.12.0...HEAD
+[4.12.0]: https://github.com/dicebear/api/compare/v4.12.0-rc.1...v4.12.0
 [4.12.0-rc.1]: https://github.com/dicebear/api/compare/v4.11.0...v4.12.0-rc.1
 [4.11.0]: https://github.com/dicebear/api/compare/v4.11.0-rc.1...v4.11.0
 [4.11.0-rc.1]: https://github.com/dicebear/api/compare/v4.10.0...v4.11.0-rc.1
