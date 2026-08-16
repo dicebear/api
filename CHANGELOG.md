@@ -15,6 +15,24 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- 3 new avatar styles, which takes the API from 52 to 55: Cutouts, Line Face
+  and Patchwork. They come from `@dicebear/styles` 10.5.0. The API reads its
+  style list from that package at boot, so the new styles appear on the
+  existing endpoints without a configuration change.
+- Color parameters for the linework of nine styles, from the same release.
+  Adventurer, Adventurer Neutral, Croodles, Croodles Neutral, Notionists,
+  Notionists Neutral and Open Peeps take `inkColor`, Lorelei takes
+  `outlineColor`, and Toon Head takes `strokeColor`. Adventurer and Adventurer
+  Neutral also split the face into groups of their own, among them `eyesColor`,
+  `lipsColor` and `teethColor`. The API derives its query parameters from each
+  definition, so these arrived with the package.
+
+### Changed
+
+- Updated `@dicebear/styles-10` to `^10.5.0` (was `^10.5.0-rc.1`).
+
 ## [4.12.0-rc.1] - 2026-08-15
 
 ## [4.11.0] - 2026-08-09
