@@ -15,6 +15,18 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Changed
+
+- Refreshed `package-lock.json` within the existing version ranges.
+  `@dicebear/core` and `@dicebear/converter` now resolve to `10.6.1` (was
+  `10.6.0`). The core release drops empty wrapper elements from the SVG output.
+  In `notionists` such a wrapper sits inside a mask, and AndroidSVG takes the
+  mask size from the wrapper's bounding box, which an empty group does not
+  have, so the whole file failed to render in Android gallery apps.
+  `bottts-neutral`, `clay`, `critters`, `notionists`, and `squircles` were
+  affected. The rendered image does not change. `fastify` resolves to `5.12.1`
+  (was `5.12.0`).
+
 ## [4.12.0] - 2026-08-16
 
 ### Added
