@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.13.0] - 2026-08-26
+
 ### Added
 
 - 6 new avatar styles, which takes the API from 55 to 61: Cameo, Gaze, Marbles,
@@ -167,7 +169,8 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.13.0-rc.1...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.13.0...HEAD
+[4.13.0]: https://github.com/dicebear/api/compare/v4.13.0-rc.1...v4.13.0
 [4.13.0-rc.1]: https://github.com/dicebear/api/compare/v4.12.1...v4.13.0-rc.1
 [4.12.1]: https://github.com/dicebear/api/compare/v4.12.0...v4.12.1
 [4.12.0]: https://github.com/dicebear/api/compare/v4.12.0-rc.1...v4.12.0
