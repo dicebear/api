@@ -15,6 +15,25 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- 6 new avatar styles, which takes the API from 55 to 61: Cameo, Gaze, Marbles,
+  Shadows, Slice and Stack. They come from `@dicebear/styles` 10.6.0. The API
+  reads its style list from that package at boot, so the new styles appear on
+  the existing endpoints without a configuration change.
+
+### Changed
+
+- Updated `@dicebear/styles-10` to `^10.6.0` (was `^10.6.0-rc.2`).
+
+### Fixed
+
+- Voxel Art no longer draws stray light and dark edges across hair and faces,
+  shadows land on the shape below them instead of on the background, and arms
+  and hands are no longer buried under clothing. In Voxel Bot the shadow below
+  the torso now covers the legs instead of the full width of the body. Both
+  fixes come from `@dicebear/styles` 10.6.0, so a few shapes look different.
+
 ## [4.13.0-rc.1] - 2026-08-26
 
 ## [4.12.1] - 2026-08-18
