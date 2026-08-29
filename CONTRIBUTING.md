@@ -7,7 +7,7 @@ This repository is the self-hostable HTTP API for DiceBear: a
 HTTP and ships as a Docker image on
 [Docker Hub](https://hub.docker.com/r/dicebear/api). User-facing hosting
 instructions live in the [README](./README.md) and in the docs at
-[Host the API yourself](https://www.dicebear.com/guides/host-the-http-api-yourself/).
+[Host the API yourself](https://www.dicebear.com/recipes/self-host-the-http-api/).
 
 ## Before you start
 

@@ -3,7 +3,7 @@
 Run the [DiceBear](https://www.dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 61 styles and five image formats, with no database and no calls to anyone else's servers.
 
 [Playground](https://www.dicebear.com/playground/) |
-[Documentation](https://www.dicebear.com/guides/host-the-http-api-yourself/) |
+[Documentation](https://www.dicebear.com/recipes/self-host-the-http-api/) |
 [Docker Hub](https://hub.docker.com/r/dicebear/api)
 
 ```sh
