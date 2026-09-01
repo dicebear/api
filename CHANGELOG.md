@@ -17,8 +17,6 @@ DiceBear library.
 
 ## [4.14.0-rc.1] - 2026-09-01
 
-## [1.14.0-rc.1] - 2026-09-01
-
 ### Added
 
 - The `/11.x` endpoints, served from `@dicebear/styles` 11.0.0-rc.1 and
