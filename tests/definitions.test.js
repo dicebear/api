@@ -11,6 +11,13 @@ describe('loadDefinitions', () => {
     assert.ok(styles.has('avataaars'), 'should include avataaars');
   });
 
+  test('loads all styles for version 11', () => {
+    const styles = loadDefinitions(11);
+    assert.ok(styles.size > 0, 'should load at least one style');
+    assert.ok(styles.has('initials'), 'should include initials');
+    assert.ok(styles.has('planets'), 'should include planets');
+  });
+
   test('each entry has a style and weightedFields', () => {
     const styles = loadDefinitions(10);
 

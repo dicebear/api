@@ -15,6 +15,21 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- The `/11.x` endpoints, served from `@dicebear/styles` 11.0.0-rc.1 and
+  enabled by default next to `/10.x`. The 11 line carries the declarative
+  animations, so `animation=true` (or a list of animation names) on an SVG
+  request returns a moving avatar, and `animationSpeed` sets the pace. Without
+  the option the output is static, and raster formats always are.
+
+### Changed
+
+- Updated `@dicebear/core` to `^11.0.0-rc.1` (was `^10.6.0`). It renders the
+  10 line byte-identical, so `/10.x` responses do not change.
+- Updated `@dicebear/schema` to `^1.6.1` (was `^1.3.0`), which adds the two
+  animation options to the query validation.
+
 ## [4.13.0] - 2026-08-26
 
 ### Added

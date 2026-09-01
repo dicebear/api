@@ -102,6 +102,35 @@ describe('SVG endpoint', () => {
   });
 });
 
+describe('11.x endpoint', () => {
+  test('returns SVG for valid style', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/initials/svg?seed=hello',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.startsWith('<svg'));
+  });
+
+  test('renders static by default', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.ok(!res.body.includes('@keyframes'));
+  });
+
+  test('plays animations on request', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.includes('@keyframes'));
+  });
+});
+
 describe('JSON endpoint', () => {
   test('returns JSON with svg and options', async () => {
     const res = await server.inject({

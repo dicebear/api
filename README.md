@@ -35,18 +35,18 @@ The project is MIT licensed, including commercial use.
 
 | Endpoint                                | Description                                       |
 | --------------------------------------- | ------------------------------------------------- |
-| `GET /10.x`                             | List of available styles                          |
-| `GET /10.x/{style}/svg`                 | Avatar as SVG                                     |
-| `GET /10.x/{style}/{png,jpg,webp,avif}` | Avatar as raster image                            |
-| `GET /10.x/{style}/json`                | Avatar as JSON                                    |
-| `GET /10.x/{style}/definition.json`     | Raw style definition (opt-in via `DEFINITION`)    |
-| `GET /10.x/{style}/options.json`        | Options descriptor (opt-in via `OPTIONS`)         |
+| `GET /11.x`                             | List of available styles                          |
+| `GET /11.x/{style}/svg`                 | Avatar as SVG                                     |
+| `GET /11.x/{style}/{png,jpg,webp,avif}` | Avatar as raster image                            |
+| `GET /11.x/{style}/json`                | Avatar as JSON                                    |
+| `GET /11.x/{style}/definition.json`     | Raw style definition (opt-in via `DEFINITION`)    |
+| `GET /11.x/{style}/options.json`        | Options descriptor (opt-in via `OPTIONS`)         |
 | `GET /health`                           | Health check for load balancers and orchestrators |
 
-The version prefix follows the `VERSIONS` variable; DiceBear 10 is enabled by default. All options from the [style documentation](https://www.dicebear.com/styles/) work as query parameters:
+The version prefix follows the `VERSIONS` variable. DiceBear 10 and 11 are enabled by default, so the same endpoints exist under `/10.x`. Each version serves the styles of its `@dicebear/styles` line; the 11 line plays animations when the `animation` option is set, the 10 line is always static. All options from the [style documentation](https://www.dicebear.com/styles/) work as query parameters:
 
 ```
-http://localhost:3000/10.x/lorelei/png?seed=Felix&size=96&backgroundColor=b6e3f4&radius=50
+http://localhost:3000/11.x/lorelei/png?seed=Felix&size=96&backgroundColor=b6e3f4&radius=50
 ```
 
 ## Getting started
@@ -92,7 +92,7 @@ npm start
 | `HOST`                             | `0.0.0.0`                                     | Host to bind to (all IPv4 addresses by default).                                                     |
 | `LOGGER`                           | `0`                                           | Enable request logger (1 = on, 0 = off).                                                             |
 | `WORKERS`                          | `1`                                           | Number of Node.js worker threads.                                                                    |
-| `VERSIONS`                         | `10`                                          | Comma-separated list of supported DiceBear major versions.                                           |
+| `VERSIONS`                         | `10,11`                                       | Comma-separated list of supported DiceBear major versions.                                           |
 | `CACHE_CONTROL_AVATARS`            | `31536000`                                    | Cache duration for avatar responses in seconds (1 year).                                             |
 | `CACHE_CONTROL_STYLES`             | `3600`                                        | Cache duration for the styles listing in seconds (1 hour).                                           |
 | `PNG`                              | `1`                                           | Enable the PNG endpoint (1 = on, 0 = off).                                                           |

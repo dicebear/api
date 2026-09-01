@@ -33,7 +33,7 @@ export const config: Config = {
   initialsFilter: {
     enabled: Boolean(Number(process.env.INITIALS_FILTER ?? 1)),
   },
-  versions: process.env.VERSIONS?.split(',').map(Number) ?? [10],
+  versions: process.env.VERSIONS?.split(',').map(Number) ?? [10, 11],
   cacheControl: {
     avatar: Number(process.env.CACHE_CONTROL_AVATARS ?? 60 * 60 * 24 * 365),
     styles: Number(process.env.CACHE_CONTROL_STYLES ?? 60 * 60),
