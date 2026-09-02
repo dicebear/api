@@ -28,7 +28,7 @@ export function parseQueryString(
       arrayLimit,
       parameterLimit,
       throwOnLimitExceeded: true,
-      depth: 1,
+      depth: 0,
     });
   } catch (error) {
     if (error instanceof RangeError) {
@@ -39,6 +39,15 @@ export function parseQueryString(
   }
 
   for (const key of Object.keys(parsed)) {
+    // Lists are comma separated. With `depth: 0` a bracketed key such as
+    // `backgroundColor[]` or `animationSpeed[blink]` stays a literal key that
+    // matches no option, so reject it here instead of dropping it silently.
+    if (key.includes('[') || key.includes(']')) {
+      throw new QueryStringRangeError(
+        `Bracket notation is not supported in "${key}". Separate list values with a comma instead.`,
+      );
+    }
+
     let value = parsed[key];
 
     // A seed could be parsed as an array due to commas. In this case convert back to a string.

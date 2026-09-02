@@ -15,6 +15,16 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Changed
+
+- Bracket notation in query strings now returns a 400 with a message that
+  names the offending parameter. `backgroundColor[]=000000` and
+  `animationSpeed[orbit]=2` used to be parsed, the first as a list and the
+  second into a shape the schema then rejected, but neither form was ever
+  documented. Lists are comma separated, as in `backgroundColor=000000,ffffff`.
+  Clients that serialise arrays with brackets by default, such as Axios, need
+  to switch to comma lists.
+
 ## [4.14.0-rc.1] - 2026-09-01
 
 ### Added

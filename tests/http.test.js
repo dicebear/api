@@ -263,6 +263,25 @@ describe('path-based options', () => {
   });
 });
 
+describe('bracket notation', () => {
+  test('rejects array brackets with a 400', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/svg?seed=hello&backgroundColor[]=000000',
+    });
+    assert.equal(res.statusCode, 400);
+    assert.match(JSON.parse(res.body).message, /Bracket notation/);
+  });
+
+  test('rejects object brackets with a 400', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true&animationSpeed[orbit]=2',
+    });
+    assert.equal(res.statusCode, 400);
+  });
+});
+
 describe('weighted variants', () => {
   test('accepts variant:weight format', async () => {
     const res = await server.inject({

@@ -91,56 +91,46 @@ describe('parseQueryString', () => {
     assert.deepEqual(result, expected({ seed: [''] }));
   });
 
-  test('handles array notation with brackets', () => {
-    const result = parseQueryString(
-      'backgroundColor[]=000000&backgroundColor[]=ffffff',
-    );
-    assert.deepEqual(
-      result,
-      expected({ backgroundColor: ['000000', 'ffffff'] }),
+  test('rejects empty bracket notation', () => {
+    assert.throws(
+      () =>
+        parseQueryString('backgroundColor[]=000000&backgroundColor[]=ffffff'),
+      { name: 'QueryStringRangeError', message: /backgroundColor\[\]/ },
     );
   });
 
-  test('handles array notation with single value', () => {
-    const result = parseQueryString('backgroundColor[]=000000');
-    assert.deepEqual(result, expected({ backgroundColor: ['000000'] }));
-  });
-
-  test('handles array notation with empty value', () => {
-    const result = parseQueryString('backgroundColor[]=');
-    assert.deepEqual(result, expected({ backgroundColor: [] }));
-  });
-
-  test('handles array notation with mixed empty and non-empty values', () => {
-    const result = parseQueryString(
-      'backgroundColor[]=000000&backgroundColor[]=&backgroundColor[]=ffffff',
-    );
-    assert.deepEqual(
-      result,
-      expected({ backgroundColor: ['000000', 'ffffff'] }),
+  test('rejects indexed bracket notation', () => {
+    assert.throws(
+      () =>
+        parseQueryString('backgroundColor[0]=000000&backgroundColor[1]=ffffff'),
+      { name: 'QueryStringRangeError' },
     );
   });
 
-  test('handles indexed array notation', () => {
-    const result = parseQueryString(
-      'backgroundColor[0]=000000&backgroundColor[1]=ffffff',
-    );
-    assert.deepEqual(
-      result,
-      expected({ backgroundColor: ['000000', 'ffffff'] }),
-    );
+  test('rejects keyed bracket notation', () => {
+    assert.throws(() => parseQueryString('animationSpeed[blink]=2'), {
+      name: 'QueryStringRangeError',
+    });
   });
 
-  test('respects custom arrayLimit for indexed arrays', () => {
-    // With arrayLimit=5, up to 5 indexed elements parse as a proper array
-    const params = Array.from(
-      { length: 5 },
-      (_, i) => `color[${i}]=val${i}`,
-    ).join('&');
-    const result = parseQueryString(params, 5);
+  test('rejects percent-encoded brackets', () => {
+    assert.throws(() => parseQueryString('backgroundColor%5B%5D=000000'), {
+      name: 'QueryStringRangeError',
+    });
+  });
 
-    assert.ok(Array.isArray(result['color']));
-    assert.equal(result['color'].length, 5);
+  test('keeps brackets inside values', () => {
+    const result = parseQueryString('seed=a[b]');
+    assert.deepEqual(result, expected({ seed: ['a[b]'] }));
+  });
+
+  test('respects custom arrayLimit for comma lists', () => {
+    const values = Array.from({ length: 6 }, (_, i) => `val${i}`).join(',');
+
+    assert.throws(() => parseQueryString(`color=${values}`, 5), {
+      name: 'QueryStringRangeError',
+    });
+    assert.equal(parseQueryString(`color=${values}`, 6)['color'].length, 6);
   });
 
   test('throws when parameterLimit is exceeded', () => {
