@@ -304,6 +304,16 @@ describe('per-name animation speed', () => {
     assert.equal(options.animation, true);
     assert.equal(options.twinkleAnimation, false);
   });
+  test('shifts the start by a seeded delay', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/json?seed=hello&animation=true&animationDelay=0,5&orbitAnimationDelay=-1',
+    });
+    assert.equal(res.statusCode, 200);
+    const options = JSON.parse(res.body).options;
+    assert.ok(options.animationDelay >= 0 && options.animationDelay <= 5);
+    assert.equal(options.orbitAnimationDelay, -1);
+  });
 
   test('draws a range from a comma list', async () => {
     const res = await server.inject({

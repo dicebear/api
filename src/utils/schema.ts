@@ -1,7 +1,7 @@
 import { config } from '../config.js';
 import type { StyleEntry } from '../types.js';
 
-const BASE_OPTION_COUNT = 12;
+const BASE_OPTION_COUNT = 13;
 const OPTIONS_PER_COMPONENT = 5;
 const OPTIONS_PER_COLOR = 4;
 
@@ -15,9 +15,8 @@ export function getQueryLimits(allVersionStyles: Map<string, StyleEntry>[]): {
   for (const styles of allVersionStyles) {
     for (const { style } of styles.values()) {
       const componentCount = style.components().size;
-      const colorCount = style.colors().size + 1;
-      // Every animation name adds a switch and a speed option.
-      const animationCount = style.animationNames().length * 2;
+      const colorCount = style.colors().size + 1; // Every animation name adds a switch, a speed and a delay option.
+      const animationCount = style.animationNames().length * 3;
       const total =
         BASE_OPTION_COUNT +
         componentCount * OPTIONS_PER_COMPONENT +

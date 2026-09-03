@@ -17,9 +17,10 @@ DiceBear library.
 
 ### Added
 
-- A switch and a speed option per animation, such as `orbitAnimation=false`
-  and `orbitAnimationSpeed=0.5`, which win over `animation` and
-  `animationSpeed` for that animation. They come with `@dicebear/core` 11.1 and
+- A switch, a speed and a delay option per animation, such as
+  `orbitAnimation=false`, `orbitAnimationSpeed=0.5` and `orbitAnimationDelay=2`,
+  which win over `animation`, `animationSpeed` and the new `animationDelay` for
+  that animation. `animationDelay=0,5` starts every seed at its own moment. They come with `@dicebear/core` 11.1 and
   `@dicebear/schema` 2.0, the API only widens its parameter budget for them.
 
 ### Changed
