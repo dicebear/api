@@ -16,10 +16,13 @@ export function getQueryLimits(allVersionStyles: Map<string, StyleEntry>[]): {
     for (const { style } of styles.values()) {
       const componentCount = style.components().size;
       const colorCount = style.colors().size + 1;
+      // Every animation name adds a switch and a speed option.
+      const animationCount = style.animationNames().length * 2;
       const total =
         BASE_OPTION_COUNT +
         componentCount * OPTIONS_PER_COMPONENT +
-        colorCount * OPTIONS_PER_COLOR;
+        colorCount * OPTIONS_PER_COLOR +
+        animationCount;
       parameterLimit = Math.max(parameterLimit, total);
 
       for (const [, component] of style.components()) {

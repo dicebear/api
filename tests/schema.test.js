@@ -4,9 +4,10 @@ import assert from 'node:assert/strict';
 import { getQueryLimits } from '../dist/utils/schema.js';
 
 // Minimal mock that mimics Style's public API
-function mockStyle({ components = {}, colors = {} }) {
+function mockStyle({ components = {}, colors = {}, animations = [] }) {
   return {
     style: {
+      animationNames: () => animations,
       components: () =>
         new Map(
           Object.entries(components).map(([name, variantCount]) => [
@@ -138,5 +139,18 @@ describe('getQueryLimits', () => {
     ]);
     const result3 = getQueryLimits([styles3]);
     assert.equal(result3.parameterLimit, 116);
+  });
+
+  test('adds two parameters per animation name', () => {
+    const many = mockStyle({
+      components: Object.fromEntries(
+        Array.from({ length: 20 }, (_, i) => [`c${i}`, 1]),
+      ),
+      animations: ['blink', 'sway'],
+    });
+    const { parameterLimit } = getQueryLimits([new Map([['many', many]])]);
+
+    // 12 base + 20*5 components + 1*4 colors(bg) + 2 animations * 2 = 120
+    assert.equal(parameterLimit, 120);
   });
 });

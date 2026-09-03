@@ -15,6 +15,13 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- A switch and a speed option per animation, such as `orbitAnimation=false`
+  and `orbitAnimationSpeed=0.5`, which win over `animation` and
+  `animationSpeed` for that animation. They come with `@dicebear/core` 11.1 and
+  `@dicebear/schema` 2.0, the API only widens its parameter budget for them.
+
 ### Changed
 
 - Bracket notation in query strings now returns a 400 with a message that

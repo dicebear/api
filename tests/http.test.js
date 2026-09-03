@@ -282,6 +282,69 @@ describe('bracket notation', () => {
   });
 });
 
+describe('per-name animation speed', () => {
+  test('accepts a speed option per animation name', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/json?seed=hello&animation=true&orbitAnimationSpeed=0.5&twinkleAnimationSpeed=2',
+    });
+    assert.equal(res.statusCode, 200);
+    const options = JSON.parse(res.body).options;
+    assert.equal(options.orbitAnimationSpeed, 0.5);
+    assert.equal(options.twinkleAnimationSpeed, 2);
+  });
+
+  test('switches one animation by name', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/json?seed=hello&animation=true&twinkleAnimation=false',
+    });
+    assert.equal(res.statusCode, 200);
+    const options = JSON.parse(res.body).options;
+    assert.equal(options.animation, true);
+    assert.equal(options.twinkleAnimation, false);
+  });
+
+  test('draws a range from a comma list', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/json?seed=hello&animation=true&orbitAnimationSpeed=0.5,1',
+    });
+    assert.equal(res.statusCode, 200);
+    const speed = JSON.parse(res.body).options.orbitAnimationSpeed;
+    assert.ok(speed >= 0.5 && speed <= 1);
+  });
+
+  test('scales only the named animation', async () => {
+    const paced = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true&orbitAnimationSpeed=2',
+    });
+    const plain = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true',
+    });
+    assert.equal(paced.statusCode, 200);
+    assert.notEqual(paced.body, plain.body);
+  });
+
+  test('rejects a factor that is not a number', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true&orbitAnimationSpeed=fast',
+    });
+    assert.equal(res.statusCode, 400);
+  });
+
+  test('rejects a factor out of range', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true&orbitAnimationSpeed=20',
+    });
+    assert.equal(res.statusCode, 400);
+  });
+});
+
 describe('weighted variants', () => {
   test('accepts variant:weight format', async () => {
     const res = await server.inject({
