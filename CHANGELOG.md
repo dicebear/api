@@ -27,6 +27,7 @@ DiceBear library.
 
 - Updated `@dicebear/schema` to `^2.0.0` (was `^1.6.1`), which validates the
   animation options and the boolean `animation`.
+- Updated `@dicebear/styles` on `/11.x` to `^11.0.0-rc.2` (was `^11.0.0-rc.1`).
 - Bracket notation in query strings now returns a 400 with a message that
   names the offending parameter. `backgroundColor[]=000000` and
   `animationSpeed[orbit]=2` used to be parsed, the first as a list and the
