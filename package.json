@@ -20,7 +20,7 @@
     "@dicebear/core": "^11.0.0-rc.1",
     "@dicebear/styles-10": "npm:@dicebear/styles@^10.6.0",
     "@dicebear/styles-11": "npm:@dicebear/styles@^11.0.0-rc.1",
-    "@dicebear/schema": "^1.6.1",
+    "@dicebear/schema": "^2.0.0",
     "@fastify/cors": "^11.2.0",
     "fast-xml-parser": "^5.7.3",
     "fastify": "^5.8.2",
