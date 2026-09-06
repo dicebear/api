@@ -15,6 +15,19 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Fixed
+
+- **The 10.x routes keep the color behavior of DiceBear 10.** The API renders
+  every version prefix with one core, the newest one, and between 10 and 11 the
+  core changed what `{color}ColorOrder=fixed` does with a style's own palette:
+  10 sorted the palette, left a gradient at two stops and ignored the pin for a
+  color with `contrastTo`, while 11 takes the palette in definition order,
+  fills a gradient with all of it and skips the contrast sort. On `/10.x` the
+  palettes are now sorted at load and the pinning options are rewritten per
+  request, so those URLs answer as they did under core 10. Without the pin
+  nothing changes, and `definition.json` still serves the file the style
+  package ships.
+
 ### Added
 
 - A switch, a speed and a delay option per animation, such as

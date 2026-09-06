@@ -4,6 +4,7 @@ import { Avatar } from '@dicebear/core';
 import { config, IMAGE_FORMATS } from '../config.js';
 import { toJpeg, toPng, toWebp, toAvif } from '@dicebear/converter';
 import { filterInitialsSvg } from '../utils/initials-filter.js';
+import { applyLegacyColorOrder } from '../utils/legacy-colors.js';
 
 export type AvatarRequest = {
   Params: {
@@ -42,6 +43,10 @@ export function avatarHandler(app: FastifyInstance, entry: StyleEntry) {
     }
 
     options['seed'] = options['seed'] ?? '';
+
+    if (entry.legacyColors) {
+      applyLegacyColorOrder(options, entry.legacyColors);
+    }
 
     reply.header('Content-Disposition', `inline; filename="avatar.${format}"`);
 

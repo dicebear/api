@@ -17,6 +17,12 @@ declare module 'fastify' {
 export type StyleEntry = {
   style: Style;
   weightedFields: Set<string>;
+  /**
+   * Names of the colors with a `contrastTo`, and the definition as published,
+   * both set for the version lines that render through the 10 color shim.
+   */
+  legacyColors?: ReadonlySet<string>;
+  definitionBody?: string;
 };
 
 export type SizeConfig = {

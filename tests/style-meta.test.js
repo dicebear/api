@@ -1,6 +1,7 @@
 import { test, describe, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import * as path from 'node:path';
 
@@ -8,6 +9,7 @@ import { app } from '../dist/app.js';
 import { config } from '../dist/config.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 let server;
 
@@ -57,6 +59,16 @@ describe('definition.json and options.json endpoints (enabled via env)', () => {
     );
 
     payload = JSON.parse(result.stdout);
+  });
+
+  test('definition.json stays the file the style package ships', () => {
+    const { statusCode, body } = payload.sortedLine;
+    assert.equal(statusCode, 200);
+
+    const published = require('@dicebear/styles-10/adventurer.json');
+    const served = JSON.parse(body);
+
+    assert.deepEqual(served.colors.skin.values, published.colors.skin.values);
   });
 
   test('definition.json returns the style definition', () => {

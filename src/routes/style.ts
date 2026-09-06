@@ -50,7 +50,8 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
   const { arrayLimit, parameterLimit } = app.queryLimits;
 
   if (config.definition.enabled) {
-    const body = JSON.stringify(entry.style.definition());
+    const body =
+      entry.definitionBody ?? JSON.stringify(entry.style.definition());
 
     app.get('/definition.json', (_request, reply) => {
       reply
