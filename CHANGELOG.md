@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.14.0-rc.2] - 2026-09-07
+
 ### Fixed
 
 - **The 10.x routes keep the color behavior of DiceBear 10.** The API renders
@@ -220,7 +222,8 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.14.0-rc.1...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.14.0-rc.2...HEAD
+[4.14.0-rc.2]: https://github.com/dicebear/api/compare/v4.14.0-rc.1...v4.14.0-rc.2
 [4.14.0-rc.1]: https://github.com/dicebear/api/compare/v1.14.0-rc.1...v4.14.0-rc.1
 [1.14.0-rc.1]: https://github.com/dicebear/api/compare/v4.13.0...v1.14.0-rc.1
 [4.13.0]: https://github.com/dicebear/api/compare/v4.13.0-rc.1...v4.13.0
