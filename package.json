@@ -16,8 +16,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@dicebear/converter": "^10.7.0",
-    "@dicebear/core": "^11.0.0-rc.1",
+    "@dicebear/converter": "^11.0.0-rc.2",
+    "@dicebear/core": "^11.0.0-rc.2",
     "@dicebear/styles-10": "npm:@dicebear/styles@^10.6.0",
     "@dicebear/styles-11": "npm:@dicebear/styles@^11.0.0-rc.3",
     "@dicebear/schema": "^2.0.1",
