@@ -304,6 +304,25 @@ describe('per-name animation speed', () => {
     assert.equal(options.animation, true);
     assert.equal(options.twinkleAnimation, false);
   });
+  test('leaves the reduced-motion query out on request', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true&animationMotionQuery=false',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.includes('<style>@keyframes'));
+    assert.ok(!res.body.includes('prefers-reduced-motion'));
+  });
+
+  test('keeps the reduced-motion query by default', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.includes('prefers-reduced-motion'));
+  });
+
   test('shifts the start by a seeded delay', async () => {
     const res = await server.inject({
       method: 'GET',

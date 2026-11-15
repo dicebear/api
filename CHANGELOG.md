@@ -15,6 +15,14 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- `animationMotionQuery=false` leaves the `prefers-reduced-motion` media query
+  out of the animation CSS, so SVG renderers that ignore media queries, such as
+  the SVG libraries of native apps, play the animations. The option comes with
+  `@dicebear/core` 11.0.0-rc.3 and `@dicebear/schema` 2.1.0, and the API widens
+  its parameter budget by one for it.
+
 ## [4.14.0-rc.3] - 2026-09-07
 
 ## [4.14.0-rc.2] - 2026-09-07

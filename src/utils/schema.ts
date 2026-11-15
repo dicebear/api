@@ -1,7 +1,7 @@
 import { config } from '../config.js';
 import type { StyleEntry } from '../types.js';
 
-const BASE_OPTION_COUNT = 13;
+const BASE_OPTION_COUNT = 14;
 const OPTIONS_PER_COMPONENT = 5;
 const OPTIONS_PER_COLOR = 4;
 

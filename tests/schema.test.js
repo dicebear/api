@@ -48,14 +48,14 @@ describe('getQueryLimits', () => {
     ]);
     const result = getQueryLimits([styles]);
 
-    // 13 base + 1*5 components + 2*4 colors(skin+bg) = 13+5+8 = 26 < 100 min
+    // 14 base + 1*5 components + 2*4 colors(skin+bg) = 14+5+8 = 27 < 100 min
     assert.equal(result.parameterLimit, 100);
     // max(3 variants, 5 colors) = 5 < 20 min
     assert.equal(result.arrayLimit, 20);
   });
 
   test('computes parameterLimit from components and colors', () => {
-    // 13 base + 10*5 + 6*4 = 13 + 50 + 24 = 87 < 100 min
+    // 14 base + 10*5 + 6*4 = 14 + 50 + 24 = 88 < 100 min
     const smallStyle = mockStyle({
       components: Object.fromEntries(
         Array.from({ length: 10 }, (_, i) => [`comp${i}`, 2]),
@@ -64,7 +64,7 @@ describe('getQueryLimits', () => {
         Array.from({ length: 5 }, (_, i) => [`color${i}`, 3]),
       ),
     });
-    // 13 base + 20*5 + 11*4 = 13 + 100 + 44 = 157 > 100 min
+    // 14 base + 20*5 + 11*4 = 14 + 100 + 44 = 158 > 100 min
     const largeStyle = mockStyle({
       components: Object.fromEntries(
         Array.from({ length: 20 }, (_, i) => [`comp${i}`, 2]),
@@ -79,7 +79,7 @@ describe('getQueryLimits', () => {
       ['large', largeStyle],
     ]);
     const result = getQueryLimits([styles]);
-    assert.equal(result.parameterLimit, 157);
+    assert.equal(result.parameterLimit, 158);
   });
 
   test('computes arrayLimit from max variant count', () => {
@@ -113,14 +113,14 @@ describe('getQueryLimits', () => {
 
   test('counts background as extra color', () => {
     // 0 components, 2 defined colors + 1 background = 3 colors
-    // 13 base + 0 + 3*4 = 25
+    // 14 base + 0 + 3*4 = 26
     const styles = new Map([
       ['style', mockStyle({ components: {}, colors: { skin: 3, hair: 3 } })],
     ]);
     const result = getQueryLimits([styles]);
 
     // parameterLimit won't exceed 100 min, but let's verify the formula with a larger example
-    // 13 base + 0 components + (20 colors + 1 bg) * 4 = 13 + 84 = 97 < 100
+    // 14 base + 0 components + (20 colors + 1 bg) * 4 = 14 + 84 = 98 < 100
     const manyColors = Object.fromEntries(
       Array.from({ length: 20 }, (_, i) => [`c${i}`, 3]),
     );
@@ -128,9 +128,9 @@ describe('getQueryLimits', () => {
       ['style', mockStyle({ components: {}, colors: manyColors })],
     ]);
     const result2 = getQueryLimits([styles2]);
-    assert.equal(result2.parameterLimit, 100); // 97 < 100 min
+    assert.equal(result2.parameterLimit, 100); // 98 < 100 min
 
-    // 13 base + 0 + (25 colors + 1 bg) * 4 = 13 + 104 = 117 > 100
+    // 14 base + 0 + (25 colors + 1 bg) * 4 = 14 + 104 = 118 > 100
     const evenMoreColors = Object.fromEntries(
       Array.from({ length: 25 }, (_, i) => [`c${i}`, 3]),
     );
@@ -138,7 +138,7 @@ describe('getQueryLimits', () => {
       ['style', mockStyle({ components: {}, colors: evenMoreColors })],
     ]);
     const result3 = getQueryLimits([styles3]);
-    assert.equal(result3.parameterLimit, 117);
+    assert.equal(result3.parameterLimit, 118);
   });
 
   test('adds three parameters per animation name', () => {
@@ -150,7 +150,7 @@ describe('getQueryLimits', () => {
     });
     const { parameterLimit } = getQueryLimits([new Map([['many', many]])]);
 
-    // 13 base + 20*5 components + 1*4 colors(bg) + 2 animations * 3 = 123
-    assert.equal(parameterLimit, 123);
+    // 14 base + 20*5 components + 1*4 colors(bg) + 2 animations * 3 = 124
+    assert.equal(parameterLimit, 124);
   });
 });
