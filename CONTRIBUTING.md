@@ -76,6 +76,7 @@ tests/
 ├── excluded-options.test.js
 ├── fonts.test.js
 ├── query-string.test.js
+├── signature.test.js
 └── schema.test.js
 fonts/          # Generated font bundle (checked-in for determinism)
 scripts/        # Build helpers (build-fonts.ts)
