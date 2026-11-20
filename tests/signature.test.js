@@ -103,6 +103,19 @@ describe('verifySignedUrl', () => {
     }
   });
 
+  test('rejects a raw # that the router would cut the URL at', () => {
+    const url = '/11.x/thumbs/svg?seed=user#1234&size=64';
+
+    assert.deepEqual(verify(`${url}&sig=${signUrl(url, SECRET)}`), {
+      ok: false,
+      reason: 'invalid',
+    });
+
+    const encoded = '/11.x/thumbs/svg?seed=user%231234&size=64';
+
+    assert.equal(verify(`${encoded}&sig=${signUrl(encoded, SECRET)}`).ok, true);
+  });
+
   test('rejects a malformed signature', () => {
     for (const signature of ['', 'abc', 'z'.repeat(64), 'a'.repeat(66)]) {
       assert.deepEqual(verify(`${URL}&sig=${signature}`), {
@@ -260,10 +273,25 @@ describe('verifySignedPath', () => {
   });
 
   test('rejects a query string next to a signed path', () => {
-    assert.deepEqual(verifyPath(`${signPath('seed=Felix')}?size=64`), {
+    for (const query of ['?size=64', '?']) {
+      assert.deepEqual(verifyPath(`${signPath('seed=Felix')}${query}`), {
+        ok: false,
+        reason: 'unexpected-query',
+      });
+    }
+  });
+
+  test('rejects a raw # that the router would cut the path at', () => {
+    // Unencoded, the router reads `seed=user` and drops the rest.
+    assert.deepEqual(verifyPath(signPath('seed=user#1234&size=64')), {
       ok: false,
       reason: 'invalid',
     });
+
+    assert.equal(
+      verifyPath(signPath('seed=user#1234&size=64', { encode: true })).ok,
+      true,
+    );
   });
 
   test('rejects a changed option or another style', () => {
@@ -413,7 +441,16 @@ describe('SIGNING_SECRETS', () => {
 
   test('starts with secrets of 32 characters', () => {
     assert.equal(load(`${'a'.repeat(32)}, ${'b'.repeat(40)}`).status, 0);
-    assert.equal(load('').status, 0);
+    assert.equal(load(`${'a'.repeat(32)},`).status, 0);
+  });
+
+  test('refuses to start with a variable that holds no secret', () => {
+    for (const secrets of ['', ' ', ',', ' , ']) {
+      const result = load(secrets);
+
+      assert.notEqual(result.status, 0, JSON.stringify(secrets));
+      assert.match(result.stderr, /is set but holds no secret/);
+    }
   });
 });
 
@@ -465,6 +502,17 @@ describe('signed URLs (enabled via env)', () => {
       'Missing signature.',
     );
     assert.equal(payload.pathWithExtraQuery.statusCode, 403);
+    assert.equal(
+      JSON.parse(payload.pathWithExtraQuery.body).message,
+      'Query string not allowed next to path options.',
+    );
+  });
+
+  test('refuses a raw # in a signed URL', () => {
+    for (const name of ['rawFragmentPath', 'rawFragmentQuery']) {
+      assert.equal(payload[name].statusCode, 403, name);
+      assert.match(payload[name].body, /Invalid signature\./, name);
+    }
   });
 
   test('reads the expiry of the path variant', () => {

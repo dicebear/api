@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
 export type SignatureFailure =
-  'missing' | 'invalid' | 'invalid-expiry' | 'expired';
+  'missing' | 'invalid' | 'invalid-expiry' | 'expired' | 'unexpected-query';
 
 export type SignatureResult =
   | { ok: true; expiresAt: number | null }
@@ -50,6 +50,15 @@ function findExpiries(parameters: string): string[] {
   }
 
   return expiries;
+}
+
+/**
+ * The router ends the URL at a raw `#` and reads the options only up to it,
+ * while the signature would cover the full URL. No browser sends one, so a
+ * URL that has it is refused. An encoded `%23` is not affected.
+ */
+function hasFragment(rawUrl: string): boolean {
+  return rawUrl.includes('#');
 }
 
 function digest(url: string, secret: string): Buffer {
@@ -122,6 +131,10 @@ export function verifySignedUrl(
   secrets: readonly string[],
   now = Math.floor(Date.now() / 1000),
 ): SignatureResult {
+  if (hasFragment(rawUrl)) {
+    return { ok: false, reason: 'invalid' };
+  }
+
   const queryStart = rawUrl.indexOf('?');
 
   if (queryStart === -1) {
@@ -160,6 +173,10 @@ export function verifySignedPath(
   secrets: readonly string[],
   now = Math.floor(Date.now() / 1000),
 ): SignatureResult {
+  if (hasFragment(rawUrl)) {
+    return { ok: false, reason: 'invalid' };
+  }
+
   const queryStart = rawUrl.indexOf('?');
   const path = queryStart === -1 ? rawUrl : rawUrl.slice(0, queryStart);
   const segmentStart = path.lastIndexOf('/') + 1;
@@ -171,9 +188,10 @@ export function verifySignedPath(
   }
 
   // The API ignores the query string on this route, so nothing in it could be
-  // signed. Accepting one anyway would give every URL endless spellings.
+  // signed. Accepting one anyway would give every URL endless spellings. It
+  // gets its own reason, so a correct signature is not reported as a wrong one.
   if (queryStart !== -1) {
-    return { ok: false, reason: 'invalid' };
+    return { ok: false, reason: 'unexpected-query' };
   }
 
   const parameters =

@@ -53,6 +53,7 @@ const SIGNATURE_MESSAGES: Record<SignatureFailure, string> = {
   invalid: 'Invalid signature.',
   'invalid-expiry': 'Invalid expiry.',
   expired: 'Signature expired.',
+  'unexpected-query': 'Query string not allowed next to path options.',
 };
 
 function signatureHook(

@@ -27,7 +27,8 @@ DiceBear library.
   and caps `Cache-Control` at it. Several comma-separated secrets are accepted
   at once, so a key can be rotated without breaking the URLs already handed out.
   Every secret needs at least 32 characters, and the API refuses to start with a
-  shorter one. Without the variable nothing changes.
+  shorter one or with a variable that is set but empty. A secret cannot contain
+  a comma. Without the variable nothing changes.
 
 ## [4.14.0-rc.4] - 2026-11-15
 

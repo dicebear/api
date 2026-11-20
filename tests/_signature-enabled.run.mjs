@@ -1,3 +1,5 @@
+import { connect } from 'node:net';
+
 import { app } from '../dist/app.js';
 import { config } from '../dist/config.js';
 import { signUrl } from '../dist/utils/signature.js';
@@ -77,6 +79,40 @@ try {
   const head = await server.inject({ method: 'HEAD', path: cases.unsigned });
 
   result.unsignedHead = { statusCode: head.statusCode };
+
+  // A raw `#` only reaches the router over a real socket. `inject` and every
+  // HTTP client drop or encode it first.
+  await server.listen({ port: 0, host: '127.0.0.1' });
+
+  const { port } = server.server.address();
+
+  const requestRaw = (target) =>
+    new Promise((resolve, reject) => {
+      const socket = connect(port, '127.0.0.1', () => {
+        socket.write(
+          `GET ${target} HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n`,
+        );
+      });
+
+      let response = '';
+
+      socket.setEncoding('utf-8');
+      socket.on('data', (chunk) => (response += chunk));
+      socket.on('error', reject);
+      socket.on('end', () => {
+        resolve({
+          statusCode: Number(response.slice(9, 12)),
+          body: response.slice(response.indexOf('\r\n\r\n') + 4),
+        });
+      });
+    });
+
+  result.rawFragmentPath = await requestRaw(
+    signPath('/10.x/initials/svg', 'seed=AB#CD&size=32'),
+  );
+  result.rawFragmentQuery = await requestRaw(
+    sign('/10.x/initials/svg?seed=AB#CD&size=32'),
+  );
 
   process.stdout.write(JSON.stringify(result));
 } finally {
