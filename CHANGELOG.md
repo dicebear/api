@@ -15,6 +15,8 @@ DiceBear library.
 
 ## [Unreleased]
 
+## [4.14.0-rc.5] - 2026-11-21
+
 ### Added
 
 - `SIGNING_SECRETS` turns on signed URLs. The avatar endpoints then only answer
@@ -249,7 +251,8 @@ DiceBear library.
   Lorelei mouth showing through beard variants and the Rings shape rendering.
 - Updated `@dicebear/schema` to `^1.1.0` (was `^1.0.0`).
 
-[Unreleased]: https://github.com/dicebear/api/compare/v4.14.0-rc.4...HEAD
+[Unreleased]: https://github.com/dicebear/api/compare/v4.14.0-rc.5...HEAD
+[4.14.0-rc.5]: https://github.com/dicebear/api/compare/v4.14.0-rc.4...v4.14.0-rc.5
 [4.14.0-rc.4]: https://github.com/dicebear/api/compare/v4.14.0-rc.3...v4.14.0-rc.4
 [4.14.0-rc.3]: https://github.com/dicebear/api/compare/v4.14.0-rc.2...v4.14.0-rc.3
 [4.14.0-rc.2]: https://github.com/dicebear/api/compare/v4.14.0-rc.1...v4.14.0-rc.2
