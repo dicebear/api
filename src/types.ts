@@ -12,6 +12,14 @@ declare module 'fastify' {
     queryLimits: QueryLimits;
     initialsBlocklist: ReadonlySet<string>;
   }
+
+  interface FastifyRequest {
+    /**
+     * Unix time in seconds at which a signed URL stops being valid, or `null`
+     * when the request carries no expiry.
+     */
+    expiresAt: number | null;
+  }
 }
 
 export type StyleEntry = {
@@ -39,13 +47,7 @@ export type ImageFormatConfig = {
 
 export type ImageFormat = 'png' | 'jpeg' | 'webp' | 'avif';
 export type RequestFormat =
-  | 'svg'
-  | 'png'
-  | 'jpg'
-  | 'jpeg'
-  | 'webp'
-  | 'avif'
-  | 'json';
+  'svg' | 'png' | 'jpg' | 'jpeg' | 'webp' | 'avif' | 'json';
 
 export type Config = {
   port: number;
@@ -73,6 +75,9 @@ export type Config = {
   cacheControl: {
     avatar: number;
     styles: number;
+  };
+  signing: {
+    secrets: string[];
   };
   queryString: {
     arrayLimitMin: number;

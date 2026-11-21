@@ -1,10 +1,20 @@
-import type { FastifyPluginCallback } from 'fastify';
+import type {
+  FastifyPluginCallback,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify';
 import type { StyleEntry } from '../types.js';
 import {
   parseQueryString,
   transformWeightedFields,
 } from '../utils/query-string.js';
 import { AvatarRequest, avatarHandler } from '../handler/avatar.js';
+import {
+  SignatureFailure,
+  SignatureResult,
+  verifySignedPath,
+  verifySignedUrl,
+} from '../utils/signature.js';
 import { config } from '../config.js';
 import { OptionsDescriptor } from '@dicebear/core';
 import { createRequire } from 'node:module';
@@ -37,6 +47,38 @@ const AVATAR_ROUTES = [
   { url: '/:format', hasPathOptions: false },
   { url: '/:format/:options', hasPathOptions: true },
 ] as const;
+
+const SIGNATURE_MESSAGES: Record<SignatureFailure, string> = {
+  missing: 'Missing signature.',
+  invalid: 'Invalid signature.',
+  'invalid-expiry': 'Invalid expiry.',
+  expired: 'Signature expired.',
+  'unexpected-query': 'Query string not allowed next to path options.',
+};
+
+function signatureHook(
+  verify: (rawUrl: string, secrets: readonly string[]) => SignatureResult,
+) {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    const result = verify(request.url, config.signing.secrets);
+
+    if (!result.ok) {
+      return reply.status(403).header('Cache-Control', 'no-store').send({
+        statusCode: 403,
+        error: 'Forbidden',
+        message: SIGNATURE_MESSAGES[result.reason],
+      });
+    }
+
+    request.expiresAt = result.expiresAt;
+  };
+}
+
+/** Both parameters belong to the signature, not to the avatar options. */
+function removeSignatureParameters(query: Record<string, unknown>) {
+  delete query.sig;
+  delete query.exp;
+}
 
 type Options = {
   entry: StyleEntry;
@@ -82,6 +124,13 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
     app.route<AvatarRequest>({
       method: 'GET',
       url,
+      ...(config.signing.secrets.length > 0
+        ? {
+            onRequest: signatureHook(
+              hasPathOptions ? verifySignedPath : verifySignedUrl,
+            ),
+          }
+        : {}),
       preValidation: async (request) => {
         if (hasPathOptions && typeof request.params.options === 'string') {
           request.query = parseQueryString(
@@ -89,6 +138,10 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
             arrayLimit,
             parameterLimit,
           );
+        }
+
+        if (config.signing.secrets.length > 0) {
+          removeSignatureParameters(request.query as Record<string, unknown>);
         }
 
         transformWeightedFields(

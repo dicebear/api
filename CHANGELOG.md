@@ -15,6 +15,21 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Added
+
+- `SIGNING_SECRETS` turns on signed URLs. The avatar endpoints then only answer
+  URLs that end in a `sig` parameter with the HMAC-SHA256 of the path and query
+  string in front of it, and answer an unsigned or wrongly signed one with a
+  `403`. Requests the API turns down before the signature check, such as one
+  with too many parameters, keep their `400`. URLs with the options in the path,
+  which Gravatar needs, carry `sig` in that path segment, and the signature
+  covers the decoded segment. An optional `exp` parameter gives a URL an expiry
+  and caps `Cache-Control` at it. Several comma-separated secrets are accepted
+  at once, so a key can be rotated without breaking the URLs already handed out.
+  Every secret needs at least 32 characters, and the API refuses to start with a
+  shorter one. A secret cannot contain a comma. Without the variable, or with
+  an empty one, nothing changes.
+
 ## [4.14.0-rc.4] - 2026-11-15
 
 ### Added

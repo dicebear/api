@@ -122,6 +122,10 @@ npm start
 | `QUERY_STRING_ARRAY_LIMIT_MIN`     | `20`                                          | Minimum number of values allowed per array parameter.                                                |
 | `EXCLUDED_OPTIONS`                 | `idRandomization,fontFamily,fontWeight,title` | Comma-separated list of option names to exclude.                                                     |
 | `QUERY_STRING_PARAMETER_LIMIT_MIN` | `100`                                         | Minimum number of query string parameters allowed.                                                   |
+| `SIGNING_SECRETS`                  |                                               | Secrets for [signed URLs](https://www.dicebear.com/recipes/self-host-the-http-api/#signed-urls).     |
+
+> [!NOTE]
+> `SIGNING_SECRETS` is split at commas and each secret is trimmed, so a secret cannot contain a comma or start or end with whitespace. Without the variable, or with an empty one, the API runs without signed URLs.
 
 > [!NOTE]
 > The `*_EXIF` variables require [Perl](https://www.npmjs.com/package/exiftool-vendored#installation) and [procps](https://www.npmjs.com/package/exiftool-vendored#this-package-requires-procps) to be installed.

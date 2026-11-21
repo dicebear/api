@@ -28,6 +28,10 @@ export const app = async () => {
     ...versionMap.values(),
   ]);
 
+  // A signed URL carries `sig` and optionally `exp` on top of the options.
+  const queryParameterLimit =
+    parameterLimit + (config.signing.secrets.length > 0 ? 2 : 0);
+
   const app = fastify({
     logger: config.logger,
     ajv: {
@@ -41,7 +45,7 @@ export const app = async () => {
       maxParamLength: 1024,
       querystringParser: (str) => {
         try {
-          return parseQueryString(str, arrayLimit, parameterLimit);
+          return parseQueryString(str, arrayLimit, queryParameterLimit);
         } catch (error) {
           if (error instanceof QueryStringRangeError) {
             return { _error: error };
@@ -65,8 +69,12 @@ export const app = async () => {
   const initialsBlocklist = JSON.parse(blocklistRaw) as string[];
 
   app.decorate('fontLookup', new FontLookup(fonts));
-  app.decorate('queryLimits', { arrayLimit, parameterLimit });
+  app.decorate('queryLimits', {
+    arrayLimit,
+    parameterLimit: queryParameterLimit,
+  });
   app.decorate('initialsBlocklist', new Set(initialsBlocklist));
+  app.decorateRequest('expiresAt', null);
 
   app.addHook('onRequest', (request, reply, done) => {
     const query = request.query as Record<string, unknown>;

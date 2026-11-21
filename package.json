@@ -10,7 +10,7 @@
     "prebuild": "tsx ./scripts/build-fonts.ts && tsx ./scripts/build-blocklist.ts",
     "build": "tsc --build",
     "start": "node ./dist/server.js",
-    "test": "node --test tests/*.js",
+    "test": "node --import ./tests/_env.setup.mjs --test tests/*.js",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src",
     "format": "prettier --write ."

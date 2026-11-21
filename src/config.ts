@@ -1,5 +1,24 @@
 import { Config, ImageFormatConfig, ImageFormat } from './types.js';
 
+const SIGNING_SECRET_MIN_LENGTH = 32;
+
+function readSigningSecrets(): string[] {
+  const secrets = (process.env.SIGNING_SECRETS ?? '')
+    .split(',')
+    .map((secret) => secret.trim())
+    .filter(Boolean);
+
+  // One signed URL is enough to try out secrets offline, so a short one
+  // protects nothing. Refuse to start instead of running with it.
+  if (secrets.some((secret) => secret.length < SIGNING_SECRET_MIN_LENGTH)) {
+    throw new Error(
+      `Every secret in SIGNING_SECRETS needs at least ${SIGNING_SECRET_MIN_LENGTH} characters. Generate one with "openssl rand -hex 32".`,
+    );
+  }
+
+  return secrets;
+}
+
 function createImageFormatConfig(envPrefix: string): ImageFormatConfig {
   return {
     enabled: Boolean(Number(process.env[envPrefix] ?? 1)),
@@ -44,6 +63,9 @@ export const config: Config = {
   )
     .split(',')
     .filter(Boolean),
+  signing: {
+    secrets: readSigningSecrets(),
+  },
   queryString: {
     arrayLimitMin: Number(process.env.QUERY_STRING_ARRAY_LIMIT_MIN ?? 20),
     parameterLimitMin: Number(

@@ -22,6 +22,17 @@ const FORMAT_CONVERTERS = {
   avif: toAvif,
 } as const;
 
+/** A signed URL with an expiry must not outlive it in a cache. */
+function getMaxAge(expiresAt: number | null): number {
+  if (expiresAt === null) {
+    return config.cacheControl.avatar;
+  }
+
+  const remaining = expiresAt - Math.floor(Date.now() / 1000);
+
+  return Math.max(0, Math.min(config.cacheControl.avatar, remaining));
+}
+
 export function avatarHandler(app: FastifyInstance, entry: StyleEntry) {
   return async (
     request: FastifyRequest<AvatarRequest>,
@@ -53,7 +64,7 @@ export function avatarHandler(app: FastifyInstance, entry: StyleEntry) {
     const avatar = new Avatar(entry.style, options);
 
     reply.header('X-Robots-Tag', 'noindex');
-    reply.header('Cache-Control', `max-age=${config.cacheControl.avatar}`);
+    reply.header('Cache-Control', `max-age=${getMaxAge(request.expiresAt)}`);
 
     const renderSvg = () => {
       const svg = avatar.toString();
