@@ -3,24 +3,10 @@ import { Config, ImageFormatConfig, ImageFormat } from './types.js';
 const SIGNING_SECRET_MIN_LENGTH = 32;
 
 function readSigningSecrets(): string[] {
-  const value = process.env.SIGNING_SECRETS;
-
-  if (value === undefined) {
-    return [];
-  }
-
-  const secrets = value
+  const secrets = (process.env.SIGNING_SECRETS ?? '')
     .split(',')
     .map((secret) => secret.trim())
     .filter(Boolean);
-
-  // An empty value usually means a variable that was not filled in on the way
-  // here. Starting without signatures would leave the API open unnoticed.
-  if (secrets.length === 0) {
-    throw new Error(
-      'SIGNING_SECRETS is set but holds no secret. Unset it to run without signed URLs.',
-    );
-  }
 
   // One signed URL is enough to try out secrets offline, so a short one
   // protects nothing. Refuse to start instead of running with it.

@@ -441,16 +441,7 @@ describe('SIGNING_SECRETS', () => {
 
   test('starts with secrets of 32 characters', () => {
     assert.equal(load(`${'a'.repeat(32)}, ${'b'.repeat(40)}`).status, 0);
-    assert.equal(load(`${'a'.repeat(32)},`).status, 0);
-  });
-
-  test('refuses to start with a variable that holds no secret', () => {
-    for (const secrets of ['', ' ', ',', ' , ']) {
-      const result = load(secrets);
-
-      assert.notEqual(result.status, 0, JSON.stringify(secrets));
-      assert.match(result.stderr, /is set but holds no secret/);
-    }
+    assert.equal(load('').status, 0);
   });
 });
 

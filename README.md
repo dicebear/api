@@ -125,7 +125,7 @@ npm start
 | `SIGNING_SECRETS`                  |                                               | Secrets for [signed URLs](https://www.dicebear.com/recipes/self-host-the-http-api/#signed-urls).     |
 
 > [!NOTE]
-> `SIGNING_SECRETS` is split at commas and each secret is trimmed, so a secret cannot contain a comma or start or end with whitespace. Leave the variable unset to run without signed URLs. The API refuses to start with an empty value.
+> `SIGNING_SECRETS` is split at commas and each secret is trimmed, so a secret cannot contain a comma or start or end with whitespace. Without the variable, or with an empty one, the API runs without signed URLs.
 
 > [!NOTE]
 > The `*_EXIF` variables require [Perl](https://www.npmjs.com/package/exiftool-vendored#installation) and [procps](https://www.npmjs.com/package/exiftool-vendored#this-package-requires-procps) to be installed.
