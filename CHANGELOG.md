@@ -59,6 +59,12 @@ DiceBear library.
   `@dicebear/core` 11.0.0-rc.3 and `@dicebear/schema` 2.1.0, and the API widens
   its parameter budget by one for it.
 
+### Changed
+
+- SVG responses carry a `data-dicebear-component` attribute on every component
+  `<use>`, on every version prefix, as `@dicebear/core` 11.0.0-rc.3 renders it.
+  The images stay the same.
+
 ## [4.14.0-rc.3] - 2026-09-07
 
 ## [4.14.0-rc.2] - 2026-09-07
@@ -81,8 +87,9 @@ DiceBear library.
 - A switch, a speed and a delay option per animation, such as
   `orbitAnimation=false`, `orbitAnimationSpeed=0.5` and `orbitAnimationDelay=2`,
   which win over `animation`, `animationSpeed` and the new `animationDelay` for
-  that animation. `animationDelay=0,5` starts every seed at its own moment. They come with `@dicebear/core` 11.1 and
-  `@dicebear/schema` 2.0, the API only widens its parameter budget for them.
+  that animation. `animationDelay=0,5` starts every seed at its own moment.
+  They come with `@dicebear/core` 11.0.0-rc.2 and `@dicebear/schema` 2.0, the
+  API only widens its parameter budget for them.
 
 ### Changed
 
