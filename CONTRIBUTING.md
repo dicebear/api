@@ -40,8 +40,9 @@ cd api
 npm install
 ```
 
-`npm install` runs the `predev` / `prebuild` hook once via `tsx` to build
-the font bundle into `fonts/`. If you ever see font-related load errors,
+`npm run dev` and `npm run build` first build the font bundle into `fonts/`
+and the initials blocklist into `data/` (the `predev` and `prebuild` hooks).
+`npm install` alone does not. If you ever see font-related load errors,
 re-run:
 
 ```sh
@@ -64,22 +65,26 @@ npx tsx ./scripts/build-fonts.ts
 
 ```
 src/
-├── server.ts      # Entry point: wires config, workers, graceful shutdown
+├── server.ts      # Entry point: starts one server or a cluster of workers
 ├── app.ts         # Fastify app factory (also used by tests)
 ├── config.ts      # Reads env vars, validates, exposes typed config
 ├── routes/        # HTTP routes (JSON, SVG, raster formats, metadata)
 ├── handler/       # Shared request handlers used by the routes
-└── utils/         # Helpers (cache headers, content negotiation, etc.)
+└── utils/         # Helpers (query parsing, fonts, signatures, schemas, etc.)
 tests/
 ├── http.test.js           # End-to-end HTTP checks via Fastify's inject()
 ├── definitions.test.js    # Style listing and metadata endpoints
 ├── excluded-options.test.js
 ├── fonts.test.js
+├── initials-filter.test.js
+├── legacy-colors.test.js
 ├── query-string.test.js
+├── schema.test.js
 ├── signature.test.js
-└── schema.test.js
-fonts/          # Generated font bundle (checked-in for determinism)
-scripts/        # Build helpers (build-fonts.ts)
+└── style-meta.test.js
+fonts/          # Generated font bundle (git-ignored, built by predev/prebuild)
+data/           # Generated initials blocklist (git-ignored, same hooks)
+scripts/        # build-fonts.ts, build-blocklist.ts, version.sh
 Dockerfile      # Production image
 ```
 
@@ -95,7 +100,7 @@ environment variables listed in the [README](./README.md#environment-variables).
 Once it's up, smoke-test with a style known to be registered:
 
 ```sh
-curl -s 'http://localhost:3000/10.x/thumbs/svg?seed=ping' | head -c 200
+curl -s 'http://localhost:3000/11.x/thumbs/svg?seed=ping' | head -c 200
 ```
 
 ## Writing tests
@@ -106,7 +111,8 @@ Tests use `node --test` against the Fastify instance returned by
 the matching file under `tests/`. Keep fixtures tiny: tests must be fast
 enough to run on every push.
 
-Tests don't need Docker. CI runs the exact same command as
+Tests don't need Docker, but they import the compiled app from `dist/`, so
+run `npm run build` first. CI does the same: `npm run build`, then
 `npm test`.
 
 ## Dockerfile changes

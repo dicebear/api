@@ -113,7 +113,9 @@ export class FontLookup {
 
     for (const text of extractTextContent(svg)) {
       for (const char of text) {
-        const fontPath = this.findFont(char.charCodeAt(0));
+        // Iterating a string yields code points, so characters outside the
+        // BMP arrive whole. charCodeAt would see only their high surrogate.
+        const fontPath = this.findFont(char.codePointAt(0)!);
 
         if (fontPath) {
           requiredFonts.add(fontPath);

@@ -668,3 +668,49 @@ describe('schema.json endpoint removed', () => {
     assert.equal(res.statusCode, 400);
   });
 });
+
+describe('Slash before the query string', () => {
+  test('reads the options from the query string', async () => {
+    const withSlash = await server.inject({
+      method: 'GET',
+      path: '/11.x/thumbs/svg/?seed=Felix',
+    });
+    const withoutSlash = await server.inject({
+      method: 'GET',
+      path: '/11.x/thumbs/svg?seed=Felix',
+    });
+    const otherSeed = await server.inject({
+      method: 'GET',
+      path: '/11.x/thumbs/svg/?seed=Aneka',
+    });
+
+    assert.equal(withSlash.statusCode, 200);
+    assert.equal(withSlash.body, withoutSlash.body);
+    assert.notEqual(withSlash.body, otherSeed.body);
+  });
+});
+
+describe('CORS on query parser errors', () => {
+  test('sends the CORS header with a 400 for bracket notation', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/thumbs/svg?backgroundColor[]=000000',
+      headers: { origin: 'https://example.com' },
+    });
+
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.headers['access-control-allow-origin'], '*');
+  });
+});
+
+describe('Seed with many commas', () => {
+  test('renders instead of hitting the array limit', async () => {
+    const seed = Array(200).fill('a').join(',');
+    const res = await server.inject({
+      method: 'GET',
+      path: `/11.x/thumbs/svg?seed=${seed}`,
+    });
+
+    assert.equal(res.statusCode, 200);
+  });
+});

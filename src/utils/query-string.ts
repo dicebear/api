@@ -12,6 +12,46 @@ export class QueryStringRangeError extends Error {
   }
 }
 
+/** Decodes one key or value the way qs does, keeping it raw when malformed. */
+function decodeComponent(raw: string): string {
+  const spaced = raw.replace(/\+/g, ' ');
+
+  try {
+    return decodeURIComponent(spaced);
+  } catch {
+    return spaced;
+  }
+}
+
+/**
+ * Takes the `seed` parameters out of a query string. A seed is free text, so
+ * its commas are not list separators, and qs must not count them against the
+ * array limit: a seed with a few hundred commas is still a valid seed.
+ */
+function splitSeed(str: string): { rest: string; seeds: string[] } {
+  const rest: string[] = [];
+  const seeds: string[] = [];
+
+  for (const part of str.split('&')) {
+    if (part === '') {
+      continue;
+    }
+
+    const separator = part.indexOf('=');
+    const key = separator === -1 ? part : part.slice(0, separator);
+
+    if (decodeComponent(key) === 'seed') {
+      seeds.push(
+        separator === -1 ? '' : decodeComponent(part.slice(separator + 1)),
+      );
+    } else {
+      rest.push(part);
+    }
+  }
+
+  return { rest: rest.join('&'), seeds };
+}
+
 export function parseQueryString(
   str: string,
   arrayLimit = config.queryString.arrayLimitMin,
@@ -19,10 +59,20 @@ export function parseQueryString(
 ): Record<string, unknown> {
   const result = Object.create(null);
 
+  const { rest, seeds } = splitSeed(str);
   let parsed;
 
   try {
-    parsed = qs.parse(str, {
+    if (
+      rest.split('&').filter(Boolean).length + seeds.length >
+      parameterLimit
+    ) {
+      throw new RangeError(
+        `Parameter limit exceeded. Only ${parameterLimit} parameter${parameterLimit === 1 ? '' : 's'} allowed.`,
+      );
+    }
+
+    parsed = qs.parse(rest, {
       comma: true,
       plainObjects: true,
       arrayLimit,
@@ -36,6 +86,11 @@ export function parseQueryString(
     }
 
     throw error;
+  }
+
+  if (seeds.length > 0) {
+    // Repeated seeds were joined with a comma before, keep that.
+    parsed.seed = seeds.join(',');
   }
 
   for (const key of Object.keys(parsed)) {

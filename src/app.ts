@@ -76,6 +76,11 @@ export const app = async () => {
   app.decorate('initialsBlocklist', new Set(initialsBlocklist));
   app.decorateRequest('expiresAt', null);
 
+  // Registered before the hook below, so its onRequest hook runs first and a
+  // 400 from the query parser carries the CORS headers too. A browser would
+  // otherwise report a CORS error instead of the message.
+  await app.register(cors);
+
   app.addHook('onRequest', (request, reply, done) => {
     const query = request.query as Record<string, unknown>;
 
@@ -93,8 +98,6 @@ export const app = async () => {
 
     done();
   });
-
-  await app.register(cors);
 
   app.get('/health', async () => ({ status: 'ok' }));
 

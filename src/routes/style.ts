@@ -56,11 +56,25 @@ const SIGNATURE_MESSAGES: Record<SignatureFailure, string> = {
   'unexpected-query': 'Query string not allowed next to path options.',
 };
 
-function signatureHook(
-  verify: (rawUrl: string, secrets: readonly string[]) => SignatureResult,
-) {
+type SignatureCheck = (
+  rawUrl: string,
+  secrets: readonly string[],
+) => SignatureResult;
+
+/**
+ * Whether the request carries options in a path segment. A slash before the
+ * query string, as in `/svg/?seed=Felix`, matches the path route with an
+ * empty segment, and those options are still in the query string.
+ */
+function hasPathOptionSegment(request: FastifyRequest): boolean {
+  const { options } = request.params as { options?: unknown };
+
+  return typeof options === 'string' && options !== '';
+}
+
+function signatureHook(verify: (request: FastifyRequest) => SignatureCheck) {
   return async (request: FastifyRequest, reply: FastifyReply) => {
-    const result = verify(request.url, config.signing.secrets);
+    const result = verify(request)(request.url, config.signing.secrets);
 
     if (!result.ok) {
       return reply.status(403).header('Cache-Control', 'no-store').send({
@@ -126,15 +140,17 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
       url,
       ...(config.signing.secrets.length > 0
         ? {
-            onRequest: signatureHook(
-              hasPathOptions ? verifySignedPath : verifySignedUrl,
+            onRequest: signatureHook((request) =>
+              hasPathOptions && hasPathOptionSegment(request)
+                ? verifySignedPath
+                : verifySignedUrl,
             ),
           }
         : {}),
       preValidation: async (request) => {
-        if (hasPathOptions && typeof request.params.options === 'string') {
+        if (hasPathOptions && hasPathOptionSegment(request)) {
           request.query = parseQueryString(
-            request.params.options,
+            request.params.options as string,
             arrayLimit,
             parameterLimit,
           );
