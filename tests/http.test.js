@@ -307,11 +307,20 @@ describe('per-name animation speed', () => {
   test('leaves the reduced-motion query out on request', async () => {
     const res = await server.inject({
       method: 'GET',
-      path: '/11.x/planets/svg?seed=hello&animation=true&animationMotionQuery=false',
+      path: '/11.x/planets/svg?seed=hello&animation=true&animationRespectReducedMotion=false',
     });
     assert.equal(res.statusCode, 200);
     assert.ok(res.body.includes('<style>@keyframes'));
     assert.ok(!res.body.includes('prefers-reduced-motion'));
+  });
+
+  test('drops the name the option carried in 11.0.0-rc.3', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/11.x/planets/svg?seed=hello&animation=true&animationMotionQuery=false',
+    });
+    assert.equal(res.statusCode, 200);
+    assert.ok(res.body.includes('prefers-reduced-motion'));
   });
 
   test('keeps the reduced-motion query by default', async () => {

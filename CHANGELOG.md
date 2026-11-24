@@ -15,6 +15,14 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Changed
+
+- `animationMotionQuery` is now called `animationRespectReducedMotion`, as in
+  `@dicebear/core` 11.0.0-rc.4 and `@dicebear/schema` 3.0.0-rc.1. Like any
+  unknown parameter, the old name is dropped, so such URLs get the animation
+  CSS inside the media query again. Replace `animationMotionQuery=false` with
+  `animationRespectReducedMotion=false`.
+
 ## [4.14.0-rc.6] - 2026-11-24
 
 ### Changed
