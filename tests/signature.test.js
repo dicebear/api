@@ -472,6 +472,7 @@ describe('signed URLs (enabled via env)', () => {
     for (const name of [
       'signed',
       'signedWithoutQuery',
+      'signedSlashBeforeQuery',
       'signedJson',
       'signedPath',
       'signedPathEncoded',
@@ -484,6 +485,7 @@ describe('signed URLs (enabled via env)', () => {
     assert.equal(payload.signed.cacheControl, `max-age=${payload.maxAge}`);
     assert.equal(payload.signedPath.body, payload.signed.body);
     assert.equal(payload.signedPathEncoded.body, payload.signed.body);
+    assert.equal(payload.signedSlashBeforeQuery.body, payload.signed.body);
   });
 
   test('refuses a path variant signed the query string way', () => {

@@ -182,3 +182,18 @@ describe('FontLookup binary search', () => {
     assert.ok(lookup.findFont(97)?.endsWith('fallback.ttf'));
   });
 });
+
+describe('FontLookup.getRequiredFonts outside the BMP', () => {
+  test('looks up a supplementary character by its code point', () => {
+    // 𠮷 is U+20BB7, two UTF-16 code units in a JS string.
+    const lookup = new FontLookup([
+      { font: 'cjk-ext-b.ttf', ranges: [[0x20000, 0x2a6df]] },
+      { font: 'cjk.ttf', ranges: [[0x4e00, 0x9fff]] },
+    ]);
+    const result = lookup.getRequiredFonts('<svg><text>𠮷田</text></svg>');
+
+    assert.equal(result.length, 2);
+    assert.ok(result.some((path) => path.endsWith('cjk-ext-b.ttf')));
+    assert.ok(result.some((path) => path.endsWith('cjk.ttf')));
+  });
+});

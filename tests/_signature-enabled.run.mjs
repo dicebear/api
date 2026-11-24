@@ -24,6 +24,7 @@ const server = await app();
 const cases = {
   signed: sign('/10.x/initials/svg?seed=Felix'),
   signedWithoutQuery: sign('/10.x/initials/svg'),
+  signedSlashBeforeQuery: sign('/10.x/initials/svg/?seed=Felix'),
   signedPath: signPath('/10.x/initials/svg', 'seed=Felix'),
   signedPathEncoded: signPath('/10.x/initials/svg', 'seed=Felix', true),
   signedPathWithoutOptions: signPath('/10.x/initials/svg', ''),

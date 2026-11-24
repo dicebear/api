@@ -1,6 +1,6 @@
 <h1><img src="https://www.dicebear.com/logo-readme.svg" width="28" /> DiceBear API</h1>
 
-Run the [DiceBear](https://www.dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 61 styles and five image formats, with no database and no calls to anyone else's servers.
+Run the [DiceBear](https://www.dicebear.com/) avatar service on your own infrastructure. One container turns a seed string into an avatar in 63 styles and five image formats, with no database and no calls to anyone else's servers.
 
 [Playground](https://www.dicebear.com/playground/) |
 [Documentation](https://www.dicebear.com/recipes/self-host-the-http-api/) |
@@ -11,7 +11,7 @@ docker run --tmpfs /run --tmpfs /tmp -p 3000:3000 dicebear/api:4
 ```
 
 ```
-http://localhost:3000/10.x/thumbs/svg?seed=Felix
+http://localhost:3000/11.x/thumbs/svg?seed=Felix
 ```
 
 ## Why self-host?
@@ -24,12 +24,12 @@ The project is MIT licensed, including commercial use.
 
 ## What's inside
 
-- 61 avatar styles by various artists; try them all in the [playground](https://www.dicebear.com/playground/)
+- 63 avatar styles by various artists; try them all in the [playground](https://www.dicebear.com/playground/)
 - SVG, PNG, JPEG, WebP, and AVIF output, plus a JSON endpoint for programmatic use
 - Every customization option of the DiceBear library as query parameters, validated against the official schema
 - Bundled Noto Sans fonts, so the initials style also renders CJK and Thai characters
 - Artist and license information embedded as EXIF metadata in raster images
-- Built on [Fastify](https://fastify.io/) with optional worker threads, CORS enabled out of the box
+- Built on [Fastify](https://fastify.io/) with optional worker processes, CORS enabled out of the box
 
 ## Endpoints
 
@@ -46,7 +46,7 @@ The project is MIT licensed, including commercial use.
 The version prefix follows the `VERSIONS` variable. DiceBear 10 and 11 are enabled by default, so the same endpoints exist under `/10.x`. Each version serves the styles of its `@dicebear/styles` line; the 11 line plays animations when the `animation` option is set, the 10 line is always static. All options from the [style documentation](https://www.dicebear.com/styles/) work as query parameters:
 
 ```
-http://localhost:3000/11.x/lorelei/png?seed=Felix&size=96&backgroundColor=b6e3f4&radius=50
+http://localhost:3000/11.x/lorelei/png?seed=Felix&size=96&backgroundColor=b6e3f4&borderRadius=50
 ```
 
 ## Getting started
@@ -91,7 +91,7 @@ npm start
 | `PORT`                             | `3000`                                        | Port to listen on.                                                                                   |
 | `HOST`                             | `0.0.0.0`                                     | Host to bind to (all IPv4 addresses by default).                                                     |
 | `LOGGER`                           | `0`                                           | Enable request logger (1 = on, 0 = off).                                                             |
-| `WORKERS`                          | `1`                                           | Number of Node.js worker threads.                                                                    |
+| `WORKERS`                          | `1`                                           | Number of worker processes (Node.js cluster).                                                        |
 | `VERSIONS`                         | `10,11`                                       | Comma-separated list of supported DiceBear major versions.                                           |
 | `CACHE_CONTROL_AVATARS`            | `31536000`                                    | Cache duration for avatar responses in seconds (1 year).                                             |
 | `CACHE_CONTROL_STYLES`             | `3600`                                        | Cache duration for the styles listing in seconds (1 hour).                                           |

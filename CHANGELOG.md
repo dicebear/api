@@ -15,6 +15,13 @@ DiceBear library.
 
 ## [Unreleased]
 
+DiceBear 11 under `/11.x/`, next to `/10.x/`. Compared to 4.13.0: 63 styles
+with Cats and Dogs, animations on SVG requests (`animation`, `${name}Animation`,
+`animationSpeed`, `animationDelay`, `animationRespectReducedMotion`), the
+`tags` filter for 35 character styles, and signed URLs for self-hosted
+instances. `/10.x/` draws the same avatars as before. The release candidate
+entries below have the details.
+
 ### Changed
 
 - `animationMotionQuery` is now called `animationRespectReducedMotion`, as in
@@ -22,6 +29,20 @@ DiceBear library.
   unknown parameter, the old name is dropped, so such URLs get the animation
   CSS inside the media query again. Replace `animationMotionQuery=false` with
   `animationRespectReducedMotion=false`.
+
+### Fixed
+
+- A slash before the query string, as in `/11.x/thumbs/svg/?seed=Felix`, threw
+  the options away, so every seed got the same avatar. The options are read
+  from the query string now, and a signed URL of that form is checked like one
+  without the slash.
+- Characters outside the Basic Multilingual Plane, such as `𠮷`, found no font
+  in PNG, JPEG, WebP and AVIF, so the initials rendered as empty boxes. The
+  font lookup uses the full code point now.
+- A 400 from the query parser, such as the one for bracket notation, carried no
+  CORS headers, so a browser reported a CORS error instead of the message.
+- A seed with more than 146 commas returned a 400 for the array limit. Commas
+  in a seed are text, so they no longer count against it.
 
 ## [4.14.0-rc.6] - 2026-11-24
 
@@ -281,8 +302,7 @@ DiceBear library.
 [4.14.0-rc.4]: https://github.com/dicebear/api/compare/v4.14.0-rc.3...v4.14.0-rc.4
 [4.14.0-rc.3]: https://github.com/dicebear/api/compare/v4.14.0-rc.2...v4.14.0-rc.3
 [4.14.0-rc.2]: https://github.com/dicebear/api/compare/v4.14.0-rc.1...v4.14.0-rc.2
-[4.14.0-rc.1]: https://github.com/dicebear/api/compare/v1.14.0-rc.1...v4.14.0-rc.1
-[1.14.0-rc.1]: https://github.com/dicebear/api/compare/v4.13.0...v1.14.0-rc.1
+[4.14.0-rc.1]: https://github.com/dicebear/api/compare/v4.13.0...v4.14.0-rc.1
 [4.13.0]: https://github.com/dicebear/api/compare/v4.13.0-rc.1...v4.13.0
 [4.13.0-rc.1]: https://github.com/dicebear/api/compare/v4.12.1...v4.13.0-rc.1
 [4.12.1]: https://github.com/dicebear/api/compare/v4.12.0...v4.12.1

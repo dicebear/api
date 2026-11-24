@@ -227,3 +227,27 @@ describe('transformWeightedFields', () => {
     assert.deepEqual(query.eyesVariant, expected({ happy: 1, wink: 2 }));
   });
 });
+
+describe('parseQueryString seed', () => {
+  test('does not count the commas of a seed against the array limit', () => {
+    const seed = Array(200).fill('a').join(',');
+    const result = parseQueryString(`seed=${seed}&flip=none,horizontal`, 5);
+
+    assert.deepEqual(result.seed, [seed]);
+    assert.deepEqual(result.flip, ['none', 'horizontal']);
+  });
+
+  test('decodes the seed like any other value', () => {
+    assert.deepEqual(parseQueryString('seed=Zo%C3%AB+K%2Cx').seed, ['Zoë K,x']);
+  });
+
+  test('joins repeated seeds with a comma', () => {
+    assert.deepEqual(parseQueryString('seed=a&seed=b').seed, ['a,b']);
+  });
+
+  test('still counts the seed as a parameter', () => {
+    assert.throws(() => parseQueryString('seed=a&flip=none', 100, 1), {
+      name: 'QueryStringRangeError',
+    });
+  });
+});
