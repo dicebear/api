@@ -15,6 +15,13 @@ DiceBear library.
 
 ## [Unreleased]
 
+### Changed
+
+- Updated the 11.x styles to `@dicebear/styles` `^11.0.0-rc.4` (was
+  `^11.0.0-rc.3`). The `tags` option now filters the variants of 35 character
+  styles, Dogs is rebuilt with new parts, and Big Ears links to The Visual
+  Team's Figma profile.
+
 ## [4.14.0-rc.5] - 2026-11-21
 
 ### Added

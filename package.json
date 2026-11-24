@@ -18,9 +18,9 @@
   "dependencies": {
     "@dicebear/converter": "^11.0.0-rc.3",
     "@dicebear/core": "^11.0.0-rc.3",
-    "@dicebear/styles-10": "npm:@dicebear/styles@^10.6.0",
-    "@dicebear/styles-11": "npm:@dicebear/styles@^11.0.0-rc.3",
     "@dicebear/schema": "^2.1.0",
+    "@dicebear/styles-10": "npm:@dicebear/styles@^10.6.0",
+    "@dicebear/styles-11": "npm:@dicebear/styles@^11.0.0-rc.4",
     "@fastify/cors": "^11.3.1",
     "fast-xml-parser": "^5.11.2",
     "fastify": "^5.12.7",
