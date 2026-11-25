@@ -43,6 +43,25 @@ const paramsSchema = {
   },
 };
 
+const FORMATS: ReadonlySet<string> = new Set(
+  paramsSchema.properties.format.enum,
+);
+
+/**
+ * A path whose format segment is no format, such as `foo` or a
+ * `definition.json` that is switched off, does not exist. Without this hook
+ * the params schema would turn it into a 400 that blames the request.
+ */
+async function unknownFormat(request: FastifyRequest, reply: FastifyReply) {
+  const { format } = request.params as { format?: string };
+
+  if (format === undefined || !FORMATS.has(format)) {
+    reply.callNotFound();
+
+    return reply;
+  }
+}
+
 const AVATAR_ROUTES = [
   { url: '/:format', hasPathOptions: false },
   { url: '/:format/:options', hasPathOptions: true },
@@ -138,15 +157,18 @@ export const styleRoutes: FastifyPluginCallback<Options> = (
     app.route<AvatarRequest>({
       method: 'GET',
       url,
-      ...(config.signing.secrets.length > 0
-        ? {
-            onRequest: signatureHook((request) =>
-              hasPathOptions && hasPathOptionSegment(request)
-                ? verifySignedPath
-                : verifySignedUrl,
-            ),
-          }
-        : {}),
+      onRequest: [
+        unknownFormat,
+        ...(config.signing.secrets.length > 0
+          ? [
+              signatureHook((request) =>
+                hasPathOptions && hasPathOptionSegment(request)
+                  ? verifySignedPath
+                  : verifySignedUrl,
+              ),
+            ]
+          : []),
+      ],
       preValidation: async (request) => {
         if (hasPathOptions && hasPathOptionSegment(request)) {
           request.query = parseQueryString(

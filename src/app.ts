@@ -79,7 +79,8 @@ export const app = async () => {
   // Registered before the hook below, so its onRequest hook runs first and a
   // 400 from the query parser carries the CORS headers too. A browser would
   // otherwise report a CORS error instead of the message.
-  await app.register(cors);
+  // The API answers GET and HEAD only, so a preflight names no other method.
+  await app.register(cors, { methods: ['GET', 'HEAD'] });
 
   app.addHook('onRequest', (request, reply, done) => {
     const query = request.query as Record<string, unknown>;
