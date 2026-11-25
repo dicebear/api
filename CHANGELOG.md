@@ -24,6 +24,11 @@ entries below have the details.
 
 ### Changed
 
+- Updated to the released packages: `@dicebear/core` and `@dicebear/converter`
+  11.0.0, `@dicebear/schema` 3.0.0, and `@dicebear/styles` 11.0.0 for `/11.x/`.
+  Cats can have a toy now, four duplicate variants are gone, and a few colors
+  and tags changed. See the
+  [Styles 11.0 release notes](https://github.com/dicebear/styles/releases/tag/v11.0.0).
 - `animationMotionQuery` is now called `animationRespectReducedMotion`, as in
   `@dicebear/core` 11.0.0-rc.4 and `@dicebear/schema` 3.0.0-rc.1. Like any
   unknown parameter, the old name is dropped, so such URLs get the animation
