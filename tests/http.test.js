@@ -500,6 +500,18 @@ describe('response headers', () => {
     });
     assert.ok(res.headers['access-control-allow-origin']);
   });
+
+  test('a CORS preflight names GET and HEAD only', async () => {
+    const res = await server.inject({
+      method: 'OPTIONS',
+      path: '/10.x/initials/svg',
+      headers: {
+        origin: 'https://example.com',
+        'access-control-request-method': 'GET',
+      },
+    });
+    assert.equal(res.headers['access-control-allow-methods'], 'GET, HEAD');
+  });
 });
 
 describe('error handling', () => {
@@ -519,12 +531,20 @@ describe('error handling', () => {
     assert.equal(res.statusCode, 404);
   });
 
-  test('returns 400 for invalid format', async () => {
+  test('returns 404 for an unknown format', async () => {
     const res = await server.inject({
       method: 'GET',
       path: '/10.x/initials/gif',
     });
-    assert.equal(res.statusCode, 400);
+    assert.equal(res.statusCode, 404);
+  });
+
+  test('returns 404 for an unknown format with path options', async () => {
+    const res = await server.inject({
+      method: 'GET',
+      path: '/10.x/initials/gif/seed=test',
+    });
+    assert.equal(res.statusCode, 404);
   });
 
   test('returns 400 for invalid size type', async () => {
@@ -665,7 +685,7 @@ describe('schema.json endpoint removed', () => {
       method: 'GET',
       path: '/10.x/avataaars/schema.json',
     });
-    assert.equal(res.statusCode, 400);
+    assert.equal(res.statusCode, 404);
   });
 });
 

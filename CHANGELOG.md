@@ -43,6 +43,11 @@ entries below have the details.
   CORS headers, so a browser reported a CORS error instead of the message.
 - A seed with more than 146 commas returned a 400 for the array limit. Commas
   in a seed are text, so they no longer count against it.
+- A path with an unknown format, such as `/11.x/lorelei/gif` or a
+  `definition.json` that is switched off, returned a 400 that blamed the
+  request. It returns a 404 now.
+- A CORS preflight listed `POST` among the allowed methods, which the API does
+  not serve. It lists `GET` and `HEAD` only.
 
 ## [4.14.0-rc.6] - 2026-11-24
 

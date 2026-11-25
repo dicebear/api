@@ -28,7 +28,7 @@ describe('definition.json and options.json endpoints (disabled by default)', () 
       path: '/10.x/initials/definition.json',
     });
 
-    assert.equal(res.statusCode, 400);
+    assert.equal(res.statusCode, 404);
   });
 
   test('options.json is not served by default', async () => {
@@ -37,7 +37,7 @@ describe('definition.json and options.json endpoints (disabled by default)', () 
       path: '/10.x/initials/options.json',
     });
 
-    assert.equal(res.statusCode, 400);
+    assert.equal(res.statusCode, 404);
   });
 });
 
